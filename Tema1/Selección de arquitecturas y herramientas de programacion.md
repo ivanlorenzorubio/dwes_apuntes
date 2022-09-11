@@ -17,8 +17,8 @@
 * Ordenadores unidos a través de conexiones de varios  tipos
 * Se utiliza el protocolo TCP/IP
 * Se ofrecen diferentes servicios a los usuarios: WWW,  FTP, DNS, e-mail, SSH, etc…
-## Introducción
 
+## Introducción
 * Una web es un sistema formado por volúmenes de información organizados  mediante recursos web (enlaces, vínculos que permiten relacionarse entre  ellos…).
 * Surge como idea original para la búsqueda de un sistema que permita  acceder rápidamente a documentos electrónicos mediante enlaces.
 * Se utiliza un lenguaje denominado HTML (HyperText Markup Language)
@@ -26,10 +26,7 @@
 * El lenguaje HTML es un estándar reconocido en todo el mundo y cuyas  normas define un organismo sin ánimo de lucro llamado [World Wide Web  Consortium](http://www.w3.org) más conocido como W3C.
 * El software para comprender e interpretar la información en un documento  HTML se denomina navegador.
 
-<div align=center>
-
 ![imagen navegadores](img/navegadores.png)
-</div>
 
 ## Modelos de programación en entornos cliente/servidor
 
@@ -78,10 +75,7 @@ Existen múltiples alternativas:
     * Devuelve la respuesta de la ejecución
     * Problemas de escalabilidad y seguridad
 
-<div align=center>
-
 ![imagen program cgi](img/cgiprogram.png)
-</div>
 
 *  __PHP__  ![imagen php](img/php.png)
     * Lenguaje interpretado por el servidor
