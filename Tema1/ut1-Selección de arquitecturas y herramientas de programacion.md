@@ -1,14 +1,14 @@
 
 # UT1 SELECCIÓN DE ARQUITECTURAS Y HERRAMIENTAS DE PROGRAMACIÓN
-## Indice
+## Índice
+  
   - [Conceptos básicos de Internet](#conceptos-básicos-de-internet)
   - [Introducción](#introducción)
-  - [Modelos de programación en entornos  cliente/servidor](#modelos-de-programación-en-entornos--clienteservidor)
+  - [Modelos de programación en entornos cliente/servidor](#modelos-de-programación-en-entornos-clienteservidor)
   - [Generación dinámica de páginas web](#generación-dinámica-de-páginas-web)
   - [Lenguajes de programación utilizados.  Lenguajes de scripting](#lenguajes-de-programación-utilizados--lenguajes-de-scripting)
-  - [Del lado del cliente](#del-lado-del-cliente)
-  - [Lenguajes del lado del servidor](#lenguajes-del-lado-del-servidor)
-  - [Lenguajes del lado del servidor](#lenguajes-del-lado-del-servidor-1)
+    - [Del lado del cliente](#del-lado-del-cliente)
+    - [Lenguajes del lado del servidor](#lenguajes-del-lado-del-servidor)
   - [Integración con los servidores web](#integración-con-los-servidores-web)
   - [Herramientas de programación](#herramientas-de-programación)
 
@@ -31,7 +31,7 @@
 ![imagen navegadores](img/navegadores.png)
 </div>
 
-## Modelos de programación en entornos  cliente/servidor
+## Modelos de programación en entornos cliente/servidor
 
 ![imagen modelos](img/modelos.png)
 
@@ -41,12 +41,13 @@ Podemos dividir las __aplicaciones web__ en:
 * __Dinámicas__: la interacción del cliente con el recurso recibido por parte  del servidor (página web) produce algún tipo de cambio en la  visualización del mismo (cambios de formato, ocultación de partes del  documento, creación de elementos nuevos, etc.). Los lenguajes  involucrados en este tipo de aplicaciones incluyen, entre otros, HTML,  CSS o JavaScript.
 * __Interactivas__: la interacción hace que se genere un diálogo entre el  cliente y el servidor. Desde el punto de vista del modelo de  programación, la lógica asociada al inicio y gestión de dicho diálogo  puede ser ejecutada tanto en el cliente como en el servidor (e incluso en  ambos).
 Las más demandadas actualmente son las interactivas. Las  tecnologías implicadas varían mucho en función de si son ejecutadas  en el lado del cliente o en el lado del servidor.
+
 ## Lenguajes de programación utilizados.  Lenguajes de scripting
 Hay que diferenciar entre:
 * Lenguajes de programación del lado del cliente.
 * Lenguajes	de	programación	del	lado	del  lenguajes scripting.
 
-## Del lado del cliente
+### Del lado del cliente
 
 * __HTML__: solo presenta texto en una página, además de definir algunos aspectos
 visuales en el documento mediante el uso de estilos.
@@ -58,7 +59,7 @@ visuales en el documento mediante el uso de estilos.
 * __ActiveX__: controles que tienen un comportamiento parecido a los applets pero  son desarrollados por Microsoft (no recomendado).
 * __Adobe Flash__ (problemas de usabilidad).
 
-## Lenguajes del lado del servidor
+### Lenguajes del lado del servidor
 El	código	de	los	lenguajes	del	lado	del	servidor	es	ejecutado	por	un
 software específico en el componente que actúa como servidor.
 Existen múltiples alternativas:
@@ -71,7 +72,6 @@ Existen múltiples alternativas:
     * CLR: C# (ASP.NET), …
 * Otros: frameworks, CMS, etc.
 
-## Lenguajes del lado del servidor
 * __CGI__ (Common Gateway Interface), 1.1 (2004)
     * Método estándar para transmitir parámetros entre  servidor y programas ejecutables
     * Los programas CGIs son ejecutados por el servidor
@@ -139,6 +139,7 @@ Existen múltiples alternativas:
         * Scala: Play, Lift
         * Groovy: Grails
         * Haskell: Yesod
+
 ## Integración con los servidores web
 * Los clientes hacen peticiones a los servidor.
     * En	ellas	tienen	que	constar	de	unos	elementos	concretos	y  especificados en un orden determinado.
@@ -164,4 +165,4 @@ Existen múltiples alternativas:
 * __Herramientas de tratamiento de imágenes__: la mayoría de las páginas web muestran contenido gráfico de una u otra manera. Es necesario el uso de este tipo de herramientas para adecuar las características de las imágenes a su transmisión.
 * __Herramientas para la creación y administración de bases de datos__: herramientas para la carga de datos y el mantenimiento posterior de los datos almacenados.
   
-
+:computer:Hoja01_herramientas_01
