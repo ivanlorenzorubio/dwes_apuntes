@@ -1,6 +1,7 @@
 
 # UT1 SELECCIÓN DE ARQUITECTURAS Y HERRAMIENTAS DE PROGRAMACIÓN
 
+
 ## Conceptos básicos de Internet
 * Es una gran red de ordenadores y como todas ellas  sirve para compartir recursos e intercambiar  información.
 * Ordenadores unidos a través de conexiones de varios  tipos
@@ -84,15 +85,19 @@ Existen múltiples alternativas:
 
 * __Lenguajes dinámicos__
     * Python, Ruby
+    
     * Lenguajes interpretados de propósito general
     * Buenos frameworks y librerías para Web
         * Ruby: Ruby on Rails
         * Python: Django
-
- ![imagen estadistica](img/estadistica.png)       
+  
+![imagen lenguaje](img/python.png) ![imagen lenguajes](img/rails.png) 
 * __JavaScript del lado del servidor__
     * Librería Node.js
         * Basado V8, el motor JavaScript de Google
         * Permite utilizar JavaScript en el servidor
         * Entrada/salida basada en eventos
         * Creciendo en popularidad
+
+![imagen lenguajes](img/nodejs.png)   
+  
