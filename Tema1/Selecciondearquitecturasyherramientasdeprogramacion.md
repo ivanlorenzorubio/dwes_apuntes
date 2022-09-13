@@ -42,7 +42,9 @@ Las más demandadas actualmente son las interactivas. Las  tecnologías implicad
 ## Lenguajes de programación utilizados.  Lenguajes de scripting
 Hay que diferenciar entre:
 * Lenguajes de programación del lado del cliente.
-* Lenguajes	de	programación	del	lado	del  lenguajes scripting.
+* Lenguajes	de	programación del lado del lado del servidor o lenguajes scripting.
+
+<div class="page"/>
 
 ### Del lado del cliente
 
@@ -84,7 +86,7 @@ Existen múltiples alternativas:
         * Llama al intérprete
         * Ejecuta el código
         * Devuelve el resultado
-    * Según [__w3techs__]  (https://w3techs.com/technologies/overview/programming_language/all), el 77% de los sitios web utiliza PHP
+    * Según [__w3techs__](https://w3techs.com/technologies/overview/programming_language/all), el 77% de los sitios web utiliza PHP
 ![imagen estadistica](img/estadistica.png)
 
 * __Lenguajes dinámicos__
@@ -120,7 +122,7 @@ Existen múltiples alternativas:
     * Otros lenguajes:
         * VB.Net, ...
   
-![imagen lenguaje](img/java.png) ![imagen lenguajes](img/asp.png) 
+![imagen lenguaje](img/ljava.png) ![imagen lenguajes](img/asp.png) 
 
 * __Frameworks__
     * Normalmente basados en el patrón MVC
