@@ -57,26 +57,26 @@
 <div class="page"/>
 
 * La incrustación de código PHP en HTML se puede hacer de varias maneras:
-    * Forma a)(compatible con todas las plataformas)
+  * Forma a)(compatible con todas las plataformas)
   
 ```php
     
          <?php
             ...
         ?>
-``` 
-  
-    * Forma b)
+```
+  * Forma b)
 ```php
         <?
             ...
          ?>
 ``` 
-    * Forma c)
+  * Forma c)
+
 ```html
   	<script language=“php”>  …… </script>
 ```
-    * Forma d)	
+  * Forma d)	
 ```php
         <%
             ...
