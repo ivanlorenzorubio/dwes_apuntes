@@ -56,8 +56,8 @@
   
 <div class="page"/>
 
-* La incrustación de código PHP en HTML se puede hacer de varias maneras:
-  * Forma a)(compatible con todas las plataformas)
+La incrustación de código PHP en HTML se puede hacer de varias maneras:
+* Forma a)(compatible con todas las plataformas)
   
 ```php
     
@@ -65,25 +65,24 @@
             ...
         ?>
 ```
-  * Forma b)
+* Forma b)
 ```php
         <?
             ...
          ?>
 ``` 
-  * Forma c)
+* Forma c)
 
 ```html
   	<script language=“php”>  …… </script>
 ```
-  * Forma d)	
+* Forma d)	
 ```php
         <%
             ...
          %>
 ```
-
-  * Sólo la forma a) es compatible y portable con todas las plataformas, el resto requiere hacer ajustes adicionales en el fichero de configuración.
+* Sólo la forma a) es compatible y portable con todas las plataformas, el resto requiere hacer ajustes adicionales en el fichero de configuración.
 * Ejemplo
   
 ```html
@@ -360,38 +359,39 @@ Ejercicios:
 
 ### Funciones relacionadas con los tipos de datos
 
-* Funciones para comprobar y establecer el tipo de datos de una variable
-  * __gettype( )__: obtiene el tipo de variable
+Funciones para comprobar y establecer el tipo de datos de una variable
+* __gettype( )__: obtiene el tipo de variable
 ```php
     gettype($variable);
 ```
-  * __settype( )__: convierte una variable al tipo indicado por parámetro.
+* __settype( )__: convierte una variable al tipo indicado por parámetro.
 ```php
     settype($variable,”float”);
 ``` 
-  * Funciones para comprobar si es de un tipo concreto:
-    * __is_array( )__, __is_bool( )__, __is_float( )__, __is_integer( )__….
-    * __isset( )__: indica si una variable está definida y no es null.
+Funciones para comprobar si es de un tipo concreto:
+* __is_array( )__, __is_bool( )__, __is_float( )__, __is_integer( )__….
+* __isset( )__: indica si una variable está definida y no es null.
 ```php  
     isset($variable);
 ```
-  * __unset ( )__: destruye una variable.
+* __unset ( )__: destruye una variable.
 ```php
     unset($variable);
 ```
 :computer:Hoja02_PHP_02
 
-  * __Fechas__: no hay un tipo especifico. La información fecha y hora se almacena como un número entero y hay una serie de funciones en PHP para trabajar con ellas:
-    * __date( )__ es una de las más útiles. Permite obtener una cadena de texto a partir de una fecha y hora con el formato que se elija.
+Funciones para __Fechas__: no hay un tipo especifico. La información fecha y hora se almacena como un número entero y hay una serie de funciones en PHP para trabajar con ellas:
+* __date( )__ es una de las más útiles. Permite obtener una cadena de texto a partir de una fecha y hora con el formato que se elija.
+  
 ```php 
 	    date (string $formato [, int $fechahora]);
 ```  
-   Si no se indica el segundo parámetro se utiliza la hora actual.
-    * __date_default_timezone_set__ establece la zona horaria donde me encuentro.
+Si no se indica el segundo parámetro se utiliza la hora actual
+*  **date_default_timezone_set** establece la zona horaria donde me encuentro.
 ```php 
 	date_default_timezone_set(‘Europe/Madrid’);
 ```  
-    * __getdate( )__ devuelve un array con información sobre la fecha y hora actual.
+* __getdate( )__ devuelve un array con información sobre la fecha y hora actual.
 
 :computer:Hoja02_PHP_03
 
@@ -399,10 +399,10 @@ Ejercicios:
 
 * PHP incluye variables internas predefinidas que pueden usarse desde cualquier ámbito. Se denominan __superglobales__.
 * Cada una de estas variables es un array que contiene un conjunto de valores. Son las siguientes:
-  * __$_SERVER__: contiene información sobre el entorno del servidor web y de ejecución. 
-  * __$_GET, $_POST y $_COOKIE__: contienen las variables que se han pasado al guión actual utilizando respectivamente los métodos GET (parámetros en la URL), HTTP POST y Cookies HTTP.
-  * __$_REQUEST__: junta en uno solo el contenido de los tres arrays anteriores.
-  * __$_ENV__: contiene las variables que se puedan haber pasado a PHP desde el entorno en que se ejecuta.
-  * __$_FILES__: contiene los ficheros que se puedan haber subido al servidor utilizando el método POST.
-  * __$_SESSION__: contiene las variables de sesión disponibles para el guión actual.
+  * **$_SERVER**: contiene información sobre el entorno del servidor web y de ejecución. 
+  * **$_GET, $_POST y $_COOKIE**: contienen las variables que se han pasado al guión actual utilizando respectivamente los métodos GET (parámetros en la URL), HTTP POST y Cookies HTTP.
+  * **$_REQUEST**: junta en uno solo el contenido de los tres arrays anteriores.
+  * **$_ENV**: contiene las variables que se puedan haber pasado a PHP desde el entorno en que se ejecuta.
+  * **$_FILES**: contiene los ficheros que se puedan haber subido al servidor utilizando el método POST.
+  * **$_SESSION**: contiene las variables de sesión disponibles para el guión actual.
 
