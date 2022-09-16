@@ -85,6 +85,7 @@
 
     * Sólo la forma a) es compatible y portable con todas las plataformas, el resto requiere hacer ajustes adicionales en el fichero de configuración.
 * Ejemplo
+  
 ```html
 <!DOCTYPE html>
 <html>
@@ -107,11 +108,11 @@
                 print("2.- El texto está por instrucción print de PHP");
             }
         ?>
- ```
- ```html
+``` 
+```html
     </body>
 <html>
-```
+``` 
 * Ejercicio : Realiza una página web que presente como título "Mi primer ejemplo"  y un mensaje de texto "primer ejemplo", mediante etiquetas HTML y un mensaje "¡ Hola mundo !" con un script php  
 
 ### Sintaxis básica
@@ -123,18 +124,18 @@
 * El número de scripts es indefinido.
 * Cuando se ejecuta un código embebido, el script se sustituye por el resultado de dicha ejecución, incluidas las etiquetas de inicio y fin.
    
-``` html
+```html
 <!DOCTYPE html>
 <html>
-```
+``` 
 ```php
         <?php
 
             $salida="contenido php";
             
         ?>
-```
-``` html
+``` 
+```html
     <head>
         <meta charset="UTF-8">
         <title>
@@ -172,11 +173,11 @@
 
 * echo: muestra __una o más cadenas__ 
   
- ```php 
+```php 
 	echo cadena1 [, cadena2...]; 
 ```
 Ejemplo
- ```php 
+```php 
     echo "Hola Mundo";
 	echo "Hola", "Mundo"; 
 ```
@@ -271,12 +272,12 @@ Ejercicios:
         <?php
             echo "Hola mundo";
         ?>
- ```
- ```html
+``` 
+```html
         </h1>
     </body>
 <html>
-```
+``` 
 ### Insertar etiquetas dentro de un script PHP
 
 ```html
@@ -294,8 +295,8 @@ Ejercicios:
         <?php
             echo "<h1> Hola mundo </h1>";
         ?>
- ```
- ```html
+```
+```html
     </body>
 <html>
 ```
@@ -313,7 +314,7 @@ Ejercicios:
             print ("</body>");
             print ("</html>");
         ?>
- ```
+```
 :computer:Hoja02_PHP_01
 
 ### Ámbito de las variables
@@ -334,14 +335,14 @@ Ejercicios:
             $modulo="DWES";
             echo "<p> Módulo: $modulo </p>";
         ?>
- ```        
+```        
 * PHP al encontrar la variable la sustituye por DWES. 
 * Para que PHP distinga correctamente el texto que forma la cadena del nombre, a veces es necesario encerrarla __entre llaves__
 ```php
         <?php
             echo "<p> Módulo: ${modulo} </p>";
         ?>
- ```        
+```        
 #### Concatenación de cadenas
 
 * Concatenación punto (.)
@@ -354,7 +355,7 @@ Ejercicios:
             $a .="DWES";
             // ahora $a también contiene "Módulo DWES"
         ?>
- ```        
+```        
 <div class="page"/>
 
 ### Funciones relacionadas con los tipos de datos
@@ -382,14 +383,14 @@ Ejercicios:
 
   * __Fechas__: no hay un tipo especifico. La información fecha y hora se almacena como un número entero y hay una serie de funciones en PHP para trabajar con ellas:
     * __date( )__ es una de las más útiles. Permite obtener una cadena de texto a partir de una fecha y hora con el formato que se elija.
-   ```php 
+```php 
 	    date (string $formato [, int $fechahora]);
-   ```  
+```  
    Si no se indica el segundo parámetro se utiliza la hora actual.
     * __date_default_timezone_set__ establece la zona horaria donde me encuentro.
-   ```php 
+```php 
 	date_default_timezone_set(‘Europe/Madrid’);
-   ```  
+```  
     * __getdate( )__ devuelve un array con información sobre la fecha y hora actual.
 
 :computer:Hoja02_PHP_03
