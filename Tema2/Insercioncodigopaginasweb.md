@@ -59,28 +59,29 @@
 * La incrustación de código PHP en HTML se puede hacer de varias maneras:
     * Forma a)(compatible con todas las plataformas)
   
-    ```php
+ ```php
+    
          <?php
             ...
         ?>
-    ```
+ ``` 
   
     * Forma b)
-    ```php
+```php
         <?
             ...
          ?>
-    ``` 
+``` 
     * Forma c)
-    ```html
+ ```html
   	<script language=“php”>  …… </script>
-    ```
+```
     * Forma d)	
-    ```php
+```php
         <%
             ...
          %>
-    ```
+```
 
     * Sólo la forma a) es compatible y portable con todas las plataformas, el resto requiere hacer ajustes adicionales en el fichero de configuración.
 * Ejemplo
