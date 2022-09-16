@@ -237,7 +237,7 @@ Ejercicios:
 * Operador de __asignación__: =
 * Operadores de __comparación__: ==, !=, <, >, <=, >= 
 * Operador de __control de error__: @. Antepuesto a una expresión, evita cualquier mensaje de error que pueda ser generado por la expresión.
-* Operadores __lógicos__: and (&&), or (||), !, xor 
+* Operadores __lógicos__: and (&&), or (\|\|), !, xor 
 * Operadores de __cadena__: 
   * concatenación: . (punto) 
   * asignación con concatenación: .= 
@@ -250,7 +250,7 @@ Ejercicios:
 * <, <=, >, <=
 * ==, !=
 * &&
-* ||
+* \|\|
 * and
 * or
 
