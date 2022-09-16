@@ -60,16 +60,15 @@ La incrustación de código PHP en HTML se puede hacer de varias maneras:
 * Forma a)(compatible con todas las plataformas)
   
 ```php
-    
-         <?php
-            ...
-        ?>
+    <?php
+        ...
+    ?>
 ```
 * Forma b)
 ```php
-        <?
-            ...
-         ?>
+    <?
+        ...
+     ?>
 ``` 
 * Forma c)
 
@@ -78,9 +77,9 @@ La incrustación de código PHP en HTML se puede hacer de varias maneras:
 ```
 * Forma d)	
 ```php
-        <%
-            ...
-         %>
+    <%
+        ...
+     %>
 ```
 * Sólo la forma a) es compatible y portable con todas las plataformas, el resto requiere hacer ajustes adicionales en el fichero de configuración.
 * Ejemplo
@@ -173,25 +172,29 @@ La incrustación de código PHP en HTML se puede hacer de varias maneras:
 * echo: muestra __una o más cadenas__ 
   
 ```php 
-	echo cadena1 [, cadena2...]; 
+echo cadena1 [, cadena2...]; 
 ```
 Ejemplo
+
 ```php 
-    echo "Hola Mundo";
-	echo "Hola", "Mundo"; 
+echo "Hola Mundo";
+echo "Hola", "Mundo"; 
 ```
 * print: muestra __una cadena__
-```php 
-	print cadena ; 
 
+```php 
+print cadena ; 
 ```
+
 <div class="page"/>
 
 Ejemplo
+
 ```php 
-	print "Hola mundo"; 
-    print "Hola "."mundo";
+print "Hola mundo"; 
+print "Hola "."mundo";
 ```
+
 ### variables y tipos de datos 
 
 * El tipo de una variable no se suele especificar.
