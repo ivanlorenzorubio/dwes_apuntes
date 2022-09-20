@@ -110,7 +110,7 @@ Ejemplo
 ``` 
 ### Creación y ejecución de funciones
 Para crear tus propias funciones se usa la palabra __function__
-Ejemplo
+
 ```php
 <?php
    function precio_con_iva(){
@@ -238,4 +238,142 @@ $modulos1[]="Desarrollo web en entorno servivor";
 ``` 
 #### Recorrer un array 
 
+Las cadenas de texto o strings se pueden tratar como arrays en los que se almacena una letra en cada posición, siendo 0 el índice correspondiente a la primera letra, 1 el de la segunda, etc.
 
+```php
+$modulo = "Desarrollo web en entorno servidor";
+// $modulo[3] == "a";
+``` 
+Para recorrer un array se puede utilizar __el bucle foreach__. Utiliza una variable temporal para asignarle en cada iteración el valor de cada uno de los elementos del arrays. Puedes usarlo de dos formas.
+*  Recorriendo sólo los elementos:
+
+```php
+foreach ($modulos1 as $modulo)
+		echo $modulo . "<br/>";
+
+``` 
+* O recorriendo los elementos y sus valores clave de forma simultánea:
+
+```php
+foreach ($modulos2 as $codigo => $modulo)
+		echo "El código del módulo ".$modulo." es ".$codigo."<br/";
+``` 
+## Funciones relacionadas con los tipos de datos completos
+
+En PHP existen funciones específicas para comprobar y establecer el tipo de datos de una variable, __gettype__ obtiene el tipo de la variable que se le pasa como parámetro y devuelve una cadena de texto, que puede ser array, boolean, double, integer, object, string, null, resource o unknown type.
+
+También podemos comprobar si la variable es de un tipo concreto utilizando una de las siguientes funciones: **is_array(), is_bool(), is_float(), is_integer(), is_null(), is_numeric(), is_object(), is_resource(), is_scalar() e is_string()**. Devuelven true si la variable es del tipo indicado.
+```php
+<?php
+  //asignamos a las dos variables la misma cadena de texto 
+	$a = $b = "3.1416"; 
+	settype($b, "float"); //y cambiamos $b a tipo float
+	print "\$a vale $a y es de tipo ".gettype($a);
+	print "<br />"; 
+	print "\$b vale $b y es de tipo ".gettype($b);
+?>
+``` 
+Si sólo nos interesa saber si una variable está definida y no es null, puedes usar __la función isset__. 
+__La función unset__ destruye la variable o variables que se le pasa como parámetro.
+
+:omputer: Hoja03_PHP_03
+
+## Formularios
+
+Son la forma de hacer llegar los datos a una aplicación web
+Van encerrados en las etiquetas <form> </form>
+Dentro de las etiquetas de formulario se pueden incluir elementos sobre los que puede actuar el usuario. Ejemplo:
+
+<input>
+<select>
+<textarea>
+<button>
+
+En el __atributo action__ del FORM se indica la página a la que se enviarán los datos del formulario
+En el __atributo method__ se especifica el método usado para enviar la información:
+* __get__: los datos se envían en la URI utilizando el signo __?__ como separador.
+* __post__: los datos se incluyen en el cuerpo del formulario y se envían usando el protocolo HTTP
+
+### métodos GET y POST
+
+Son métodos del protocolo HTTP para intercambio de información entre cliente y servidor.
+* __get__:  el método más usado, sin embargo en formularios está en desuso. Pide al servidor que le devuelva al cliente la información identificada en la URI.
+* __post__: se usa para enviar información a un servidor. Puede ser usado para completar un formulario de autenticación, por ejemplo.
+  
+La principal diferencia radica en la codificación de la información.
+
+#### __Método GET__: utiliza la dirección URL que está formada por:
+
+* **Protocolo**: especifica el protocolo de comunicación
+* **Nombre de dominio**: nombre del servidor donde se aloja la información.
+* **Directorios**: secuencia de directorios separados por /que indican la ruta en la que se encuentra el recurso
+* **Fichero**: nombre del recurso al que acceder.
+* Detrás de la URL se coloca el símbolo __?__ Para indicar el comienzo de las variables con valor que se enviarán, separadas cada una de ellas por __&__.
+* __Ejemplo__: http://www.exmaple.org/file/example1.php?v1=0&v2=3 
+
+![imagen explicacion get](img/metodoget.png)
+
+```html
+<!DOCTYPE html>
+<html> 
+<head> 
+	<title>Ejemplo Formularios</title> 
+</head> 
+<body>
+	<h1>Ejemplo de procesado de formularios</h1> 
+	<form action="ejemplo1.php" method="get">
+        <label for="nombre">Introduzca su nombre:</label>
+		<input type="text" id="nombre" name="nombre">
+		<br/> 
+        <label for="apellido">Introduzca sus apellidos:</label>
+		<input type="text" id="apellido" name="apellidos"><br/> 
+		<input type="submit" value="Enviar">
+	</form>
+</body> 
+</html> 
+```
+#### __Método POST__:la información va codificada en el cuerpo de la petición HTTP y por tanto viaja oculta.
+* No hay un método más seguro que otro, ambas tienen sus pros y sus contras.
+* Es conveniente usarlos GET para la recuperación y POST para el envío de información.
+  
+```html
+<!DOCTYPE html>
+<html> 
+<head> 
+	<title>Ejemplo Formularios</title> 
+</head> 
+<body>
+	<h1>Ejemplo de procesado de formularios</h1> 
+	<form action="ejemplo1.php" method="post">
+        <label for="nombre">Introduzca su nombre:</label>
+		<input type="text" id="nombre" name="nombre">
+		<br/> 
+        <label for="apellido">Introduzca sus apellidos:</label>
+		<input type="text" id="apellido" name="apellidos"><br/> 
+		<input type="submit" value="Enviar">
+	</form>
+</body> 
+</html> 
+```
+:computer: Hoja3_PHP_04(ejercicios1 y 2)
+
+### Recuperación de información 
+
+#### Con GET
+En el caso del envío de información utilizando el método GET existe una variable especial __$_GET__, donde se almacenan todas las variables pasadas con este método. 
+
+La forma de almacenar la información es un array en el que __el índice es el nombre asignado al elemento del formulario__
+
+```html
+$_GET[‘nombre’];
+$_GET[‘apellidos’];
+```
+
+También se puede recuperar con la función __print_r__ que muestra el array completo.
+
+```php
+<?php
+	print_r($_GET);
+?>
+```
+#### Con POST

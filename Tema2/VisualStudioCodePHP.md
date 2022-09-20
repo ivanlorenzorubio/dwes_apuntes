@@ -84,3 +84,7 @@ php -S localhost:8001
 Y en ese momento ya tendremos __un servidor local__ que es capaz de __ejecutar nuestra web PHP__ en la dirección http://localhost:8001 (en vez de 8001, puedes elegir el puerto que quieras que no esté ocupado).
 
 ![imagen pagina en el servidor](img/servidorpagina.png)
+
+También podemos realizar la acción de utilizar un servidor local de PHP desde el propio visual studio code abriendo una terminal
+
+![imagen pagina de visualStudioCode](img/visualservidor.png)
