@@ -474,7 +474,129 @@ Desde PHP7 se incluyen una serie de funciones útiles para el desarrollo de apli
 | __get_declared_classes__  | print_r(get_declared_classes());  | Devuelve un array con los nombres de las clases definidas |
 | __class_alias__ | class_alias('Producto','Articulo');<br/> $p = new Articulo(); | Crea un alias para una clase |
 | __get_class_methods__  | print_r(get_class_methods('Producto'));  | Devuelve un array con los nombres de los métodos de una clase que son accesibles desde donde se hace la llamada |
+|__method_exists__ | if (method_exists('Producto','vende')){ ....}| Devuelve true si existe el método en el objeto o la clase que se indica, o false en caso contrario, independientemente de si es accesible o no|
+|__get_class_vars| print_r(get_class_vars('Producto'));| Devuelve un array con los nombre de los atributos de una clase que son accesibles desde dónde se hace la llamada|
+|__get_object_vars__| print_r(get_object_vars($p));|Devuelve un array con los nombres de los atributos de un objeto que son accesibles desde dónde se hace la llamada|
+|__property_exits__ | if(property_exists('Producto','codigo')){...}|Devuelve true si existe el atributo en el objeto o la clase que se indica, o false en caso contrario, independientemente de si es accesible o no|
 
+Desde PHP5, puedes indicar en las funciones y métodos de qué clase deben ser los objetos que se pasen como parámetros. Para ello, debes especificar el tipo antes del parámetro.
+
+```php
+public function vendeProducto( Producto $p){
+    ...
+}
+```
+Si cuando se realiza la llamada, el parámetro no es del tipo adecuado, se produce un error que se podría capturar.
+
+Pregunta: ¿Qué sucede al ejecutar el siguiente código?
+
+```php
+$p = new Persona();
+$p->nombre ='Pepe';
+$a=$p;
+
+```
+Desde PHP5 El código anterior simplemente crearía un __nuevo identificador del mismo objeto__. Esto es, en cuanto se utilice uno cualquiera de los identificadores para cambiar el valor de algún atributo, este cambio se vería también reflejado al acceder utilizando el otro identificador. Aunque haya dos o más identificadores del mismo objeto, en realidad todos se refieren a la única copia que se almacena del mismo. Tiene un comportamiento similar al que ocurre en Java.
+
+Si necesitas __copiar un objeto__, debes utilizar __clone__. Al utilizar clone sobre un objeto existente, se crea una
+copia de todos los atributos del mismo en un nuevo objeto.
+```php
+$p = new Producto();
+$p->nombre = 'Xiaomi 13';
+$a = clone $p;
+```
+Además, existe una forma sencilla de personalizar la copia para cada clase particular. Por ejemplo, puede suceder que quieras copiar todos los atributos menos alguno. En nuestro ejemplo, al menos el código de cada
+producto debe ser distinto y, por tanto, quizás no tenga sentido copiarlo al crear un nuevo objeto Si éste fuera el caso, puedes crear un método de nombre  **__clone** en la clase. Este método se llamará automáticamente después de copiar todos los atributos en el nuevo objeto.
+
+```php
+class Producto {
+    …
+    public function __clone(){
+        $this->codigo = nuevo_codigo();
+        }
+    …
+}
+```
+A veces tienes dos objetos y quieres saber su relación exacta. Para eso, puedes utilizar los operadores == y ===
+
+* Si utilizas __el operador de comparación ==__, comparas los valores de los atributos de los objetos. Por tanto dos objetos serán iguales si son instancias de la misma clase y, además, sus atributos tienen los mismos valores.
+```php
+$p = new Producto();
+$p->nombre = 'Xiaomi 13';
+$a = clone $p;
+// El resultado de comparar $a==$p da verdadero pues $a y $p son dos copias idénticas
+```
+* Sin embargo, si utilizas __el operador ===__, el resultado de la comparación será true sólo cuando las dos variables sean referencias al mismo objeto.
+```php
+$p = new Producto();
+$p->nombre = 'Xiaomi 13';
+$a = clone $p;
+// El resultado de comparar $a===$p da falso pues $a y $p no hacen referencia al mismo objeto
+$a = $p;
+// Ahora el resultado de comparar $a===$p da verdadero pues $a y $p son referencias al mismo objeto.
+```
+### Herencia
+
+La herencia es un mecanismo de la POO que nos permite definir nuevas clases en base a otra ya existente Las nuevas
+clases que heredan también se conocen con el nombre de __subclases__. La clase de la que heredan se llama __clase base o
+superclase__.
+
+Por ejemplo si tenemos la clase Persona, podemos crear las subclases Alumno y Profesor
+```php
+class Persona{
+    protected $nombre;
+    protected $apellidos;
+    public function muestra(){
+        print "<p>".$this->nombre.",".$this->apellidos."</p>";
+    }
+}
+```
+Esto puede ser útil si todas las personas sólo tuviesen nombre y apellidos, pero los alumnos tendrán un conjunto de notas y los profesores tendrán, por ejemplo, un número de horas de docencia.
+```php
+class Alumno extends Persona{
+    private $notas;
+}
+```
+Ejercicio : Codificar estas dos clases y crear un objeto de tipo Alumno. Comprobar mediante el operador instanceof si el objeto es de tipo Persona o de tipo Alumno
+
+
+| Función | Ejemplo | Significado |
+| ------------- | ------------------------------ | ---------------------------------- |
+| __get_parent_class__  | echo "La clase padre es:".get_parent_class($p);  |Devuelve el nombre de la clase padre del objeto o la clase que se indica |
+| __is_subclass_of__  | if (is_subclass_of($t,'Producto')){ ...}  | Devuelve true si el objero o la clase del primer parámetro, tiene como clase base a la que se indica en el segundo parámetro, o false en caso contrario |
+
+La nueva clase hereda todos los atributos y métodos públicos de la clase base, pero no los privados.
+
+Si quieres crear en la clase base un método no visible al exterior (como los privados) que se herede a las subclases, debes utilizar la palabra __protected__ en lugar de private. Además, puedes redefinir el comportamiento de los métodos existentes en la clase base, simplemente creando en la subclase un nuevo método con el mismo nombre.
+
+```php
+class Profesor extends Persona{
+    private $horas;
+    public function muestra(){
+        print "<p>".$this->nombre.",".$this->apellidos.":".$this->horas."</p>";
+    }
+}
+```
+Existe una forma de evitar que las clases heredadas puedan redefinir el comportamiento de los métodos existentes en la
+superclase: utilizar la palabra __final__ . Si en nuestro ejemplo hubiéramos
+
+```php
+class Persona{
+    protected $nombre;
+    protected $apellidos;
+    public final function muestra(){
+        print "<p>".$this->nombre.",".$this->apellidos."</p>";
+    }
+}
+```
+En este caso el método muestra no podría redefinirse en la clase Profesor.
+
+Incluso se puede declarar __una clase utilizando final__ . En este caso no se podrían crear clases heredadas utilizándola como base.
+```php
+final class Persona{
+    …
+}
+```
 
 ## Funciones relacionadas con los tipos de datos completos
 
