@@ -330,13 +330,99 @@ require_once('producto php');
 Para acceder desde un objeto a sus atributos o a los métodos de la clase, debes utilizar el __operador flecha__ (sólo se pone el símbolo $ delante del nombre del objeto)
 
 ```php
-$p->nombre ='Samsung Galaxy S 20’;
+$p->nombre ="Samsung Galaxy S 20";
 echo $p->muestra();
 ```
 #### Métodos get y set 
 
 Aunque no es obligatorio, el nombre del método que nos permite obtener el valor de un atributo suele empezar por get y el que nos permite modificarlo por set
 
+```php
+private $codigo
+
+public function setCodigo ($nuevo_codigo)
+    {
+        if (noExisteCodigo ($nuevo_codigo))
+            {
+                $this-> codigo =$nuevo_codigo;
+                return true;
+            }
+        return  false;
+    }
+public function getCodigo() {return $this->codigo;}
+```
+
+Desde PHP 5 se introdujeron los llamados __métodos mágicos__ entre ellos **__set** y **__get** Si se declaran estos dos métodos en una clase, PHP los invoca automáticamente cuando desde un objeto se intenta usar un atributo no existente o no accesible
+
+Por ejemplo, el código siguiente simula que la clase Producto tiene cualquier atributo que queramos usar:
+
+```php
+class Producto
+{
+    private $atributos =array();
+    public function __get($atributo){
+        return $this->atributos[$atributo];
+    }
+    public function __set($atributo,$valor){
+        $this->atributos[$atributo ] = $valor;
+    }
+}
+```
+#### Operador this
+Cuando desde un objeto se invoca un __método de la clase__ a éste se le pasa siempre una referencia al objeto que hizo la llamada. Esta referencia se almacena en la variable __$this__.
+
+Se utiliza, por ejemplo, en el código anterior para tener acceso a los __atributos privados del objeto__ (que
+sólo son accesibles desde los métodos de la clase).
+
+```php
+print "<p>". $this->codigo ."</p";
+
+```
+
+#### Constantes
+
+Además de métodos y propiedades, en una clase también se pueden definir __constantes__ utilizando la palabra __const__.
+
+No hay que confundir los atributos con las constantes Son conceptos distintos las constantes no pueden cambiar su valor ( de ahí su nombre), no usan elcarácter __$__ y está asociado a la clase, es decir, no existe una copia del mismo en cada objeto.
+
+Por tanto, para acceder a las constantes de una clase, se debe utilizar el nombre de la clase y el operador __::__ llamado __operador de resolución de ámbito__ (que se utiliza para acceder a los elementos de una clase).
+
+```php
+class BaseDatos{
+    const USUARIO = "dwes";
+    ...
+}
+
+echo BaseDatos::USUARIO;
+```
+No es necesario que exista ningún objeto de una clase para poder acceder al valor de las constantes que defina.
+Además, sus nombres suelen escribirse en mayúsculas.
+
+#### Métodos estáticos
+
+Una clase puede tener atributos o métodos estáticos también llamados a veces atributos o métodos de clase. Se definen utilizando la palabra clave __static__
+
+```php
+class Producto{
+    private static $num_productos = 0;
+    public static function nuevoProducto(){
+        self::$num_productos++;
+    }
+…
+}
+```
+Los atributos y métodos estáticos __no__ pueden ser llamados desde un objeto de la clase utilizando el operador ->.
+
+* Si el método o atributo es público , deberá accederse utilizando el nombre de la clase y el operador de resolución de ámbito.
+
+```php
+    Producto:: nuevoProducto();
+```
+* Si es privado , como el atributo $num_productos en el ejemplo anterior, sólo se podrá acceder a él desde los métodos de la propia clase, utilizando la palabra __self__ . De la misma forma que $this hace referencia al objeto actual, self hace referencia a la clase actual.
+```php
+    self:: $num_productos++;
+```
+#### Constructores
 
 
 ## Funciones relacionadas con los tipos de datos completos
