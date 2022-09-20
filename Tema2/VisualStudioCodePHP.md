@@ -66,7 +66,7 @@ Para verlo en el navegador, podemos hacer botón derecho sobre el fichero index.
 
 __Finalmente, vamos a probar a introducir código PHP en nuestra web__, para comprobar que toda la configuración de Visual Studio Code es correcta. Por ejemplo, podemos probar a mostrar en nuestra página web información sobre la instalación de PHP (versión, etc).
 ```php
-<?php>
+<?php
     phpinfo();
 ?>
 ```

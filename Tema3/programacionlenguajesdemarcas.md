@@ -3,6 +3,26 @@
 
 ## Índice
 
+  - [Estructuras de control](#estructuras-de-control)
+    - [Sentencias condicionales](#sentencias-condicionales)
+    - [Sentencias repetitivas o bucles](#sentencias-repetitivas-o-bucles)
+  - [Funciones](#funciones)
+    - [Inclusión de las funciones en ficheros externos](#inclusión-de-las-funciones-en-ficheros-externos)
+    - [Creación y ejecución de funciones](#creación-y-ejecución-de-funciones)
+    - [Argumentos en las funciones](#argumentos-en-las-funciones)
+  - [Tipos de datos compuestos](#tipos-de-datos-compuestos)
+    - [Arrays](#arrays)
+      - [Recorrer un array](#recorrer-un-array)
+  - [Funciones relacionadas con los tipos de datos completos](#funciones-relacionadas-con-los-tipos-de-datos-completos)
+  - [Formularios](#formularios)
+    - [métodos GET y POST](#métodos-get-y-post)
+      - [Método GET](#método-get)
+      - [Método POST](#método-post)
+    - [Recuperación de información](#recuperación-de-información)
+      - [Con GET](#con-get)
+      - [Con POST](#con-post)
+    - [Validación de datos](#validación-de-datos)
+
 ## Estructuras de control
 
 son de dos tipos:
@@ -97,8 +117,11 @@ En ocasiones resulta más cómodo agrupar las funciones en ficheros externos al 
 
 Formas de incorporar ficheros externos:
 * __include__: evalúa el contenido del fichero que se indica y lo incluye como parte del fichero actual en el punto de realización de la llamada. Se puede indicar la ruta de forma absoluta o de forma relativa. Se toma como base la ruta que se especifica en la directiva include_path del fichero php.ini, si no se encuentra en esa ubicación, se buscará en el directorio actual
+  
 * __include_once__: si por equivocación incluyes más de una vez un mismo fichero, lo normal es que obtengas algún tipo de error (por ejemplo, al repetir una definición de una función) 
-* __require__: si el fichero que queremos incluir no se encuentra, include da un aviso y continua la ejecución del guión. La diferencia más importante al usar require es que en ese caso, cuando no se puede incluir el fichero, se detiene la ejecución del guion. 
+  
+* __require__: si el fichero que queremos incluir no se encuentra, include da un aviso y continua la ejecución del guión. La diferencia más importante al usar require es que en ese caso, cuando no se puede incluir el fichero, se detiene la ejecución del guion.
+   
 * __require_once__: es la combinación de las dos anteriores. 
 
 Ejemplo
@@ -122,7 +145,7 @@ Para crear tus propias funciones se usa la palabra __function__
    precio_con_iva();
 ?>
 ``` 
-No es necesario definir las funciones antes de usarlas excepto cuando están definida condicionalmente:
+No es necesario definir las funciones antes de usarlas excepto cuando están definidas condicionalmente:
 ```php
 <?php
     $iva=true;
@@ -258,6 +281,39 @@ foreach ($modulos1 as $modulo)
 foreach ($modulos2 as $codigo => $modulo)
 		echo "El código del módulo ".$modulo." es ".$codigo."<br/";
 ``` 
+### Objetos
+
+el lenguaje PHP original no se diseñó con características de orientación a objetos
+
+Las características de POO que soportan  a partir de la versión PHP 5 incluyen:
+* Métodos estáticos
+* Métodos constructores y destructores
+* Herencia
+* Interfaces
+* Clases abstractas
+
+No se incluye:
+* Herencia múltiple (Java NO tiene)
+* Sobrecarga de métodos (Java SÍ tiene)
+* Sobrecarga de operadores (Java NO tiene)
+
+#### Creación de clases en PHP
+
+La declaración de una clase en PHP se hace utilizando la palabra __class__. A continuación y entre llaves, deben figurar los miembros de la clase. Conviene hacerlo de forma ordenada, primero las propiedades o atributos, y después los métodos, cada uno con su código respectivo.
+```php
+    class Producto{
+        private $codigo;
+        public $nombre;
+        public $PVP;
+        public function muestra(){
+            return "<p>"..$this codigo .."</p">;
+
+        }
+
+}
+}
+
+
 ## Funciones relacionadas con los tipos de datos completos
 
 En PHP existen funciones específicas para comprobar y establecer el tipo de datos de una variable, __gettype__ obtiene el tipo de la variable que se le pasa como parámetro y devuelve una cadena de texto, que puede ser array, boolean, double, integer, object, string, null, resource o unknown type.
@@ -280,15 +336,23 @@ __La función unset__ destruye la variable o variables que se le pasa como pará
 
 ## Formularios
 
-Son la forma de hacer llegar los datos a una aplicación web
-Van encerrados en las etiquetas <form> </form>
+Son la forma de hacer llegar los datos a una aplicación web.
+
+Van encerrados en las etiquetas
+```html
+ <form> 
+    ....
+ </form>
+ ```
 Dentro de las etiquetas de formulario se pueden incluir elementos sobre los que puede actuar el usuario. Ejemplo:
 
+```html
 <input>
 <select>
 <textarea>
 <button>
 
+```
 En el __atributo action__ del FORM se indica la página a la que se enviarán los datos del formulario
 En el __atributo method__ se especifica el método usado para enviar la información:
 * __get__: los datos se envían en la URI utilizando el signo __?__ como separador.
@@ -302,14 +366,16 @@ Son métodos del protocolo HTTP para intercambio de información entre cliente y
   
 La principal diferencia radica en la codificación de la información.
 
-#### __Método GET__: utiliza la dirección URL que está formada por:
+#### Método GET 
+
+Utiliza la dirección URL que está formada por:
 
 * **Protocolo**: especifica el protocolo de comunicación
 * **Nombre de dominio**: nombre del servidor donde se aloja la información.
 * **Directorios**: secuencia de directorios separados por /que indican la ruta en la que se encuentra el recurso
 * **Fichero**: nombre del recurso al que acceder.
 * Detrás de la URL se coloca el símbolo __?__ Para indicar el comienzo de las variables con valor que se enviarán, separadas cada una de ellas por __&__.
-* __Ejemplo__: http://www.exmaple.org/file/example1.php?v1=0&v2=3 
+* __Ejemplo__: http://www.example.org/file/example1.php?v1=0&v2=3 
 
 ![imagen explicacion get](img/metodoget.png)
 
@@ -332,7 +398,9 @@ La principal diferencia radica en la codificación de la información.
 </body> 
 </html> 
 ```
-#### __Método POST__:la información va codificada en el cuerpo de la petición HTTP y por tanto viaja oculta.
+#### Método POST
+
+La información va codificada en el cuerpo de la petición HTTP y por tanto viaja oculta.
 * No hay un método más seguro que otro, ambas tienen sus pros y sus contras.
 * Es conveniente usarlos GET para la recuperación y POST para el envío de información.
   
@@ -355,16 +423,16 @@ La principal diferencia radica en la codificación de la información.
 </body> 
 </html> 
 ```
-:computer: Hoja3_PHP_04(ejercicios1 y 2)
+:computer: Hoja3_PHP_04(ejercicio1 y ejercicio2)
 
 ### Recuperación de información 
 
 #### Con GET
 En el caso del envío de información utilizando el método GET existe una variable especial __$_GET__, donde se almacenan todas las variables pasadas con este método. 
 
-La forma de almacenar la información es un array en el que __el índice es el nombre asignado al elemento del formulario__
+La forma de almacenar la información es __un array en el que el índice es el nombre asignado al elemento del formulario__
 
-```html
+```php
 $_GET[‘nombre’];
 $_GET[‘apellidos’];
 ```
@@ -377,3 +445,66 @@ También se puede recuperar con la función __print_r__ que muestra el array com
 ?>
 ```
 #### Con POST
+
+Al igual que en el método GET, se utiliza una variable interna __$_POST__, donde se almacenan todas las variables pasadas con este método. 
+
+La forma de almacenar la información, también es __un array en el que el índice es el nombre asignado al elemento del formulario__
+
+```php
+$_POST[‘nombre’];
+$_POST[‘apellidos’];
+```
+
+También se puede recuperar con la función __print_r__ que muestra el array completo.
+
+Existe otra variable __$_REQUEST__ que contiene tanto el contenido de $_GET como $_POST
+
+:computer: Hoja03_PHP_04(ejercicio3 y ejercicio4)
+
+### Validación de datos
+Siempre que sea posible, es preferible __validar los datos que se introducen en el navegador antes de enviarlos. Para ello deberás usar código en lenguaje Javascript__. 
+
+Si por algún motivo hay datos que se tengan que validar en el servidor, por ejemplo, porque necesites comprobar que los datos de un usuario no existan ya en la base de datos antes de introducirlos, __será necesario hacerlo con código PHP en la página que figura en el atributo action del formulario__. 
+
+```html
+<html> 
+    <head> <title>Desarrollo Web</title> </head> 
+    <body>
+```
+```php 
+        <?php 
+            if (isset($_POST['enviar'])) { 
+	            $nombre = $_POST['nombre']; 
+	            $modulos = $_POST['modulos'];
+	            print "Nombre: ".$nombre."<br />"; 
+		        foreach ($modulos as $modulo) { print "Modulo: ".$modulo."<br />"; }
+            } 
+            else {
+        ?>
+```
+```html 
+	    <form name="input" action="" method="post"> 
+	        <label for="nombre">Nombre del alumno: </label>
+            <input type="text" name="nombre" id="nombre" />
+             <br />
+	        <p>Módulos que cursa:</p> 
+	        <input type="checkbox" name="modulos[]" value="DWES" />Desarrollo web en entorno servidor<br /> 
+	        <input type="checkbox" name="modulos[]" value="DWEC" />Desarrollo web en entorno cliente<br /> <br /> 
+	        <input type="submit" name="enviar" value="Enviar" />
+	    </form>
+```
+```php
+        <?php  	}   ?>
+```
+```html
+    </body> 
+</html>
+```
+> en el atributo action también se puede poner 
+> ```php
+> <?php echo $_SERVER['PHP_SELF'];
+> ?>
+>```
+ 
+ :computer: Hoja03_PHP_04
+
