@@ -419,10 +419,61 @@ Los atributos y métodos estáticos __no__ pueden ser llamados desde un objeto d
     Producto:: nuevoProducto();
 ```
 * Si es privado , como el atributo $num_productos en el ejemplo anterior, sólo se podrá acceder a él desde los métodos de la propia clase, utilizando la palabra __self__ . De la misma forma que $this hace referencia al objeto actual, self hace referencia a la clase actual.
+
 ```php
     self:: $num_productos++;
 ```
 #### Constructores
+
+Desde PHP 7 puedes definir en las clases métodos constructores, que se ejecutan cuando se crea el objeto El constructor de
+una clase debe llamarse __construct__ Se pueden utilizar, por ejemplo, para asignar valores a atributos
+
+```php
+class Producto{
+    private static $num_productos = 0;
+    private $codigo;
+    public function __construct(){
+        self:: $num_productos++;
+    }
+…
+}
+
+```
+El constructor de una clase puede llamar a otros métodos o tener parámetros, en cuyo caso deberán pasarse cuando se crea el
+objeto.
+
+Sin embargo, __sólo puede haber un método constructor en cada clase__
+
+```php
+class Producto{
+    private static $num_productos = 0;
+    private $codigo;
+    public function __construct($codigo){
+        $this->$codigo = $codigo;
+        self:: $num_productos++;
+    }
+…
+}
+
+```
+### Utilización de objetos
+
+Una vez creado un objeto, puedes utilizar el operador instanceof para comprobar si es o no una instancia de una clase determinada.
+
+```php
+if ($p instanceof Producto){
+    ...
+}
+```
+Desde PHP7 se incluyen una serie de funciones útiles para el desarrollo de aplicaciones utilizando POO.
+
+| Función | Ejemplo | Significado |
+| ------------- | ------------------------------ | ---------------------------------- |
+| __get_class__  | echo "La clase es:".get_class($p);  |Devuelve el nombre de la clase del objeto |
+| __class_exists__  | if (class_exits('Producto')) <br/>{ $p= new Producto(); ...}  | Devuelve true si la clase está definida o false en caso contrario |
+| __get_declared_classes__  | print_r(get_declared_classes());  | Devuelve un array con los nombres de las clases definidas |
+| __class_alias__ | class_alias('Producto','Articulo');<br/> $p = new Articulo(); | Crea un alias para una clase |
+| __get_class_methods__  | print_r(get_class_methods('Producto'));  | Devuelve un array con los nombres de los métodos de una clase que son accesibles desde donde se hace la llamada |
 
 
 ## Funciones relacionadas con los tipos de datos completos
