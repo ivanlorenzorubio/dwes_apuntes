@@ -304,14 +304,39 @@ La declaración de una clase en PHP se hace utilizando la palabra __class__. A c
     class Producto{
         private $codigo;
         public $nombre;
-        public $PVP;
+        protected $PVP;
         public function muestra(){
             return "<p>"..$this codigo .."</p">;
 
         }
 
-}
-}
+    }
+
+```
+En el ejemplo hemos puesto para recordar los principales niveles de acceso de los atributos, recordar que por lo general los atributos deben ser privados
+
+> Recomendaciones:
+> * Cada clase en un fichero distinto
+> * Los nombres de las clases deben comenzar por mayúsculas para distinguirlos de los objetos y otras variables
+
+Una vez definida la clase, podemos usar la palabra __new__ para instanciar objetos de la siguiente forma:
+```php
+$p = new Producto();
+```
+Para que la línea anterior se ejecute sin error, previamente debemos haber declarado la clase Para ello, en ese mismo fichero tendrás que incluir la clase poniendo algo como:
+```php
+require_once('producto php');
+```
+Para acceder desde un objeto a sus atributos o a los métodos de la clase, debes utilizar el __operador flecha__ (sólo se pone el símbolo $ delante del nombre del objeto)
+
+```php
+$p->nombre ='Samsung Galaxy S 20’;
+echo $p->muestra();
+```
+#### Métodos get y set 
+
+Aunque no es obligatorio, el nombre del método que nos permite obtener el valor de un atributo suele empezar por get y el que nos permite modificarlo por set
+
 
 
 ## Funciones relacionadas con los tipos de datos completos
