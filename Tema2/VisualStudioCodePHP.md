@@ -88,3 +88,7 @@ Y en ese momento ya tendremos __un servidor local__ que es capaz de __ejecutar n
 También podemos realizar la acción de utilizar un servidor local de PHP desde el propio visual studio code abriendo una terminal
 
 ![imagen pagina de visualStudioCode](img/visualservidor.png)
+
+Si no reconoce el comando para arrancar el servidor local, se debe configurar la variable de entorno del sistema Path con la dirección donde se encuentra instalado el php
+
+![imagen variables entorno](img/varentorno.png)
