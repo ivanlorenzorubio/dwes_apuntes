@@ -13,6 +13,16 @@
   - [Tipos de datos compuestos](#tipos-de-datos-compuestos)
     - [Arrays](#arrays)
       - [Recorrer un array](#recorrer-un-array)
+    - [Objetos](#objetos)
+      - [Creación de clases en PHP](#creación-de-clases-en-php)
+      - [Métodos get y set](#métodos-get-y-set)
+      - [Operador this](#operador-this)
+      - [Constantes](#constantes)
+      - [Métodos estáticos](#métodos-estáticos)
+      - [Constructores](#constructores)
+      - [Utilización de objetos](#utilización-de-objetos)
+      - [Herencia](#herencia)
+      - [Interfaces](#interfaces)
   - [Funciones relacionadas con los tipos de datos completos](#funciones-relacionadas-con-los-tipos-de-datos-completos)
   - [Formularios](#formularios)
     - [métodos GET y POST](#métodos-get-y-post)
@@ -22,7 +32,6 @@
       - [Con GET](#con-get)
       - [Con POST](#con-post)
     - [Validación de datos](#validación-de-datos)
-
 ## Estructuras de control
 
 son de dos tipos:
@@ -202,6 +211,8 @@ No es necesario definir las funciones antes de usarlas excepto cuando están def
 ``` 
 :computer: Hoja03_PHP_02
 
+<div class="page"/>
+
 ## Tipos de datos compuestos
 
 Un tipo de datos compuesto es aquel que te permite almacenar más de un valor. En PHP puedes utilizar dos tipos de datos compuestos: el array y el objeto.
@@ -281,11 +292,13 @@ foreach ($modulos1 as $modulo)
 foreach ($modulos2 as $codigo => $modulo)
 		echo "El código del módulo ".$modulo." es ".$codigo."<br/";
 ``` 
+:computer: Hoja03_PHP_03
+
 ### Objetos
 
 el lenguaje PHP original no se diseñó con características de orientación a objetos
 
-Las características de POO que soportan  a partir de la versión PHP 5 incluyen:
+Las características de POO que se soportan a partir de la versión PHP 5 incluyen:
 * Métodos estáticos
 * Métodos constructores y destructores
 * Herencia
@@ -307,11 +320,8 @@ La declaración de una clase en PHP se hace utilizando la palabra __class__. A c
         protected $PVP;
         public function muestra(){
             return "<p>"..$this codigo .."</p">;
-
         }
-
     }
-
 ```
 En el ejemplo hemos puesto para recordar los principales niveles de acceso de los atributos, recordar que por lo general los atributos deben ser privados
 
@@ -333,6 +343,8 @@ Para acceder desde un objeto a sus atributos o a los métodos de la clase, debes
 $p->nombre ="Samsung Galaxy S 20";
 echo $p->muestra();
 ```
+Ejercicio: Crea la clase Producto con los atributos que consideres necesarios.
+
 #### Métodos get y set 
 
 Aunque no es obligatorio, el nombre del método que nos permite obtener el valor de un atributo suele empezar por get y el que nos permite modificarlo por set
@@ -351,6 +363,7 @@ public function setCodigo ($nuevo_codigo)
     }
 public function getCodigo() {return $this->codigo;}
 ```
+Ejercicio: crea los métodos get y set para la clase Producto creada por ti.
 
 Desde PHP 5 se introdujeron los llamados __métodos mágicos__ entre ellos **__set** y **__get** Si se declaran estos dos métodos en una clase, PHP los invoca automáticamente cuando desde un objeto se intenta usar un atributo no existente o no accesible
 
@@ -368,7 +381,10 @@ class Producto
     }
 }
 ```
+Ejercicio: comenta los métodos get y set que has hecho y añade los mágicos
+
 #### Operador this
+
 Cuando desde un objeto se invoca un __método de la clase__ a éste se le pasa siempre una referencia al objeto que hizo la llamada. Esta referencia se almacena en la variable __$this__.
 
 Se utiliza, por ejemplo, en el código anterior para tener acceso a los __atributos privados del objeto__ (que
@@ -398,6 +414,9 @@ echo BaseDatos::USUARIO;
 No es necesario que exista ningún objeto de una clase para poder acceder al valor de las constantes que defina.
 Además, sus nombres suelen escribirse en mayúsculas.
 
+Ejercicio: crea una clase BaseDatos que tendrá como constantes el dominio donde está alojada, el usuario y la contraseña y la base de datos a utilizar.
+<div class="page"/>
+
 #### Métodos estáticos
 
 Una clase puede tener atributos o métodos estáticos también llamados a veces atributos o métodos de clase. Se definen utilizando la palabra clave __static__
@@ -425,8 +444,7 @@ Los atributos y métodos estáticos __no__ pueden ser llamados desde un objeto d
 ```
 #### Constructores
 
-Desde PHP 7 puedes definir en las clases métodos constructores, que se ejecutan cuando se crea el objeto El constructor de
-una clase debe llamarse __construct__ Se pueden utilizar, por ejemplo, para asignar valores a atributos
+Desde PHP 7 puedes definir en las clases métodos constructores, que se ejecutan cuando se crea el objeto. El constructor de una clase debe llamarse __construct__. Se pueden utilizar, por ejemplo, para asignar valores a atributos.
 
 ```php
 class Producto{
@@ -439,8 +457,7 @@ class Producto{
 }
 
 ```
-El constructor de una clase puede llamar a otros métodos o tener parámetros, en cuyo caso deberán pasarse cuando se crea el
-objeto.
+El constructor de una clase puede llamar a otros métodos o tener parámetros, en cuyo caso deberán pasarse cuando se crea el objeto.
 
 Sin embargo, __sólo puede haber un método constructor en cada clase__
 
@@ -456,7 +473,28 @@ class Producto{
 }
 
 ```
-### Utilización de objetos
+Ejercicio: Crea un constructor para vuestra clase Producto.
+
+También es posible definir un método destructor, que debe llamarse **__destruct** y permite definir acciones que se ejecutarán cuando se elimine el objeto.
+
+```php
+class Producto{
+    private static $num_productos = 0;
+    private $codigo;
+    public function __construct($codigo){
+        $this->$codigo = $codigo;
+        self:: $num_productos++;
+    }
+    public function __destruct(){
+        self::$num_productos--;
+    }
+…
+}
+$p = new Producto('Iphone');
+```
+:computer: Hoja03_PHP_04
+
+#### Utilización de objetos
 
 Una vez creado un objeto, puedes utilizar el operador instanceof para comprobar si es o no una instancia de una clase determinada.
 
@@ -475,7 +513,7 @@ Desde PHP7 se incluyen una serie de funciones útiles para el desarrollo de apli
 | __class_alias__ | class_alias('Producto','Articulo');<br/> $p = new Articulo(); | Crea un alias para una clase |
 | __get_class_methods__  | print_r(get_class_methods('Producto'));  | Devuelve un array con los nombres de los métodos de una clase que son accesibles desde donde se hace la llamada |
 |__method_exists__ | if (method_exists('Producto','vende')){ ....}| Devuelve true si existe el método en el objeto o la clase que se indica, o false en caso contrario, independientemente de si es accesible o no|
-|__get_class_vars| print_r(get_class_vars('Producto'));| Devuelve un array con los nombre de los atributos de una clase que son accesibles desde dónde se hace la llamada|
+|__get_class_vars__| print_r(get_class_vars('Producto'));| Devuelve un array con los nombre de los atributos de una clase que son accesibles desde dónde se hace la llamada|
 |__get_object_vars__| print_r(get_object_vars($p));|Devuelve un array con los nombres de los atributos de un objeto que son accesibles desde dónde se hace la llamada|
 |__property_exits__ | if(property_exists('Producto','codigo')){...}|Devuelve true si existe el atributo en el objeto o la clase que se indica, o false en caso contrario, independientemente de si es accesible o no|
 
@@ -535,11 +573,9 @@ $a = clone $p;
 $a = $p;
 // Ahora el resultado de comparar $a===$p da verdadero pues $a y $p son referencias al mismo objeto.
 ```
-### Herencia
+#### Herencia
 
-La herencia es un mecanismo de la POO que nos permite definir nuevas clases en base a otra ya existente Las nuevas
-clases que heredan también se conocen con el nombre de __subclases__. La clase de la que heredan se llama __clase base o
-superclase__.
+La herencia es un mecanismo de la POO que nos permite definir nuevas clases en base a otra ya existente. Las nuevas clases que heredan también se conocen con el nombre de __subclases__. La clase de la que heredan se llama __clase base o superclase__.
 
 Por ejemplo si tenemos la clase Persona, podemos crear las subclases Alumno y Profesor
 ```php
@@ -577,8 +613,7 @@ class Profesor extends Persona{
     }
 }
 ```
-Existe una forma de evitar que las clases heredadas puedan redefinir el comportamiento de los métodos existentes en la
-superclase: utilizar la palabra __final__ . Si en nuestro ejemplo hubiéramos
+Existe una forma de evitar que las clases heredadas puedan redefinir el comportamiento de los métodos existentes en la superclase: utilizar la palabra __final__ . Si en nuestro ejemplo hubiéramos hecho:
 
 ```php
 class Persona{
@@ -589,7 +624,7 @@ class Persona{
     }
 }
 ```
-En este caso el método muestra no podría redefinirse en la clase Profesor.
+En este caso el __método muestra__ no podría redefinirse en la clase Profesor.
 
 Incluso se puede declarar __una clase utilizando final__ . En este caso no se podrían crear clases heredadas utilizándola como base.
 ```php
@@ -597,6 +632,97 @@ final class Persona{
     …
 }
 ```
+Opuestamente al __modificador final__ existe también  el __modificador abstract__. Se utiliza de la misma forma, tanto con métodos como con clases completas, pero en lugar de prohibir la herencia, obliga aque se herede. Es decir, una clase con el modificador abstract no puede tener objetos que la instancien, pero sí podrá utilizarse de clase base y sus subclases sí podrán utilizarse para instanciar objetos.
+
+<div class="page"/>
+
+```php
+abstract class Persona{
+    …
+}
+```
+Y un método en el que se indique __abstract__ debe ser redefinido obligatoriamente por las subclases, y no podrá contener código.
+```php
+ class Persona{
+    …
+    abstract public function muestra();
+}
+```
+Ejercicio: Crea un constructor para la clase Persona. ¿Qué pasará ahora con la clase Alumno, que hereda de Persona? Cuando crees un nuevo objeto de esa clase, ¿se llamará al constructor de Persona?¿Puedes crear un nuevo constructor específico para Alumno que redefina el comportamiento de la clase base?
+
+Desde PHP7,si la clase heredada no tiene constructor propio, se llamará automáticamente al constructor de la clase base (si existe). Sin embargo, si la clase heredada define su propio constructor, deberás ser tú el que realice la llamada al constructor de la clase base si lo consideras necesario, utilizando para ello la palabra __parent y el operador de resolución de ámbito__
+```php
+class Alumno extends Persona{
+    private $notas;
+    public function __construct($nombre,$apellidos,$notas){
+        parent::__construct($nombre,$apellidos);
+        $this->notas=$notas;
+    }
+}
+```
+La utilización de la palabra __parent__ es similar a __self__. Al utilizar parent haces referencia a la clase base de la actual
+
+:computer: Hoja03_PHP_05
+
+#### Interfaces
+
+Un interface es similar a una clase vacía que solamente contiene declaraciones de métodos. Se definen utilizando la palabra __interface__.
+
+Por ejemplo, antes viste que podías crear nuevas clases heredadas de Persona como Profesor o Alumno. También viste que en las subclases podías redefinir el comportamiento del método muestra para que generara una salida en HTML diferente para cada tipo de persona.
+
+Si quieres asegurarte de que todos los tipos de persona tengan un __método muestra__ puedes crear un interface como el siguiente:
+```php
+interface iMuestra{
+    public function muestra();
+
+}
+```
+Y cuando crees las subclases deberás indicar con la palabra __implements__ que tienen que implementar los métodos declarados en este interface.
+```php
+class Profesor extends Persona implements iMuestra{
+    …
+    public  function muestra(){
+    print "<p>".$this->nombre .": ".$this->horas."</p>";
+    }
+    …
+}
+```
+Todos los métodos que se declaren en un interface deben ser __públicos__. Además de métodos, los interfaces podrán contener constantes pero no atributos.
+
+Un interface es como un contrato que la clase debe cumplir. Al implementar todos los métodos declarados en el interface se asegura la interoperabilidad entre clases. Si sabes que una clase implementa un interface determinado, sabes qué nombre tienen sus métodos, qué parámetros les debes pasar y, probablemente, podrás averiguar fácilmente con qué objetivo han sido escritos.
+
+Por ejemplo, en la librería de PHP está definido el __interface Countable__
+```php
+interface Countable{
+    abstract public int count (void);
+}
+```
+Desde PHP7, es posible crear clases que implementen varios interfaces, simplemente separando la lista de interfaces por comas después de la palabra __implements__.
+```php
+class Profesor extends Persona implements iMuestra,Countable{
+    ...
+}
+```
+La única restricción es que los nombres de los métodos que se deban implementar en los distintos interfaces no coincidan Es decir, en nuestro ejemplo, el interface __iMuestra__ no podría contener __un método count__ pues éste ya está declarado en __Countable__.
+
+Desde PHP 7 también se pueden crear nuevos interfaces heredando de otros ya existentes. Se hace de la misma forma que con las clases, utilizando la palabra __extends__.
+
+Una de las dudas más comunes en POO, es qué solución adoptar en algunas situaciones interfaces o clases abstractas. Ambas permiten definir reglas para las clases que los implementen o hereden respectivamente. Y ninguna permite instanciar objetos Las diferencias principales entre ambas opciones son:
+
+* En las clases abstractas, los métodos pueden contener código. Si van a existir varias subclases con un comportamiento común, se podría programar en los métodos de la clase abstracta. Si se opta por un interface, habría que repetir el código en todas las clases que lo implemente.
+
+* Las clases abstractas pueden contener atributos, y los interfaces no.
+
+* No se puede crear una clase que herede de dos clases abstractas, pero sí se puede crear una clase que implemente varios interfaces.
+
+Para finalizar con los interfaces, a la lista de funciones de PHP relacionadas con la POO puedes añadir las siguientes:
+
+| Función | Ejemplo | Significado |
+| ------------- | ------------------------------ | ---------------------------------- |
+| __get_declared_interfaces__  | print_r(get_declared_interfaces());  |Devuelve un array con los nombres de los interfaces declarados |
+| __interface_exists__  | if (interface_exists('iMuestra')){ ...}  | Devuelve true si existe el interface que se indica o false en caso contrario.|
+
+:computer: Hoja03_PHP_06
 
 ## Funciones relacionadas con los tipos de datos completos
 
@@ -615,8 +741,6 @@ También podemos comprobar si la variable es de un tipo concreto utilizando una 
 ``` 
 Si sólo nos interesa saber si una variable está definida y no es null, puedes usar __la función isset__. 
 __La función unset__ destruye la variable o variables que se le pasa como parámetro.
-
-:omputer: Hoja03_PHP_03
 
 ## Formularios
 
@@ -707,7 +831,7 @@ La información va codificada en el cuerpo de la petición HTTP y por tanto viaj
 </body> 
 </html> 
 ```
-:computer: Hoja3_PHP_04(ejercicio1 y ejercicio2)
+:computer: Hoja3_PHP_07(ejercicio1 y ejercicio2)
 
 ### Recuperación de información 
 
@@ -743,7 +867,7 @@ También se puede recuperar con la función __print_r__ que muestra el array com
 
 Existe otra variable __$_REQUEST__ que contiene tanto el contenido de $_GET como $_POST
 
-:computer: Hoja03_PHP_04(ejercicio3 y ejercicio4)
+:computer: Hoja03_PHP_07(ejercicio3 y ejercicio4)
 
 ### Validación de datos
 Siempre que sea posible, es preferible __validar los datos que se introducen en el navegador antes de enviarlos. Para ello deberás usar código en lenguaje Javascript__. 
@@ -790,5 +914,5 @@ Si por algún motivo hay datos que se tengan que validar en el servidor, por eje
 > ?>
 >```
  
- :computer: Hoja03_PHP_04
+ :computer: Hoja03_PHP_07
 
