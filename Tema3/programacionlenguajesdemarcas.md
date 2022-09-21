@@ -25,7 +25,7 @@
       - [Interfaces](#interfaces)
   - [Funciones relacionadas con los tipos de datos completos](#funciones-relacionadas-con-los-tipos-de-datos-completos)
   - [Formularios](#formularios)
-    - [métodos GET y POST](#métodos-get-y-post)
+    - [Métodos GET y POST](#Métodos-get-y-post)
       - [Método GET](#método-get)
       - [Método POST](#método-post)
     - [Recuperación de información](#recuperación-de-información)
@@ -753,20 +753,18 @@ Van encerrados en las etiquetas
  </form>
  ```
 Dentro de las etiquetas de formulario se pueden incluir elementos sobre los que puede actuar el usuario. Ejemplo:
-
 ```html
 <input>
 <select>
 <textarea>
 <button>
-
 ```
 En el __atributo action__ del FORM se indica la página a la que se enviarán los datos del formulario
 En el __atributo method__ se especifica el método usado para enviar la información:
 * __get__: los datos se envían en la URI utilizando el signo __?__ como separador.
 * __post__: los datos se incluyen en el cuerpo del formulario y se envían usando el protocolo HTTP
 
-### métodos GET y POST
+### Métodos GET y POST
 
 Son métodos del protocolo HTTP para intercambio de información entre cliente y servidor.
 * __get__:  el método más usado, sin embargo en formularios está en desuso. Pide al servidor que le devuelva al cliente la información identificada en la URI.
@@ -857,6 +855,7 @@ También se puede recuperar con la función __print_r__ que muestra el array com
 Al igual que en el método GET, se utiliza una variable interna __$_POST__, donde se almacenan todas las variables pasadas con este método. 
 
 La forma de almacenar la información, también es __un array en el que el índice es el nombre asignado al elemento del formulario__
+<div class="page"/>
 
 ```php
 $_POST[‘nombre’];
@@ -908,7 +907,7 @@ Si por algún motivo hay datos que se tengan que validar en el servidor, por eje
     </body> 
 </html>
 ```
-> en el atributo action también se puede poner 
+> en el __atributo action__ del formulario también se puede poner 
 > ```php
 > <?php echo $_SERVER['PHP_SELF'];
 > ?>
