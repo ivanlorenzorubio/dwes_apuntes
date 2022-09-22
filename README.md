@@ -15,6 +15,6 @@ Apuntes de Desarrollo Web en Entorno Servidor del CFGS de Desarrollo de Aplicaci
 [Configuración Visual Studio Code para PHP.](Tema2/VisualStudioCodePHP.md)
 
 
-** 3. UNIDAD 3.Programación basada en lenguaje de marcas con código embebido
+**3. UNIDAD 3.Programación basada en lenguaje de marcas con código embebido.**
 
 [Apuntes de la Unidad 3.](Tema3/Programacionlenguajesdemarca.md)
