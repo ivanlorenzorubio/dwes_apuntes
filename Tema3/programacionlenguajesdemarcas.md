@@ -71,6 +71,7 @@ son de dos tipos:
 ### Sentencias repetitivas o bucles
 
 * __while:__:define un bucle que se ejecuta mientras se cumpla una expresión. La expresión se evalúa antes de comenzar cada ejecución del bucle. 
+  
 ```php
 <?php
     $a=1;
