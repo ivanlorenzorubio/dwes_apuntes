@@ -84,6 +84,7 @@ son de dos tipos:
 > no es necesario poner {} porque solo ejecuta una sentencia 
 
 * __do ... while__:similar al bucle while, pero la expresión se evalúa al final, con lo cúal se asegura que la sentencia/as del bucle se ejecutan al menos una vez.
+  
 ```php
 <?php
     $a=1;
