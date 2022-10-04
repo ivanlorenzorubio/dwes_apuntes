@@ -252,6 +252,7 @@ $modulos2["DWES"];
 ?>
 ``` 
 * Para hacer referencia a los elementos almacenados en un array multidimensional, hay que indicar las claves para cada una de las dimensiones:
+  
 ```php
 $ciclos["DAW"]["DWES"];
 
