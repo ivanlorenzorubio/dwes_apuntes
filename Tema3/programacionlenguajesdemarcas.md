@@ -322,7 +322,7 @@ La declaración de una clase en PHP se hace utilizando la palabra __class__. A c
         public $nombre;
         protected $PVP;
         public function muestra(){
-            return "<p>"..$this codigo .."</p">;
+            return "<p>".$this codigo."</p">;
         }
     }
 ```
@@ -357,12 +357,8 @@ private $codigo
 
 public function setCodigo ($nuevo_codigo)
     {
-        if (noExisteCodigo ($nuevo_codigo))
-            {
-                $this-> codigo =$nuevo_codigo;
-                return true;
-            }
-        return  false;
+        $this->codigo =$nuevo_codigo;
+        
     }
 public function getCodigo() {return $this->codigo;}
 ```
