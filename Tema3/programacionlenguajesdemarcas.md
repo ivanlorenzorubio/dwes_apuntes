@@ -322,7 +322,7 @@ La declaración de una clase en PHP se hace utilizando la palabra __class__. A c
         public $nombre;
         protected $PVP;
         public function muestra(){
-            return "<p>".$this codigo."</p">;
+            return "<p>".$this->codigo."</p">;
         }
     }
 ```
@@ -376,7 +376,7 @@ class Producto
         return $this->atributos[$atributo];
     }
     public function __set($atributo,$valor){
-        $this->atributos[$atributo ] = $valor;
+        $this->atributos[$atributo] = $valor;
     }
 }
 ```
@@ -693,7 +693,7 @@ Un interface es como un contrato que la clase debe cumplir. Al implementar todos
 Por ejemplo, en la librería de PHP está definido el __interface Countable__
 ```php
 interface Countable{
-    abstract public int count (void);
+    abstract public int count ();
 }
 ```
 Desde PHP7, es posible crear clases que implementen varios interfaces, simplemente separando la lista de interfaces por comas después de la palabra __implements__.
@@ -798,7 +798,7 @@ Utiliza la dirección URL que está formada por:
 		<br/> 
         <label for="apellido">Introduzca sus apellidos:</label>
 		<input type="text" id="apellido" name="apellidos"><br/> 
-		<input type="submit" value="Enviar">
+		<input type="submit" name="enviar" value="Enviar">
 	</form>
 </body> 
 </html> 
@@ -823,7 +823,7 @@ La información va codificada en el cuerpo de la petición HTTP y por tanto viaj
 		<br/> 
         <label for="apellido">Introduzca sus apellidos:</label>
 		<input type="text" id="apellido" name="apellidos"><br/> 
-		<input type="submit" value="Enviar">
+		<input type="submit" name="enviar" value="Enviar">
 	</form>
 </body> 
 </html> 
