@@ -88,6 +88,8 @@ Para indicar que utilice codificación UTF-8 para los datos que se transmitan:
 $opciones = array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"); 
 $dwes = new PDO('mysql:host=localhost;dbname=dwes', 'dwes', 'abc123.', $opciones);
 ```
+:computer: Hoja04_BBDD_01 (Ej 1,2,3)
+
 ### PDO: ejecución de consultas
 Hay que diferenciar entre las sentencias SQL que no devuelven datos, de aquellas que sí lo devuelven.
 
@@ -121,6 +123,7 @@ if ($ok) $dwes->commit();  // Si todo fue bien confirma los cambios
 else $dwes->rollback(); // y si no, los revierte
 ```
 ### PDO: obtención y utilización de conjuntos de resultados
+
 Al igual que en MySQLi, en PDO hay varias posibilidades para tratar con el conjunto de resultados devueltos por el método query. La más utilizada es el**método fetch**:
 
 ```php 
@@ -130,11 +133,11 @@ while ($registro = $resultado->fetch())
 echo $registro['campo1'].": ".$registro['campo2']."<br />";
 } 
 ```
-Por defecto, el **método fetc**h genera y devuelve, a partir de cada registro, un array con claves numéricas y asociativas. Para cambiar su comportamiento, admite un parámetro opcional que puede tomar uno de los siguientes valores:
-- PDO::FETCH_ASSOC: devuelve solo un array asociativo.
-- PDO::FETCH_NUM: devuelve solo un array con claves numéricas.
-- PDO::FETCH_BOTH: devuelve un array con claves numéricas y asociativas. Es el comportamiento por defecto.
-- PDO::FETCH_OBJ: devuelve un objeto cuyas propiedades se corresponden con los campos del registro.
+Por defecto, el **método fetch** genera y devuelve, a partir de cada registro, un array con claves numéricas y asociativas. Para cambiar su comportamiento, admite un parámetro opcional que puede tomar uno de los siguientes valores:
+- **PDO::FETCH_ASSOC**: devuelve solo un array asociativo.
+- **PDO::FETCH_NUM**: devuelve solo un array con claves numéricas.
+- **PDO::FETCH_BOTH**: devuelve un array con claves numéricas y asociativas. Es el comportamiento por defecto.
+- **PDO::FETCH_OBJ**: devuelve un objeto cuyas propiedades se corresponden con los campos del registro.
 
 ```php 
 $resultado = $dwes->query('SELECT campo1, campo2 FROM tabla WHERE condicion');
@@ -143,8 +146,8 @@ while ($registro = $resultado->fetch(PDO::FETCH_OBJ))
 	echo $registro->campo1.": ".$registro->campo2."<br />";
 } 
 ```
-- PDO::FETCH_LAZY: devuelve tanto el objeto como el array con clave dual anterior.
-- PDO::FETCH_BOUND: devuelve true y asigna los valores del registro a variables, según se indique con el método bindColumn. Este método debe ser llamado una vez por cada columna, indicando en cada llamada el número de columna (empezando en 1) y la variable a asignar.
+- **PDO::FETCH_LAZY**: devuelve tanto el objeto como el array con clave dual anterior.
+- **PDO::FETCH_BOUND**: devuelve true y asigna los valores del registro a variables, según se indique con el método bindColumn. Este método debe ser llamado una vez por cada columna, indicando en cada llamada el número de columna (empezando en 1) y la variable a asignar.
 
 ```php
 $resultado = $dwes->query('SELECT campo1, campo2 FROM tabla WHERE condicion');
@@ -155,6 +158,8 @@ while ($registro = $resultado->fetch(PDO::FETCH_BOUND))
 	echo $campo1.": ".$campo2."<br />";
 } 
 ```
+:computer: Hoja04_BBDD_01(Ej 4,5,6 y 7)
+
 ### PDO: consultas preparadas
 
 Para preparar la consulta se utiliza el **método prepare** de la clase PDO. Este método devuelve un objeto de la clase **PDOStatement**. Los parámetros se pueden marcar utilizando signos de interrogación como en MySQLi.
@@ -180,6 +185,8 @@ Una vez preparada la consulta y enlazados los parámetros con sus valores, se ej
 ```php
 $consulta->execute();
 ```
+:computer: Hoja04_BBDD_01(Ej 8)
+
 ## Errores y manejo de excepciones
 
 PHP define una **clasificación de los errores** que se pueden producir en la ejecución de un programa y ofrece métodos para ajustar el tratamiento de los mismos. Para hacer referencia a cada uno de los niveles de error, PHP define una serie de **constantes**. 
