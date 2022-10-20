@@ -31,7 +31,7 @@ Mientras PDO ofrece un conjunto común de funciones, las extensiones nativas nor
 
 **MariaDB** es un sistema de gestión de bases de datos derivado de MySQL con licencia GPL (General Public License). Es desarrollado por Michael (Monty) Widenius —fundador de MySQL—, la fundación MariaDB y la comunidad de desarrolladores de software libre.
 
-![Logo de MariaDB](img/mariadb.png)
+![Logo de MariaDB](img/mariaDB.png)
 
 Ambas bases de datos incorporan múltiples motores de almacenamiento siendo alguno de ellos:
 
