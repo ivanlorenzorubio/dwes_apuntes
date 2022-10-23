@@ -126,7 +126,7 @@ else $dwes->rollback(); // y si no, los revierte
 ```
 ### PDO: obtención y utilización de conjuntos de resultados
 
-Al igual que en MySQLi, en PDO hay varias posibilidades para tratar con el conjunto de resultados devueltos por el método query. La más utilizada es el**método fetch**:
+Al igual que en MySQLi, en PDO hay varias posibilidades para tratar con el conjunto de resultados devueltos por el método query. La más utilizada es el **método fetch**:
 
 ```php 
 $resultado = $dwes->query('SELECT campo1, campo2 FROM tabla WHERE condicion');
