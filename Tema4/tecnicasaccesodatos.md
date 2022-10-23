@@ -68,14 +68,16 @@ Para acceder a las funcionalidades de la extensión hay que emplear los objetos 
 
 ### PDO: establecimiento de conexiones
 Para establecer una conexión con una base de datos utilizando PDO hay que instanciar un objeto de la clase PDO pasándole los siguientes parámetros (solo el primero es obligatorio):
-- Origen de datos (DSN). Es una cadena de texto que indica qué controlador se va a utilizar y a continuación, separadas por el carácter dos puntos, los parámetros específicos necesarios por el controlador, como por ejemplo el nombre o dirección IP del servidor y el nombre de la base de datos.
-- Nombre de usuario con permisos para establecer la conexión.
-- Contraseña del usuario.
-- Opciones de conexión, almacenadas en forma de array.
+
+* Origen de datos (DSN). Es una cadena de texto que indica qué controlador se va a utilizar y a continuación, separadas por el carácter dos puntos, los parámetros específicos necesarios por el controlador, como por ejemplo el nombre o dirección IP del servidor y el nombre de la base de datos.
+* Nombre de usuario con permisos para establecer la conexión.
+* Contraseña del usuario.
+* Opciones de conexión, almacenadas en forma de array.
 
 ```php 
 $dwes = new PDO('mysql:host=localhost;dbname=dwes', 'dwes', 'abc123.');
 ```
+
 Si se utiliza **el controlador para MySQL**, los parámetros específicos para utilizar en la cadena DSN (separadas unas de otras por el carácter punto y coma) a continuación del prefijo mysql: son los siguientes:
 - **host**: nombre o dirección IP del servidor.
 - **port**: número de puerto TCP en el que escucha el servidor.
@@ -112,8 +114,8 @@ Por defecto PDO trabaja en modo "autocommit", es decir, que confirma de forma au
 - **commit**: confirma la transacción actual.
 - **rollback**: revierte los cambios llevados a cabo en la transacción actual.
 Una vez ejecutado un commit o un rollback, se volverá al modo de confirmación automática.
-```php 
 
+```php 
 $ok = true; 
 $dwes->beginTransaction(); 
 if($dwes->exec('DELETE …') == 0)  $ok = false; 
