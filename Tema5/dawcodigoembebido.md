@@ -34,11 +34,11 @@ Pero ¿cómo le indicamos a Apache qué recursos tienen acceso restringido? Resp
 
 Desde PHP puedes acceder a la información de autentificación HTTP que ha introducido el usuario utilizando el array superglobal **$_SERVER**
 
-**$_SERVER['PHP_AUTH_USER']** Nombre de usuario que se ha introducido.
+* **$_SERVER['PHP_AUTH_USER']** Nombre de usuario que se ha introducido.
 
-**$_SERVER['PHP_AUTH_PW']** Contraseña introducida.
+* **$_SERVER['PHP_AUTH_PW']** Contraseña introducida.
 
-**$_SERVER['AUTH_TYPE']** Método HTTP usado para autentificar. Puede ser Basic o Diges.
+* **$_SERVER['AUTH_TYPE']** Método HTTP usado para autentificar. Puede ser Basic o Diges.
 
 En PHP puedes usar **la función header** para forzar a que el servidor envíe un error de "Acceso no autorizado" (código 401). De esta forma no es necesario utilizar ficheros .htaccess para indicarle a Apache qué recursos están restringidos.
 
