@@ -30,14 +30,17 @@ En Apache existe la utilidad **htpasswd**
 
 Pero ¿cómo le indicamos a Apache qué recursos tienen acceso restringido? Respuesta: Fichero .htaccess
 
-*Además tendrás que asegurarte de que en la configuración de Apache se utiliza **la directiva AllowOverride** para que se aplique correctamente la configuración que figura en el **fichero .htaccess**.
+* Además tendrás que asegurarte de que en la configuración de Apache se utiliza **la directiva AllowOverride** para que se aplique correctamente la configuración que figura en el **fichero .htaccess**.
 
 Desde PHP puedes acceder a la información de autentificación HTTP que ha introducido el usuario utilizando el array superglobal **$_SERVER**
-**$_SERVER['PHP_AUTH_USER']** Nombre de usuario que se ha introducido.
-**$_SERVER['PHP_AUTH_PW']** Contraseña introducida.
-**$_SERVER['AUTH_TYPE']** Método HTTP usado para autentificar. Puede ser Basic o Digest
 
-En PHP puedes usar**la función header** para forzar a que el servidor envíe un error de "Acceso no autorizado" (código 401). De esta forma no es necesario utilizar ficheros .htaccess para indicarle a Apache qué recursos están restringidos.
+**$_SERVER['PHP_AUTH_USER']** Nombre de usuario que se ha introducido.
+
+**$_SERVER['PHP_AUTH_PW']** Contraseña introducida.
+
+**$_SERVER['AUTH_TYPE']** Método HTTP usado para autentificar. Puede ser Basic o Diges.
+
+En PHP puedes usar **la función header** para forzar a que el servidor envíe un error de "Acceso no autorizado" (código 401). De esta forma no es necesario utilizar ficheros .htaccess para indicarle a Apache qué recursos están restringidos.
 
 En su lugar, puedes añadir las siguientes líneas en tus páginas PHP:
 
@@ -121,6 +124,7 @@ El término sesión hace referencia al conjunto de información relativa a un us
 Ejemplos:
 * Nombre del usuario
 * Artículos de la lista de la compra de una tienda online
+  
 Cada usuario distinto de un sitio web tiene su propia información de sesión.
 
 Para distinguir una sesión de otra se usan **los identificadores de sesión (SID)**. 
@@ -132,6 +136,7 @@ Pregunta: ¿Dónde se almacena ese SID?
 Existen dos maneras de mantener el SID entre las páginas de un sitio web que visita el usuario:
 * Utilizando cookies, tal y como vimos
 * Propagando el SID en un parámetro de la URL. El SID se añade como una parte más de la URL, de la forma:
+  
 http://www.misitioweb.com/tienda/listado.php&PHPSESSID=34534fg4ffg34ty
 
 En PHP el manejo de sesiones está automatizado en gran medida. 
@@ -146,7 +151,7 @@ Sin embargo, antes de utilizar sesiones en tu sitio web, debes configurar correc
 | __session.use_cookies__  |Indica si se deben usar cookies (1) o propagación en la URL (0) para almacenar el SID |
 | __session.use_only_cookies__  |Se debe activar (1) cuando utilizas cookies para almacenar los SID, y además no quieres que se reconozcan los SID que se puedan pasar como parte de la URL (este método se puede usar para usurpar el identificador de otro usuario) |
 | __session.save_handler__  |Se utiliza para indicar a PHP cómo debe almacenar los datos de la sesión del usuario. Existen cuatro opciones: en ficheros (files), en memoria (mm), en una base de datos SQLite (sqlite) o utilizando para ello funciones que debe definir el programador (user). El valor por defecto (files) funcionará sin problemas en la mayoría de los casos |
-| __session.name__  |Determina el nombre de la cookie que se utilizará para guardar el SID. Su valor por defecto es PHPSESSID. |
+| __session.name__  |Determina el nombre de la cookie que se utilizará para guardar el SID. Su valor por defecto es PHPSESSID |
 | __session.auto_start__  |Su valor por defecto es 0, y en este caso deberás usar **la función session_start** para gestionar el inicio de las sesiones. Si usas sesiones en el sitio web, puede ser buena idea cambiar su valor a 1 para que PHP active de forma automática el manejo de sesiones |
 | __session.cookie_lifetime__  |Si utilizas la URL para propagar el SID, éste se perderá cuando cierres tu navegador. Sin embargo, si utilizas cookies, el SID se mantendrá mientras no se destruya la cookie. En su valor por defecto (0), las cookies se destruyen cuando se cierra el navegador. Si quieres que se mantenga el SID durante más tiempo, debes indicar en esta directiva ese tiempo en segundos |
 | __session.gc_maxlifetime__  |Indica el tiempo en segundos que se debe mantener activa la sesión, aunque no haya ninguna actividad por parte del usuario. Su valor por defecto es 1440. Es decir, pasados 24 minutos desde la última actividad por parte del usuario, se cierra su sesión automáticamente |
