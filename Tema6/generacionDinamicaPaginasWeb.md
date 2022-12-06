@@ -97,11 +97,160 @@ Entramos en la carpeta __public__  y comprobamos que se ha instalado correctamen
 
 ![pagina web de laravel](img/paginawebl.png)
 
+Como entorno de desarrollo vamos a utilizar Visual Studio code e instalar la extensión Laravel extension pack que a su vez nos instala 12 plugins.
 
+### Patrón de Laravel
 
+Laravel se basa en un diseño  MVC
 
+![patrón de laravel](img/patronlaravel.png)
 
+### Estructura de Laravel
 
+Vamos a ver la estructura de nuestro proyecto, para así entender que hay dentro de las principales carpetas:
+* __app__ - contiene los controladores, modelos, vistas y  configuraciones de la aplicación. En esta carpeta escribiremos la  mayoría del código para que nuestra aplicación funcione. En la  carpeta Models tenemos un solo modelo: “User.php” que se crea  por defecto.
+* __app/Http__
+  * __Controllers__ son los que interaccionan con los modelos
+  * __Midleware__ son filtros de seguridad cuando se envía una ruta, un formulario….
+* __bootstrap__ son archivos del sistema. En esta carpeta se incluye el código que se carga para procesar cada una de las llamadas a nuestro proyecto. Normalmente, no tendremos que modificar nada de esta carpeta.
+* __config__ todos los archivos de configuración del sistema
+  * __app.php__ tenemos los namespace para acceder a las librerías internas de Laravel,si descargamos algo nuevo para nuestra aplicación hay que  instalar los namespace aquí
+  * __database.php__ se configura la B.D. que ya contiene mysql, pero también  tiene sqlite y otras
+  * __filesystems.php__ maneja discos internos en laravel: imágenes, videos,…
+* __database__
+  * __migrations__ se crea la estructura para la BD,tablas...
+* __lang__ en esta carpeta se guardan archivos PHP que contienen arrays con los textos de nuestro sitio web en diferentes lenguajes; solo será necesario utilizarlo en caso de que se desee que la aplicación se pueda traducir
+* __public__ es la única carpeta a la que los usuarios de la  aplicación pueden acceder. Todas las peticiones y solicitudes a la aplicación pasan por esta carpeta, ya que en ella se encuentra el index.php, este archivo es el que inicia todo el  proceso de ejecución del framework. En este directorio también se alojan los archivos CSS, Javascript, imágenes y  otros archivos que se quieran hacer públicos.
+* __resources__
+  * __views__ las vistas. Welcome.blade.php que es la página de inicio
+* __routes__ las rutas. web.php es la más importante, aquí se definen las rutas para interpretar las solicitudes que el usuario hace al sistema
+* __storage__ discos internos de laravel. En esta carpeta almacena toda la información interna necesaria para la ejecución de la web, como los archivos de sesión, la caché, la compilación de las vistas, metainformación y logs del sistema.
+* __tests__ esta carpeta se utiliza para los ficheros con las pruebas automatizadas. Laravel incluye un sistema que facilita todo el proceso de pruebas con PHPUnit.
+* __vendor__ En esta carpeta se alojan todas las librerías que  conforman el framework y sus dependencias
+  
+Además, en la carpeta raíz también encontramos tres ficheros importantes que utilizaremos:
+* __.env__ se utiliza para almacenar los valores de configuración que son propios de la máquina o instalación actual, lo que nos permite cambiar fácilmente la configuración según la máquina en la que se instale y tener opciones distintas para producción, para distintos desarrolladores.
+* __composer.json__ este fichero es el utilizado por Composer para realizar la instalación de Laravel. En una instalación inicial únicamente se especificará la instalación de un paquete (el propio framework de laravel), pero podemos especificar la instalación de otras librerías o paquetes externos que añadan funcionalidad a Laravel.
+* __package.json__ en este fichero se encuentran algunas dependencias por parte cliente( Bootstrap o jQuery), y se encuentran preinstaladas en la carpeta node_modules.
+Estos tres archivos no deben subirse a ningun repositorio(GitHub) incluir en el __.gitignore__, porque si importamos un proyecto en laravel, podemos regenerar las dependencias de PHP con __composer install__ y las dependencias de JavaScript con __npm install__, es decir, los archivos composer.json y package.json actúan como indice de dependencias de PHP y JavaScript, respectivamente.
+
+### Funcionamiento básico
+
+El funcionamiento básico que sigue Laravel tras una petición web a una URL de nuestro sitio es el siguiente:
+1. Todas las peticiones entran a través del fichero public/index.php, el cual en primer lugar comprobará en el fichero de rutas (routes/web.php) si la URL es válida y en caso  de serlo a qué controlador tiene que hacer la petición.
+2. A continuación se llamará al método del controlador asignado para dicha ruta. Como hemos visto, el controlador es el punto de entrada de las peticiones del usuario.
+3. Accederá a la base de datos (si fuese necesario) a través de los "modelos" para obtener datos (o para añadir, modificar o eliminar).
+4. Tras obtener los datos necesarios los preparará para pasárselos a la vista.
+5. Por último se mostrará al usuario
+   
+  ![funcionamiento básico](img/funcionamiento.png) 
+
+### Artisan
+
+Laravel incluye un interfaz de línea de comandos (CLI,  Command line interface llamado __Artisan__.
+
+Esta utilidad nos va a permitir realizar múltiples tareas necesarias durante el  proceso de desarrollo o despliegue a producción de una aplicación, por lo que nos facilitará y acelerará el trabajo.
+
+Para ver una lista de todas las opciones que incluye Artisan podemos ejecutar el siguiente  comando en una consola o terminal del sistema en la carpeta raíz de nuestro proyecto:
+__php artisan list__ (o php artisan)
+
+vamos a la terminal de Visual Studio Code y ejecutamos
+
+![listado comandos artisan](img/artisan.png)
+
+Para ver un listado con todas las rutas que hemos definido en el fichero routes.php  podemos ejecutar el comando:
+
+__php artisan route:list__
+
+Esto nos mostrará una tabla con el método, la dirección, la acción y los filtros definidos  para todas las rutas.
+
+A través de la __opción make__ podemos generar diferentes componentes de Laravel (controladores, modelos, filtros, etc.) como si fueran plantillas, esto nos ahorrará  mucho trabajo y podremos empezar a escribir directamente el contenido del  componente.Por ejemplo, para crear un nuevo controlador tendríamos que escribir:
+
+__php artisan make:controller TaskController__
+
+Dentro de Laravel, ya tenemos un servidor interno que haría la función de servidor web: 
+
+__php artisan serve__
+
+Esto pondrá en marcha un servidor en el puerto 8000; podremos acceder anuestro proyecto a través de la URL http://localhost:8000
+
+### Rutas
+
+Las rutas se tienen que definir en el fichero __routes/web.php__.
+
+Cualquier ruta no definida en este fichero no será válida, generado una excepción (lo que devolverá un error 404).
+
+Las rutas, en su forma más sencilla, pueden devolver __directamente un valor__  desde el propio fichero de rutas, pero también podrán __generar la llamada  a una vista o a un controlador__.
+
+Con las rutas, construimos las URL amigables( son fáciles de recordar y más seuguras) de nuestra aplicación, es importante para el posicionamiento web. 
+
+Son un mecamismo que nos permite establecer el controlador al que debemos enviar la petición de una determinada URL. 
+
+Además de definir la URL de la petición, también indican el método con el cual se ha de hacer dicha petición. Los dos métodos más utilizados son GET y tipo POST.
+
+En el archivo __routes/web.php__ inicialmente ya existe una ruta predefinida a la raiz del proyecto
+```php
+Route::get('/', function () {
+    return view('welcome');
+});
+```
+Lo que hace dicha ruta es llamar al método __view__, que carga una vista o archivo final HTML situado en __resources/views/welcome.blade.php__ 
+
+para definir una ruta, realizamos la llamada al método get/post de la clase Route
+
+```php
+Route::get('/',function()){
+  return 'Hola mundo';
+});
+```
+Este código se lanzaría cuando se realice una petición tipo GET a la ruta raíz  de nuestra aplicación.
+
+Para definir una ruta tipo POST se realizaría de la misma forma pero cambiando el verbo  GET por POST:
+```php
+Route::post('foo/bar',function(){
+  return 'Hola mundo';
+});
+```
+En este caso la ruta apuntaría a la dirección URL foo/bar
+Si queremos que una ruta se defina a la vez para get y post lo podemos hacer añadiendo un  array con los tipos, de la siguiente forma:
+```php
+Route::match(array('GET','POST'),'/',function(){
+  return 'Hola mundo';
+});
+```
+O para cualquier tipo de petición HTTP utilizando el método any
+```php
+Route::any('/',function(){
+  return 'Hola mundo';
+});
+```
+Si queremos añadir parámetros a una ruta simplemente los tenemos que indicar
+entre llaves {} a continuación de la ruta, de la forma:
+```php
+Route::get('user/{id}',function($id){
+  return 'User'.$id;
+});
+```
+Definimos la ruta /user/{id}, donde id es __obligatorio__ y puede ser cualquier valor.
+En caso de no especificar ningún id se produciría un error. También podemos indicar  que un parámetro es opcional simplemente añadiendo el símbolo ? al final (y en  este caso no daría error si no se realiza la petición con dicho parámetro):
+```php
+Route::get('user/{name?}',function($name=null){
+  return $name;
+});
+//tambien podemos poner algún valor por defecto
+Route::get('user/{name?}',function($name='cic'){
+  return $name;
+});
+```
+Podemos definir rutas con alias o named routes, al definir la ruta, asociamos al método name el nombre que queramos. Esto es interesante cuando esta ruta forma parte de algún enlace en alguna página de nuestra aplicación
+```php
+Route::get('clientes',function(){return "listado";})->name('ruta_clientes');
+```
+Laravel también permite el uso de expresiones  regulares para validar los  parámetros que se le pasan a una ruta. Por ejemplo, para validar que un  parámetro esté formado sólo por letras o sólo por números:
+```php
+Route::get('user/{name?}',function($name){return $name;})->where('name','[A-Za-z]+');
+```
+### Controladores
 
 
 
