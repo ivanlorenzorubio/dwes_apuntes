@@ -20,12 +20,12 @@ El más extendido es el patrón de diseño Modelo – Vista – Controlador (MVC
 
 ### Funcionamiento MVC
 
-1 El usuario envía petición al controlador vía una URL
-2 El controlador solicita al modelo los datos
-3 El modelo devuelve los datos
-4 El controlador selecciona una vista
-5 Se devuelve la vista seleccionada al controlador
-6 El controlador devuelve una vista (página php) que carga los datos del modelo seleccionado
+1. El usuario envía petición al controlador vía una URL
+2. El controlador solicita al modelo los datos
+3. El modelo devuelve los datos
+4. El controlador selecciona una vista
+5. Se devuelve la vista seleccionada al controlador
+6. El controlador devuelve una vista (página php) que carga los datos del modelo seleccionado
 
 ![Modelo Vista Controlador](img/modelomvc.png)
 
@@ -63,25 +63,35 @@ lo siguiente:
     * Es un administrador de dependencias para PHP que nos permite descargar paquetes  desde un repositorio para agregarlo a nuestro proyecto.
     * Por defecto, se agregan a una carpeta llamada /vendor. De esta manera evitamos  hacer las búsquedas manualmente y el mismo Composer se puede encargar de  actualizar las dependencias que hayamos descargado por una nueva versión.
   * al instalar composer indicar la dirección del php ejemplo en windows
-  ![Path en compososer de PHP](img/composerphp.png)
+  
+![Path en compososer de PHP](img/composerphp.png)
   
 * La librería de laravel
   * Usando la terminal de GitBash vamos a la carpeta de publicación c:/xampp/htdocs y escribimos:
     * composer global require laravel /installer
-     ![instalar laravel](img/instalaravel1.png)
-     instala la última versión de Laravel;con el paso del paso del tiempo conviene ir actualizando la version de Laravel con el comando: composer global update laravel/installer
-    * comprobamos la versión del instalador de lavarel
-     ![version instalador laravel](img/instalaravel2.png)
+  
+![instalar laravel](img/instalaravel1.png)
+
+Instala la última versión de Laravel;con el paso del tiempo conviene ir actualizando la version de Laravel con el comando: composer global update laravel/installer
+
+* comprobamos la versión del instalador de lavarel
+
+![version instalador laravel](img/instalaravel2.png)
       
 * Adicionalmente también es recomendable instalar Node.js. Se instala la herramienta NPM (Node Package Manager), herramienta que permite instalar librerías de JavaScript, como BootStrap o jQuery. La página oficial es https://nodejs.org/es/download.
     * comprobamos la versión de node.js instalada
-   ![version de node.js](img/instanodejs.png)
+
+![version de node.js](img/instanodejs.png)
 
 Ahora podemos comprobar que todo lo instalado es correcto y que podemos crear nuestro primer proyecto de prueba en Laravel (lpruebas), aunque anteriormente ya estabamos posicionados en la carpeta de publicación del XAMPP hasta ahora no era necesario pero ahora sí.
-    * laravel new lpruebas
-    ![comando para crear proyecto laravel](img/crearproyecto.png)
+
+* laravel new lpruebas
+
+![comando para crear proyecto laravel](img/crearproyecto.png)
+
 También tenemos la opción de solo realizar en un paso la instalación de Laravel y la creación del proyecto, poniendo en la carpeta de publicación: 
-    * composer create-project laravel/laravel lpruebas
+
+* composer create-project laravel/laravel lpruebas
 
 Entramos en la carpeta __public__  y comprobamos que se ha instalado correctamente
 
