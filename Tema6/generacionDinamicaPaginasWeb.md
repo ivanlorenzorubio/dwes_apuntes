@@ -252,6 +252,150 @@ Route::get('user/{name?}',function($name){return $name;})->where('name','[A-Za-z
 ```
 ### Controladores
 
+__Un controlador es el componente que__ nos permite agrupar, de una mejor manera, el código necesario para dar respuesta a una petición HTTP; es el intermediario entre la vista y el modelo y __se encarga de definir la lógica de negocio__ y los controladores son necesarios para resolver las solicitudes que llegan.
+
+Lo recomendable es asociar las rutas a un método de un controlador.
+
+Esto nos permitirá separar mucho mejor el código y crear clases  (controladores) que agrupen toda la funcionalidad de un determinado  recurso.
+
+>Por ejemplo, podemos crear un controlador para gestionar toda la lógica  asociada al control de usuarios o cualquier otro tipo de recurso.
+
+Los controladores son el punto de entrada de las peticiones de los usuarios  y son los que deben contener toda la lógica asociada al procesamiento de  una petición, encargándose de realizar las consultas necesarias a la base  de datos, de preparar los datos y de llamar a la vista correspondiente con  dichos datos.
+
+Los controladores se almacenan en  ficheros PHP en la carpeta __App/Http/Controllers__ y normalmente se les añade el sufijo __Controller__.
+Ejemplo HomeController.php 
+```php
+<?php
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class HomeController extends Controller
+{
+    public function __invoke(){
+       return view('home');
+    }
+}
+```
+Todos los controladores tienen que extender la clase base Controller que se
+encuentra en la carpeta App/Http/Controllers.
+
+Se utiliza para centralizar toda la lógica que se vaya a utilizar de forma compartida por los controladores de nuestra aplicación.
+
+Una vez definido un controlador ya podemos asociarlo a una ruta. Para  esto tenemos que modificar el fichero de rutas web.php de la forma:
+
+Route::get('/',HomeController::class) -> name('home');
+
+#### Crear un nuevo controlador
+Para crear uno nuevo bien lo podemos hacer a mano y rellenar  nosotros todo el código, o podemos utilizar el siguiente comando de  Artisan que nos adelantará todo el trabajo:
+
+__php artisan make:controller EjemploController__
+
+el comando artisan admite algunos parámetros adicionales más. Uno muy útil es el __paramétro -i__ que crea el controlador con un método llamado __invoke__, que se autoejecuta cuando es llamado desde algún proceso de enrutamiento. Dentro del método invoke, podemos definir la lógica de generar y obtener los datos que necesita una vista y renderizarla,  como es el ejemplo visto.
+
+si creamos un controlador con la opción -r en vez de -i, creará un controlador de recursos(resources) y predefine en él una serie de métodos de utilidad vacios para cada una de las operaciones principales que se pueden realizar sobre una entidad de nuestra aplicación:
+* __index__- muestra un listado de los elementos de esa entidad o recurso.
+* __create__ muestra el formulario para dar de alta nuevos elementos.
+* __store__ almacena en la base de datos el recurso creado con el formulario anterior.
+* __show__ muestra los datos de un recurso específico ( a partir de su clave o id).
+* __edit__ muestra el formulario para editar un recurso existente.
+* __update__ actrualiza en la base de datos el recurso editado en el formulario anterior.
+* __destroy__ elimina un recurso por su identificador.
+
+También podemos crear subcarpetas dentro de la carpeta Controllers para  organizarnos mejor. Pero a la hora de hacer referencia al controlador únicamente  se tendrá que hacer a través de su espacio de nombres.
+Por ejemplo para crear un controlador en app\Http\Controllers\Fotos\AdminController:
+__php artisan make:controller Fotos/AdminController__
+
+#### Generar una URL a una acción
+en el fichero de rutas se debe añadir un __name__ a la ruta:
+```php
+Route::get(‘foo’, [FooController::class,’method'])->name(“foo.method");
+```
+Luego dede una plantilla podríamos hacer
+```html
+<a href="{{ route(‘foo.method') }}">¡Aprieta aquí!</a>
+```
+
+### Vistas
+Las vistas son la forma de presentar el resultado (una pantalla de nuestro sitio web) de forma  visual al usuario, el cual podrá interactuar con él y volver a realizar una petición.
+
+Las vistas además nos permiten separar toda la parte de presentación de resultados de la  lógica (controladores) y de la base de datos (modelos). Por lo tanto __no tendrán que realizar  ningún tipo de consulta ni procesamiento de datos__, simplemente  recibirán datos y los  prepararán para mostrarlos como HTML.
+
+Las vistas se almacenan en la carpeta __resources/views__ como ficheros __PHP__. Contendrán el  código HTML de nuestro sitio web, mezclado con los assets (CSS, imágenes, Javascripts, etc.  que estarán almacenados en la carpeta public) y algo de código PHP (o código Blade de  plantillas) para presentar los datos de entrada como un resultado HTML.
+
+#### pasar variables a las vistas
+Una vez tenemos una vista tenmos que asociarla a una ruta para poder mostrarla.
+
+Se suele pasar información como variables desde las rutas o los controladores a las vistas. Por ejemplo, pasar listado de datos.
+
+En este ejemplo estamos pasando la variable nombre y apellidos a la vista __inicio__, con el método __with__:
+
+```php
+Route::get('/',function(){
+  $nombre="pepe";
+  $apellidos="Grillo";
+  return view('inicio')->with(['nombre'=>$nombre,'apellidos'=>$apellidos]);
+});
+```
+Otra alternativa es pasarlo como segundo parámetro a la función __view__ como array asociativo
+
+```php
+return view('inicio',['nombre'=>$nombre,'apellidos'=>$apellidos]);
+```
+Otra mucho más usada es con la funcion __compact__ como segundo parámetro de __view__. En este caso, solo le pasamos el nombre de la variable definida en nuestro código cuyo valor queremos pasar a la vista.
+
+```php
+return view('inicio',compact('nombre','apellidos'));
+```
+En este ejemplo estamos pasando las variables nombre y apellidos a la vista inicio, de forma que podemos acceder a ellas como si de una variable local se tratara.
+
+```php
+<p> bienvenido a <?php echo $nombre.",".$apellidos ?></p>
+```
+
+lo habitual es acceder a la variable mediante la sintaxis específica de Blade, el motor de plantillas de Laravel que veremos.
+
+```php
+<p> bienvenido a {{$nombre}}.",".{{$apellidos}}</p>
+```
+#### Organización de las vistas
+Las vistas se pueden organizar en sub-carpetas dentro de la carpeta resources/views.
+
+Por ejemplo podríamos tener una carpeta resources/views/user y dentro de esta todas las
+vistas relacionadas, como por ejemplo login.php, register.php o profile.php.
+
+En este caso para referenciar las vistas que están dentro de sub-carpetas tenemos que utilizar  la notación tipo "dot", en la que las barras que separan las carpetas se sustituyen por puntos.
+
+Por ejemplo, para referenciar la vista resources/views/user/login.php usaríamos el nombre  user.login, o la vista resources/views/user/register.php la cargaríamos de la forma:
+
+```php
+Route::get('register',function(){
+  return view('user.register');
+});
+```
+### Motor de plantillas Blade
+
+Laravel utiliza Blade para la definición de plantillas en las vistas.
+
+Esta librería permite realizar todo tipo de operaciones con los datos, además de la  sustitución de secciones de las plantillas por otro contenido, herencia entre plantillas,  definición de layouts o plantillas base, etc.
+
+Los ficheros de vistas que utilizan el sistema de plantillas Blade tienen que tener la  extensión __.blade.php.__
+
+Esta extensión tampoco se tendrá que incluir a la hora de referenciar una vista  desde el fichero de rutas o desde un controlador. Es decir, utilizaremos view('home')  tanto si el fichero se llama home.php como home.blade.php.
+
+En general __el código__ que incluye __Blade en una vista__ empezará por __los símbolos @__  o __{{__, el cual posteriormente será procesado y preparado para mostrarse por  pantalla.
+
+Blade no añade sobrecarga de procesamiento,  ya que todas las vistas son
+preprocesadas y cacheadas.
+
+El método más básico que tenemos en Blade es el de mostrar datos. Para esto  utilizaremos las llaves dobles {{ }} y dentro de ellas escribiremos la variable o  función a mostrar:
+
+Ejemplo:
+```php 
+Hola {{$name}}
+La hora actual es {{time()}}
+```
+#### Mostrar un dato solo si existe
 
 
 
