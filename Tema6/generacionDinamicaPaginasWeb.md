@@ -430,21 +430,22 @@ La hora actual es {{time()}}
 
 Para	comprobar	que	una	variable	existe	o	tiene	un	determinado  valor podemos utilizar el operador ternario de la forma:
 ``` 
-    {{ isset($name) ? $name : 'Valor por defecto' }}
+  operador Ternario:  {{ isset($name) ? $name : 'Valor por defecto' }}
 ```
 O simplemente usar la notación que incluye Blade para este fin:
 ``` 
-    {{ $name or 'Valor por defecto' }}
+  notacion Blade:  {{ $name or 'Valor por defecto' }}
 ```
 #### Comentarios
-Para escribir comentarios en Blade se utilizan los símbolos {{-- y --}},  por ejemplo:
+Para escribir comentarios en Blade se utilizan los símbolos {{-- y --}}:
 ``` 
-    {{-- Este comentario no se mostrará en HTML --}}
+  comentario Blade:  {{-- Este comentario no se mostrará en HTML --}}
 ```
 
 #### Estructuras de control
 
 Todas las directivas Blade vienen precedidas del __símbolo @__ nos permite utilizar la __estructura condicional if__ de las siguientes formas:
+
 ```php 
 @if( count($users) === 1 )  
   ¡Solo hay un usuario!  
