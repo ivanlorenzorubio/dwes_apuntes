@@ -701,6 +701,14 @@ class CrearClienteRequest extends FormRequest
 }
 ```
 Por último, en el método del controlador recibiríamos como parámetro un objeto de tipo CrearClienteRequest en vez de un objeto de tipo Request.
+La validación es automática; si no se cumplen las reglas, nunca llegará a ejecutarse el código del método.
+
+```php
+public function InsertarConValidacion( CrearClienteRequest $request){
+  //si entramos aqui, el formulario es válido.
+}
+```
+
 
 
 
