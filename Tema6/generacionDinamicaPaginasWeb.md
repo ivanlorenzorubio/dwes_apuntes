@@ -2,6 +2,37 @@
 
 ## Índice
 
+- [UT6 GENERACIÓN DINÁMICA DE PÁGINAS WEB](#ut6-generación-dinámica-de-páginas-web)
+  - [Índice](#índice)
+  - [Patrón arquitectónico MVC (Modelo-Vista-Controlador)](#patrón-arquitectónico-mvc-modelo-vista-controlador)
+    - [Funcionamiento MVC](#funcionamiento-mvc)
+  - [Laravel](#laravel)
+    - [Instalación](#instalación)
+    - [Patrón de Laravel](#patrón-de-laravel)
+    - [Estructura de Laravel](#estructura-de-laravel)
+    - [Funcionamiento básico](#funcionamiento-básico)
+    - [Artisan](#artisan)
+    - [Rutas](#rutas)
+    - [Controladores](#controladores)
+      - [Crear un nuevo controlador](#crear-un-nuevo-controlador)
+      - [Generar una URL a una acción](#generar-una-url-a-una-acción)
+    - [Vistas](#vistas)
+      - [pasar variables a las vistas](#pasar-variables-a-las-vistas)
+      - [Organización de las vistas](#organización-de-las-vistas)
+    - [Motor de plantillas Blade](#motor-de-plantillas-blade)
+      - [Mostrar un dato solo si existe](#mostrar-un-dato-solo-si-existe)
+      - [Comentarios](#comentarios)
+      - [Estructuras de control](#estructuras-de-control)
+      - [Enlaces a otras rutas con Blade](#enlaces-a-otras-rutas-con-blade)
+      - [Definir Plantillas con Blade](#definir-plantillas-con-blade)
+    - [Redirecciones](#redirecciones)
+      - [Redirecciones con valores](#redirecciones-con-valores)
+      - [Redirección con los valores de la petición](#redirección-con-los-valores-de-la-petición)
+    - [Formularios](#formularios)
+      - [Protección contra CSRF](#protección-contra-csrf)
+      - [Validación de formularios](#validación-de-formularios)
+      - [Form Request para validaciones más complejas](#form-request-para-validaciones-más-complejas)
+
 ## Patrón arquitectónico MVC (Modelo-Vista-Controlador)
 
 En muchas ocasiones se mezcla el código propio de la lógica de la aplicación, con el código necesario para crear el interface web que se presenta a los usuarios.
@@ -397,7 +428,278 @@ La hora actual es {{time()}}
 ```
 #### Mostrar un dato solo si existe
 
+Para	comprobar	que	una	variable	existe	o	tiene	un	determinado  valor podemos utilizar el operador ternario de la forma:
 
+```php 
+{{ isset($name) ? $name : 'Valor por defecto' }}
+```
+
+O simplemente usar la notación que incluye Blade para este fin:
+```php 
+{{ $name or 'Valor por defecto' }}
+```
+#### Comentarios
+Para escribir comentarios en Blade se utilizan los símbolos {{-- y --}},  por ejemplo:
+```php 
+{{-- Este comentario no se mostrará en HTML --}}
+```
+#### Estructuras de control
+Todas las directivas Blade vienen precedidas del __símbolo @__ nos permite utilizar la __estructura condicional if__ de las siguientes formas:
+```php 
+@if( count($users) === 1 )  
+  ¡Solo hay un usuario!  
+@elseif (count($users) > 1)  
+  ¡Hay muchos usuarios!
+@else
+  ¡No hay ningún usuario!  
+@endif
+```
+__Estructuras repetitivas bucles tipo for, while o foreach__
+```php
+@for ($i = 0; $i < 10; $i++)  
+  El valor actual es {{ $i }}
+@endfor
+@while (true)
+<p>Soy un bucle while infinito!</p>  
+@endwhile
+@foreach ($users as $user)
+<p>Usuario {{ $user->name }} con identificador: {{ $user->id }}</p>  
+@endforeach
+```
+__Estructura alternativa que controla a la vez que la variable esté definida y tenga elementos forelse__
+Esta directiva permite una cláusula adicional @empty para indicar qué hacer si la colección no tiene elementos o está sin definir.
+```php
+@forelse ($elementos as $elemento)
+<li> {{$elemento}}</li>
+@empty
+<li>No hay elementos que mostrar </li>
+@endforelse
+```
+#### Enlaces a otras rutas con Blade
+
+la forma tradicional de enlazar es
+```php
+echo "<a href='/contacto'>contacto</a>";
+```
+o bien empleando la funcion route, seguida del nombre que le dado a la ruta:
+```php
+<a href="{{route('ruta_contacto')}}">contacto</a>;
+```
+Mediante Blade, empleando la funcion url, que genera una URL completa hasta la ruta que indiquemos
+```php
+<a href="{{url('/contacto')}}">contacto</a>
+```
+#### Definir Plantillas con Blade
+En Blade podemos indicar que se incluya una plantilla dentro de otra plantilla,
+para esto disponemos de la instrucción @include:
+```php
+@include('view_name')
+```
+Además podemos pasarle un array de datos a la vista a cargar usando el segundo  parámetro del método include:
+```php
+@include('view_name', array('some'=>'data'))
+```
+Esta opción es muy útil para crear vistas que sean reutilizables o para separar el
+contenido de una vista en varios ficheros.
+
+__Layouts__
+Blade también nos permite la definición de layouts para crear una estructura HTML  base con secciones que serán rellenadas por otras plantillas o vistas hijas.
+
+Por ejemplo, podemos crear un layout con el contenido principal o común de nuestra  web (head, body, etc.) y definir una serie de secciones que serán rellenados por  otras plantillas para completar el código.
+
+Este layout puede ser utilizado para todas las pantallas de nuestro sitio web, lo que  nos permite que en el resto de plantillas no tengamos que repetir todo este código.
+Para crear una plantilla en Blade, creamos por ejemplo, __plantilla.blade.php_ en la carpeta
+__resources/view/layout/__ plantilla.blade.php
+En aquellas zonas del documento donde vamos a permitir contenido variable dependiendo de la vista, añadimos una sección llamada __@yield, con un nombre asociado__.
+Un ejemplo
+```php
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@yield('titulo')</title>
+    <!--favicon -->
+</head>
+<body>
+    @include('layouts.partials.header')
+    @yield('contenido')
+    @include('layouts.partials.footer')
+</body>
+</html>
+```
+En el ejemplo ya está incluyendo otras vistas header y footer que se encuentran definidas en __resources/view/layout/partials/__
+Por ejemplo el contenido de footer denominada footer.blade.php
+```php
+<footer>
+    este es el pie de página
+</footer>
+```
+Luego, en cada vista en la que usemos esta plantilla, añadimos la directiva __@extends('el nombre de la plantilla')__. 
+Con la directiva __@section('nombre de la seccion')__ añadimos el contenido de esa sección para cada uno de los @yield de la plantilla. 
+por ejemplo nuestra página de inicio denomina inicio.blade.php su contenido podría ser
+```php
+@extends('layouts.plantilla')
+@section('titulo','Inicio')
+@section('contenido')
+    <h1>Bienvenido a la página principal</h1>
+@endsection
+```
+### Redirecciones
+
+Como respuesta a una petición también podemos devolver una redirección. Esta  opción será interesante cuando, por ejemplo, el usuario no esté logueado y lo  queramos redirigir al formulario de login, o cuando se produzca un error en la  validación de una petición y queramos redirigir a otra ruta.
+
+Utilizando el __método redirect__ y lo recomendable es redireccionar usando el nombre asociado a la ruta
+```php
+return redirect()->route(‘user.login’);
+```
+O si queremos volver a la ruta anterior simplemente podemos usar __el método back__
+```php
+return back();
+```
+#### Redirecciones con valores
+Si queremos  enviar datos a otra página mediante la sesión del usuario (por  ejemplo un mensaje de éxito tras realizar una inserción) podemos utilizar el __método  with()__
+```php
+return redirect()->route(‘perfil.show’)->with('mensaje’, “Perfil de usuario actualizado");
+```
+#### Redirección con los valores de la petición
+Las redirecciones se suelen utilizar tras obtener algún error en la validación
+de un formulario o tras procesar algunos parámetros de entrada.
+
+En este caso, para que al mostrar el formulario con los errores producidos  podamos añadir los datos que había escrito el usuario tendremos que  volver a enviar los valores enviados con  la petición usando el __método  withInput()__
+```php
+return redirect('form')->withInput();
+// O para reenviar los datos de entrada excepto algunos:
+return redirect('form')->withInput($request->except('password'));
+```
+Este método también lo podemos usar con la función back o con la función route
+```php
+return back()->withInput();
+return redirect()->route(‘formulario.index')->withInput();
+```
+### Formularios
+Para crear formularios la recomendación de laravel sobre __el parámetro action__ cuando tenemos que indicarle una dirección es __utilizar el método route__ , para lo cual la ruta del controlador tiene que tener un name.
+Ejemplo
+```php
+<form action="{{route('cursos.insertar')}}" method="POST">
+// en web.php la ruta esta definida
+Route::post('cursos',[CursoController::class,'insertar'])->name('cursos.insertar');
+```
+Como hemos visto anteriormente, en Laravel podemos definir distintas acciones  para procesar peticiones realizadas a una misma ruta pero usando un método  distinto (GET, POST, PUT, DELETE).
+
+Por ejemplo, podemos definir la ruta "curso" de tipo GET para que nos devuelva la página  con el formulario para crear un curso, y por otro lado definir la ruta "curso" de tipo  POST para procesar el envío del formulario. De esta forma cada ruta apuntará a un  método distinto de un controlador y nos facilitará la separación del código.
+
+Desde una vista con Blade podemos asignar el contenido de una variable (en el  ejemplo $nombre) para que aparezca el campo de texto con dicho valor. Esta  opción es muy útil para crear formularios en los que tenemos que __editar un  contenido ya existente__, como por ejemplo editar los datos de usuario:
+```php
+<input type="text" name="nombre" id="nombre" value="{{ $nombre }}">
+```
+Para mostrar los valores introducidos en una  petición anterior podemos usar el __método old__, el cuál recuperará las variables almacenadas en la petición anterior.
+
+Por ejemplo, un formulario para el registro de usuarios y al enviar el formulario se comprueba que el usuario introducido está repetido.
+En ese caso se tendría que volver a mostrar el formulario con los datos introducidos y  marcar dicho campo como erróneo.
+Para esto, después de comprobar que hay un error en el controlador, habría que  realizar una redirección a la página anterior añadiendo la entrada con withInput(), 
+por ejemplo:
+```php
+return back()->withInput();
+```
+El método withInput() añade todas las variables de entrada a la sesión, y esto nos  permite recuperarlas después de la forma:
+```php
+<input type="text" name="nombre" id="nombre" value="{{ old('nombre’) }}">
+```
+
+#### Protección contra CSRF
+El CSRF (del inglés Cross-site request forgery o falsificación de petición en  sitios cruzados) es un tipo de exploit malicioso de un sitio web en el que  comandos no autorizados son transmitidos por un usuario en el cual el sitio  web confía.
+
+Laravel proporciona una forma fácil de protegernos de este tipo de  ataques. Simplemente tendremos que llamar a la __directiva @csrf__ después de abrir el  formulario.
+
+Esto añadirá un campo oculto ya configurado con los valores necesarios. Un olvido de esta directiva provoca el error de tipo 419
+Ejemplo
+```php
+<form action="{{route('clientes.insertar')}}" method="POST">
+    @csrf
+  ...
+</form>
+```
+#### Validación de formularios
+Validar los datos en el servidor. Para la realización de esta acción, disponemos en el __objeto request de un método validate__, al que pasamos un aray con las reglas de validación.
+Por ejemplo, comprobar que el nombre y los apellidos tienen un tamaño minimo, para evitar datos inconsistentes. Si la validación falla, este método lanzará una excepción de tipo Illuminate\Validation\ValidationException, y el propio framework se encarga de devolver un mensaje de redirección al navegador para que acceda a la URL que teníamos cargada previamente
+Ejemplo
+```php
+public function insertar(Request $request){
+        $request->validate(
+          [ 'nombre'=>'required|min:4',
+            'apellidos'=>'required:min:4'
+          ],
+          [
+            'nombre.required'=>'el nombre es obligatorio',
+            'apellidos.required'=>'los apellidos son obligatorios'
+        ]);
+}
+```
+Las reglas de validacion se pueden consultar [linkl](https://laravel.com/docs/9.x/validation#available-validation-rules)
+
+#### Form Request para validaciones más complejas
+Existe otra alternativa para validaciones más complejas, de forma que así evitamos poner más codigo en los controladores y organizamos mejor el código. Se trarta de los form request, una clase adicional que contiene toda la lógica de validación. Los creamos con el comando php artisan
+Ejemplo
+```php
+php artisan make:request CrearClienteRequest
+```
+Esta clase se almacena de forma predeterminada en __app/Http/Request__ y contiene los siguientes métodos predefinidos:
+* Autorize:devuelve booleano, dependiendo de si el usuario está autorizado a enviar la petición o no. Si no requiere autorización, devolveremos true.
+* Rules: para indicar las reglas de validación.
+* Messages[opcional]: para personalizar los mensajes de error.
+* Atributes[opcional]: para personalizar, reemplazar el atributo, por el nombre del atributo personalizado
+
+Ejemplo:
+
+```php
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class CrearClienteRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, mixed>
+     */
+    public function rules()
+    {
+       return [ 'nombre'=>'required|min:4',
+                'apellidos'=>'required:min:4'
+          ];
+    }
+    public function attributes()
+    {
+        return[
+            'nombre'=>'nombre del cliente',
+        ];
+    }
+
+    public function messages()
+    {
+        return[
+            'nombre.required'=>'el nombre es obligatorio',
+            'apellidos.required'=>'los apellidos son obligatorios'
+        ];
+    }
+}
+```
+Por último, en el método del controlador recibiríamos como parámetro un objeto de tipo CrearClienteRequest en vez de un objeto de tipo Request.
 
 
 

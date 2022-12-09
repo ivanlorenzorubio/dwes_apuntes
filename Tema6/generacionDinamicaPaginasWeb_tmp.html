@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>generacionDinamicaPaginasWeb.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="ut6-generaci%C3%B3n-din%C3%A1mica-de-p%C3%A1ginas-web">UT6 GENERACIÓN DINÁMICA DE PÁGINAS WEB</h1>
+<h2 id="%C3%ADndice">Índice</h2>
+<h2 id="patr%C3%B3n-arquitect%C3%B3nico-mvc-modelo-vista-controlador">Patrón arquitectónico MVC (Modelo-Vista-Controlador)</h2>
+<p>En muchas ocasiones se mezcla el código propio de la lógica de la aplicación, con el código necesario para crear el interface web que se presenta a los usuarios.</p>
+<p>Existen varios métodos que permiten separar la lógica de presentación (en nuestro caso, la que<br>
+genera las etiquetas HTML) de la lógica de negocio, donde se implementa la lógica propia de<br>
+cada aplicación.</p>
+<p>El más extendido es el patrón de diseño Modelo – Vista – Controlador (MVC). Este patrón pretende dividir el código en tres partes, dedicando cada una, a una función definida y diferenciada de las otras:</p>
+<ul>
+<li>
+<p><strong>Modelo</strong>: es el encargado de manejar los datos propios de la aplicación.Debe proveer mecanismos para obtener y modificar la información del mismo. Si la aplicación utiliza algún tipo de almacenamiento para su información (como un SGBD), tendrá que encargarse de almacenarla y recuperarla.</p>
+</li>
+<li>
+<p><strong>Vista</strong>: es la parte del modelo que se encarga de la interacción con el usuario. En esta parte se encuentra el código necesario para generar el interface de usuario (en nuestro caso en HTML), según la información obtenida del modelo.</p>
+</li>
+<li>
+<p><strong>Controlador</strong>: en este módulo se decide qué se ha de hacer, en función de las acciones del usuario con su interface. Con esta información,interactúa con el modelo para indicarle las acciones a realizar y, según el resultado obtenido, envía a la vista las instrucciones necesarias para generar el nuevo interface.</p>
+</li>
+</ul>
+<h3 id="funcionamiento-mvc">Funcionamiento MVC</h3>
+<ol>
+<li>El usuario envía petición al controlador vía una URL</li>
+<li>El controlador solicita al modelo los datos</li>
+<li>El modelo devuelve los datos</li>
+<li>El controlador selecciona una vista</li>
+<li>Se devuelve la vista seleccionada al controlador</li>
+<li>El controlador devuelve una vista (página php) que carga los datos del modelo seleccionado</li>
+</ol>
+<p><img src="file:///c:/Users/cic/Documents/Curso22-23/DESARROLLOWEBENTORNOSERVIDOR/DWES2223/Tema6/img/modelomvc.png" alt="Modelo Vista Controlador"></p>
+<p>Aunque se puede programar utilizando MVC por tu cuenta, es más habitual utilizar el patrón MVC en  conjunción con un framework o marco de desarrollo. Existen numerosos frameworks disponibles en PHP,  muchos de los cuales incluyen soporte para MVC.</p>
+<p><strong>La arquitectura MVC</strong> separa <strong>la lógica de negocio</strong> (el modelo) y <strong>la  presentación</strong> (la vista) por lo que se consigue un mantenimiento  más sencillo de las aplicaciones.</p>
+<p>Si por ejemplo una misma aplicación debe ejecutarse tanto en un  navegador estándar como un navegador de un dispositivo móvil,  solamente es necesario crear una vista nueva para cada  dispositivo; manteniendo el controlador y el modelo original.</p>
+<p><strong>El  controlador se encarga de aislar al modelo y a la vista de los  detalles del protocolo</strong> utilizado para las peticiones (HTTP, consola  de comandos, email, etc.). <strong>El modelo se encarga de la abstracción  de la lógica relacionada con los datos</strong>, haciendo que la vista y las  acciones sean independientes de, por ejemplo, el tipo de gestor de  bases de datos utilizado por la aplicación.</p>
+<p>Para poder entender las ventajas de utilizar el patrón MVC, se va a  transformar una aplicación simple realizada con PHP en una  aplicación que sigue la arquitectura MVC</p>
+<h2 id="laravel">Laravel</h2>
+<p>Laravel es un framework de código abierto para el  desarrollo de aplicaciones web en PHP que posee una  sintaxis simple y elegante.</p>
+<p>Características:</p>
+<ul>
+<li>Creado en 2011 por Taylor Otwell.</li>
+<li>Está	inspirado	en	<strong>Ruby	on	rails</strong>	y	<strong>Symfony</strong>,	de	quien	posee  muchas dependencias.</li>
+<li>Está diseñado para desarrollar bajo el patrón <strong>MVC</strong></li>
+<li>Posee	un	sistema	de	mapeado	de	datos	relacional	llamado <strong>Eloquent ORM</strong>.</li>
+<li>Utiliza un sistema de procesamiento de plantillas llamado <strong>Blade</strong>,  el cuál hace uso de la caché para darle mayor velocidad</li>
+</ul>
+<h3 id="instalaci%C3%B3n">Instalación</h3>
+<p>Para la utilización de Laravel en primer lugar necesitamos tener instalado<br>
+lo siguiente:</p>
+<ul>
+<li>Un servidor web Apache</li>
+<li>PHP</li>
+<li>MySQL</li>
+<li>Composer(https://getcomposer.org)
+<ul>
+<li>Permite descargar y gestionar las dependencias del Framework.</li>
+<li>Es un administrador de dependencias para PHP que nos permite descargar paquetes  desde un repositorio para agregarlo a nuestro proyecto.</li>
+<li>Por defecto, se agregan a una carpeta llamada /vendor. De esta manera evitamos  hacer las búsquedas manualmente y el mismo Composer se puede encargar de  actualizar las dependencias que hayamos descargado por una nueva versión.</li>
+<li>al instalar composer indicar la dirección del php ejemplo en windows</li>
+</ul>
+</li>
+</ul>
+<p><img src="file:///c:/Users/cic/Documents/Curso22-23/DESARROLLOWEBENTORNOSERVIDOR/DWES2223/Tema6/img/composerphp.png" alt="Path en compososer de PHP"></p>
+<ul>
+<li>La librería de laravel
+<ul>
+<li>Usando la terminal de GitBash vamos a la carpeta de publicación c:/xampp/htdocs y escribimos:
+<ul>
+<li>composer global require laravel /installer</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="file:///c:/Users/cic/Documents/Curso22-23/DESARROLLOWEBENTORNOSERVIDOR/DWES2223/Tema6/img/instalaravel1.png" alt="instalar laravel"></p>
+<p>Instala la última versión de Laravel;con el paso del tiempo conviene ir actualizando la version de Laravel con el comando: composer global update laravel/installer</p>
+<ul>
+<li>comprobamos la versión del instalador de lavarel</li>
+</ul>
+<p><img src="file:///c:/Users/cic/Documents/Curso22-23/DESARROLLOWEBENTORNOSERVIDOR/DWES2223/Tema6/img/instalaravel2.png" alt="version instalador laravel"></p>
+<ul>
+<li>Adicionalmente también es recomendable instalar Node.js. Se instala la herramienta NPM (Node Package Manager), herramienta que permite instalar librerías de JavaScript, como BootStrap o jQuery. La página oficial es https://nodejs.org/es/download.
+<ul>
+<li>comprobamos la versión de node.js instalada</li>
+</ul>
+</li>
+</ul>
+<p><img src="file:///c:/Users/cic/Documents/Curso22-23/DESARROLLOWEBENTORNOSERVIDOR/DWES2223/Tema6/img/instanodejs.png" alt="version de node.js"></p>
+<p>Ahora podemos comprobar que todo lo instalado es correcto y que podemos crear nuestro primer proyecto de prueba en Laravel (lpruebas), aunque anteriormente ya estabamos posicionados en la carpeta de publicación del XAMPP hasta ahora no era necesario pero ahora sí.</p>
+<ul>
+<li>laravel new lpruebas</li>
+</ul>
+<p><img src="file:///c:/Users/cic/Documents/Curso22-23/DESARROLLOWEBENTORNOSERVIDOR/DWES2223/Tema6/img/crearproyecto.png" alt="comando para crear proyecto laravel"></p>
+<p>También tenemos la opción de solo realizar en un paso la instalación de Laravel y la creación del proyecto, poniendo en la carpeta de publicación:</p>
+<ul>
+<li>composer create-project laravel/laravel lpruebas</li>
+</ul>
+<p>Entramos en la carpeta <strong>public</strong>  y comprobamos que se ha instalado correctamente</p>
+<p><img src="file:///c:/Users/cic/Documents/Curso22-23/DESARROLLOWEBENTORNOSERVIDOR/DWES2223/Tema6/img/paginawebl.png" alt="pagina web de laravel"></p>
+<p>Como entorno de desarrollo vamos a utilizar Visual Studio code e instalar la extensión Laravel extension pack que a su vez nos instala 12 plugins.</p>
+<h3 id="patr%C3%B3n-de-laravel">Patrón de Laravel</h3>
+<p>Laravel se basa en un diseño  MVC</p>
+<p><img src="file:///c:/Users/cic/Documents/Curso22-23/DESARROLLOWEBENTORNOSERVIDOR/DWES2223/Tema6/img/patronlaravel.png" alt="patrón de laravel"></p>
+<h3 id="estructura-de-laravel">Estructura de Laravel</h3>
+<p>Vamos a ver la estructura de nuestro proyecto, para así entender que hay dentro de las principales carpetas:</p>
+<ul>
+<li><strong>app</strong> - contiene los controladores, modelos, vistas y  configuraciones de la aplicación. En esta carpeta escribiremos la  mayoría del código para que nuestra aplicación funcione. En la  carpeta Models tenemos un solo modelo: “User.php” que se crea  por defecto.</li>
+<li><strong>app/Http</strong>
+<ul>
+<li><strong>Controllers</strong> son los que interaccionan con los modelos</li>
+<li><strong>Midleware</strong> son filtros de seguridad cuando se envía una ruta, un formulario….</li>
+</ul>
+</li>
+<li><strong>bootstrap</strong> son archivos del sistema. En esta carpeta se incluye el código que se carga para procesar cada una de las llamadas a nuestro proyecto. Normalmente, no tendremos que modificar nada de esta carpeta.</li>
+<li><strong>config</strong> todos los archivos de configuración del sistema
+<ul>
+<li><strong>app.php</strong> tenemos los namespace para acceder a las librerías internas de Laravel,si descargamos algo nuevo para nuestra aplicación hay que  instalar los namespace aquí</li>
+<li><strong>database.php</strong> se configura la B.D. que ya contiene mysql, pero también  tiene sqlite y otras</li>
+<li><strong>filesystems.php</strong> maneja discos internos en laravel: imágenes, videos,…</li>
+</ul>
+</li>
+<li><strong>database</strong>
+<ul>
+<li><strong>migrations</strong> se crea la estructura para la BD,tablas...</li>
+</ul>
+</li>
+<li><strong>lang</strong> en esta carpeta se guardan archivos PHP que contienen arrays con los textos de nuestro sitio web en diferentes lenguajes; solo será necesario utilizarlo en caso de que se desee que la aplicación se pueda traducir</li>
+<li><strong>public</strong> es la única carpeta a la que los usuarios de la  aplicación pueden acceder. Todas las peticiones y solicitudes a la aplicación pasan por esta carpeta, ya que en ella se encuentra el index.php, este archivo es el que inicia todo el  proceso de ejecución del framework. En este directorio también se alojan los archivos CSS, Javascript, imágenes y  otros archivos que se quieran hacer públicos.</li>
+<li><strong>resources</strong>
+<ul>
+<li><strong>views</strong> las vistas. Welcome.blade.php que es la página de inicio</li>
+</ul>
+</li>
+<li><strong>routes</strong> las rutas. web.php es la más importante, aquí se definen las rutas para interpretar las solicitudes que el usuario hace al sistema</li>
+<li><strong>storage</strong> discos internos de laravel. En esta carpeta almacena toda la información interna necesaria para la ejecución de la web, como los archivos de sesión, la caché, la compilación de las vistas, metainformación y logs del sistema.</li>
+<li><strong>tests</strong> esta carpeta se utiliza para los ficheros con las pruebas automatizadas. Laravel incluye un sistema que facilita todo el proceso de pruebas con PHPUnit.</li>
+<li><strong>vendor</strong> En esta carpeta se alojan todas las librerías que  conforman el framework y sus dependencias</li>
+</ul>
+<p>Además, en la carpeta raíz también encontramos tres ficheros importantes que utilizaremos:</p>
+<ul>
+<li><strong>.env</strong> se utiliza para almacenar los valores de configuración que son propios de la máquina o instalación actual, lo que nos permite cambiar fácilmente la configuración según la máquina en la que se instale y tener opciones distintas para producción, para distintos desarrolladores.</li>
+<li><strong>composer.json</strong> este fichero es el utilizado por Composer para realizar la instalación de Laravel. En una instalación inicial únicamente se especificará la instalación de un paquete (el propio framework de laravel), pero podemos especificar la instalación de otras librerías o paquetes externos que añadan funcionalidad a Laravel.</li>
+<li><strong>package.json</strong> en este fichero se encuentran algunas dependencias por parte cliente( Bootstrap o jQuery), y se encuentran preinstaladas en la carpeta node_modules.<br>
+Estos tres archivos no deben subirse a ningun repositorio(GitHub) incluir en el <strong>.gitignore</strong>, porque si importamos un proyecto en laravel, podemos regenerar las dependencias de PHP con <strong>composer install</strong> y las dependencias de JavaScript con <strong>npm install</strong>, es decir, los archivos composer.json y package.json actúan como indice de dependencias de PHP y JavaScript, respectivamente.</li>
+</ul>
+<h3 id="funcionamiento-b%C3%A1sico">Funcionamiento básico</h3>
+<p>El funcionamiento básico que sigue Laravel tras una petición web a una URL de nuestro sitio es el siguiente:</p>
+<ol>
+<li>Todas las peticiones entran a través del fichero public/index.php, el cual en primer lugar comprobará en el fichero de rutas (routes/web.php) si la URL es válida y en caso  de serlo a qué controlador tiene que hacer la petición.</li>
+<li>A continuación se llamará al método del controlador asignado para dicha ruta. Como hemos visto, el controlador es el punto de entrada de las peticiones del usuario.</li>
+<li>Accederá a la base de datos (si fuese necesario) a través de los &quot;modelos&quot; para obtener datos (o para añadir, modificar o eliminar).</li>
+<li>Tras obtener los datos necesarios los preparará para pasárselos a la vista.</li>
+<li>Por último se mostrará al usuario</li>
+</ol>
+<p><img src="file:///c:/Users/cic/Documents/Curso22-23/DESARROLLOWEBENTORNOSERVIDOR/DWES2223/Tema6/img/funcionamiento.png" alt="funcionamiento básico"></p>
+<h3 id="artisan">Artisan</h3>
+<p>Laravel incluye un interfaz de línea de comandos (CLI,  Command line interface llamado <strong>Artisan</strong>.</p>
+<p>Esta utilidad nos va a permitir realizar múltiples tareas necesarias durante el  proceso de desarrollo o despliegue a producción de una aplicación, por lo que nos facilitará y acelerará el trabajo.</p>
+<p>Para ver una lista de todas las opciones que incluye Artisan podemos ejecutar el siguiente  comando en una consola o terminal del sistema en la carpeta raíz de nuestro proyecto:<br>
+<strong>php artisan list</strong> (o php artisan)</p>
+<p>vamos a la terminal de Visual Studio Code y ejecutamos</p>
+<p><img src="file:///c:/Users/cic/Documents/Curso22-23/DESARROLLOWEBENTORNOSERVIDOR/DWES2223/Tema6/img/artisan.png" alt="listado comandos artisan"></p>
+<p>Para ver un listado con todas las rutas que hemos definido en el fichero routes.php  podemos ejecutar el comando:</p>
+<p><strong>php artisan route:list</strong></p>
+<p>Esto nos mostrará una tabla con el método, la dirección, la acción y los filtros definidos  para todas las rutas.</p>
+<p>A través de la <strong>opción make</strong> podemos generar diferentes componentes de Laravel (controladores, modelos, filtros, etc.) como si fueran plantillas, esto nos ahorrará  mucho trabajo y podremos empezar a escribir directamente el contenido del  componente.Por ejemplo, para crear un nuevo controlador tendríamos que escribir:</p>
+<p><strong>php artisan make:controller TaskController</strong></p>
+<p>Dentro de Laravel, ya tenemos un servidor interno que haría la función de servidor web:</p>
+<p><strong>php artisan serve</strong></p>
+<p>Esto pondrá en marcha un servidor en el puerto 8000; podremos acceder anuestro proyecto a través de la URL http://localhost:8000</p>
+<h3 id="rutas">Rutas</h3>
+<p>Las rutas se tienen que definir en el fichero <strong>routes/web.php</strong>.</p>
+<p>Cualquier ruta no definida en este fichero no será válida, generado una excepción (lo que devolverá un error 404).</p>
+<p>Las rutas, en su forma más sencilla, pueden devolver <strong>directamente un valor</strong>  desde el propio fichero de rutas, pero también podrán <strong>generar la llamada  a una vista o a un controlador</strong>.</p>
+<p>Con las rutas, construimos las URL amigables( son fáciles de recordar y más seuguras) de nuestra aplicación, es importante para el posicionamiento web.</p>
+<p>Son un mecamismo que nos permite establecer el controlador al que debemos enviar la petición de una determinada URL.</p>
+<p>Además de definir la URL de la petición, también indican el método con el cual se ha de hacer dicha petición. Los dos métodos más utilizados son GET y tipo POST.</p>
+<p>En el archivo <strong>routes/web.php</strong> inicialmente ya existe una ruta predefinida a la raiz del proyecto</p>
+<pre class="hljs"><code><div>Route::get(<span class="hljs-string">'/'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">return</span> view(<span class="hljs-string">'welcome'</span>);
+});
+</div></code></pre>
+<p>Lo que hace dicha ruta es llamar al método <strong>view</strong>, que carga una vista o archivo final HTML situado en <strong>resources/views/welcome.blade.php</strong></p>
+<p>para definir una ruta, realizamos la llamada al método get/post de la clase Route</p>
+<pre class="hljs"><code><div>Route::get(<span class="hljs-string">'/'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>)</span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-string">'Hola mundo'</span>;
+});
+</div></code></pre>
+<p>Este código se lanzaría cuando se realice una petición tipo GET a la ruta raíz  de nuestra aplicación.</p>
+<p>Para definir una ruta tipo POST se realizaría de la misma forma pero cambiando el verbo  GET por POST:</p>
+<pre class="hljs"><code><div>Route::post(<span class="hljs-string">'foo/bar'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-string">'Hola mundo'</span>;
+});
+</div></code></pre>
+<p>En este caso la ruta apuntaría a la dirección URL foo/bar<br>
+Si queremos que una ruta se defina a la vez para get y post lo podemos hacer añadiendo un  array con los tipos, de la siguiente forma:</p>
+<pre class="hljs"><code><div>Route::match(<span class="hljs-keyword">array</span>(<span class="hljs-string">'GET'</span>,<span class="hljs-string">'POST'</span>),<span class="hljs-string">'/'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-string">'Hola mundo'</span>;
+});
+</div></code></pre>
+<p>O para cualquier tipo de petición HTTP utilizando el método any</p>
+<pre class="hljs"><code><div>Route::any(<span class="hljs-string">'/'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-string">'Hola mundo'</span>;
+});
+</div></code></pre>
+<p>Si queremos añadir parámetros a una ruta simplemente los tenemos que indicar<br>
+entre llaves {} a continuación de la ruta, de la forma:</p>
+<pre class="hljs"><code><div>Route::get(<span class="hljs-string">'user/{id}'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">($id)</span></span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-string">'User'</span>.$id;
+});
+</div></code></pre>
+<p>Definimos la ruta /user/{id}, donde id es <strong>obligatorio</strong> y puede ser cualquier valor.<br>
+En caso de no especificar ningún id se produciría un error. También podemos indicar  que un parámetro es opcional simplemente añadiendo el símbolo ? al final (y en  este caso no daría error si no se realiza la petición con dicho parámetro):</p>
+<pre class="hljs"><code><div>Route::get(<span class="hljs-string">'user/{name?}'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">($name=null)</span></span>{
+  <span class="hljs-keyword">return</span> $name;
+});
+<span class="hljs-comment">//tambien podemos poner algún valor por defecto</span>
+Route::get(<span class="hljs-string">'user/{name?}'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">($name=<span class="hljs-string">'cic'</span>)</span></span>{
+  <span class="hljs-keyword">return</span> $name;
+});
+</div></code></pre>
+<p>Podemos definir rutas con alias o named routes, al definir la ruta, asociamos al método name el nombre que queramos. Esto es interesante cuando esta ruta forma parte de algún enlace en alguna página de nuestra aplicación</p>
+<pre class="hljs"><code><div>Route::get(<span class="hljs-string">'clientes'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{<span class="hljs-keyword">return</span> <span class="hljs-string">"listado"</span>;})-&gt;name(<span class="hljs-string">'ruta_clientes'</span>);
+</div></code></pre>
+<p>Laravel también permite el uso de expresiones  regulares para validar los  parámetros que se le pasan a una ruta. Por ejemplo, para validar que un  parámetro esté formado sólo por letras o sólo por números:</p>
+<pre class="hljs"><code><div>Route::get(<span class="hljs-string">'user/{name?}'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">($name)</span></span>{<span class="hljs-keyword">return</span> $name;})-&gt;where(<span class="hljs-string">'name'</span>,<span class="hljs-string">'[A-Za-z]+'</span>);
+</div></code></pre>
+<h3 id="controladores">Controladores</h3>
+<p><strong>Un controlador es el componente que</strong> nos permite agrupar, de una mejor manera, el código necesario para dar respuesta a una petición HTTP; es el intermediario entre la vista y el modelo y <strong>se encarga de definir la lógica de negocio</strong> y los controladores son necesarios para resolver las solicitudes que llegan.</p>
+<p>Lo recomendable es asociar las rutas a un método de un controlador.</p>
+<p>Esto nos permitirá separar mucho mejor el código y crear clases  (controladores) que agrupen toda la funcionalidad de un determinado  recurso.</p>
+<blockquote>
+<p>Por ejemplo, podemos crear un controlador para gestionar toda la lógica  asociada al control de usuarios o cualquier otro tipo de recurso.</p>
+</blockquote>
+<p>Los controladores son el punto de entrada de las peticiones de los usuarios  y son los que deben contener toda la lógica asociada al procesamiento de  una petición, encargándose de realizar las consultas necesarias a la base  de datos, de preparar los datos y de llamar a la vista correspondiente con  dichos datos.</p>
+<p>Los controladores se almacenan en  ficheros PHP en la carpeta <strong>App/Http/Controllers</strong> y normalmente se les añade el sufijo <strong>Controller</strong>.<br>
+Ejemplo HomeController.php</p>
+<pre class="hljs"><code><div><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-keyword">namespace</span> <span class="hljs-title">App</span>\<span class="hljs-title">Http</span>\<span class="hljs-title">Controllers</span>;
+
+<span class="hljs-keyword">use</span> <span class="hljs-title">Illuminate</span>\<span class="hljs-title">Http</span>\<span class="hljs-title">Request</span>;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HomeController</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Controller</span>
+</span>{
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__invoke</span><span class="hljs-params">()</span></span>{
+       <span class="hljs-keyword">return</span> view(<span class="hljs-string">'home'</span>);
+    }
+}
+</div></code></pre>
+<p>Todos los controladores tienen que extender la clase base Controller que se<br>
+encuentra en la carpeta App/Http/Controllers.</p>
+<p>Se utiliza para centralizar toda la lógica que se vaya a utilizar de forma compartida por los controladores de nuestra aplicación.</p>
+<p>Una vez definido un controlador ya podemos asociarlo a una ruta. Para  esto tenemos que modificar el fichero de rutas web.php de la forma:</p>
+<p>Route::get('/',HomeController::class) -&gt; name('home');</p>
+<h4 id="crear-un-nuevo-controlador">Crear un nuevo controlador</h4>
+<p>Para crear uno nuevo bien lo podemos hacer a mano y rellenar  nosotros todo el código, o podemos utilizar el siguiente comando de  Artisan que nos adelantará todo el trabajo:</p>
+<p><strong>php artisan make:controller EjemploController</strong></p>
+<p>el comando artisan admite algunos parámetros adicionales más. Uno muy útil es el <strong>paramétro -i</strong> que crea el controlador con un método llamado <strong>invoke</strong>, que se autoejecuta cuando es llamado desde algún proceso de enrutamiento. Dentro del método invoke, podemos definir la lógica de generar y obtener los datos que necesita una vista y renderizarla,  como es el ejemplo visto.</p>
+<p>si creamos un controlador con la opción -r en vez de -i, creará un controlador de recursos(resources) y predefine en él una serie de métodos de utilidad vacios para cada una de las operaciones principales que se pueden realizar sobre una entidad de nuestra aplicación:</p>
+<ul>
+<li><strong>index</strong>- muestra un listado de los elementos de esa entidad o recurso.</li>
+<li><strong>create</strong> muestra el formulario para dar de alta nuevos elementos.</li>
+<li><strong>store</strong> almacena en la base de datos el recurso creado con el formulario anterior.</li>
+<li><strong>show</strong> muestra los datos de un recurso específico ( a partir de su clave o id).</li>
+<li><strong>edit</strong> muestra el formulario para editar un recurso existente.</li>
+<li><strong>update</strong> actrualiza en la base de datos el recurso editado en el formulario anterior.</li>
+<li><strong>destroy</strong> elimina un recurso por su identificador.</li>
+</ul>
+<p>También podemos crear subcarpetas dentro de la carpeta Controllers para  organizarnos mejor. Pero a la hora de hacer referencia al controlador únicamente  se tendrá que hacer a través de su espacio de nombres.<br>
+Por ejemplo para crear un controlador en app\Http\Controllers\Fotos\AdminController:<br>
+<strong>php artisan make:controller Fotos/AdminController</strong></p>
+<h4 id="generar-una-url-a-una-acci%C3%B3n">Generar una URL a una acción</h4>
+<p>en el fichero de rutas se debe añadir un <strong>name</strong> a la ruta:</p>
+<pre class="hljs"><code><div>Route::get(‘foo’, [FooController::class,’method<span class="hljs-string">'])-&gt;name(“foo.method");
+</span></div></code></pre>
+<p>Luego dede una plantilla podríamos hacer</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"{{ route(‘foo.method') }}"</span>&gt;</span>¡Aprieta aquí!<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+</div></code></pre>
+<h3 id="vistas">Vistas</h3>
+<p>Las vistas son la forma de presentar el resultado (una pantalla de nuestro sitio web) de forma  visual al usuario, el cual podrá interactuar con él y volver a realizar una petición.</p>
+<p>Las vistas además nos permiten separar toda la parte de presentación de resultados de la  lógica (controladores) y de la base de datos (modelos). Por lo tanto <strong>no tendrán que realizar  ningún tipo de consulta ni procesamiento de datos</strong>, simplemente  recibirán datos y los  prepararán para mostrarlos como HTML.</p>
+<p>Las vistas se almacenan en la carpeta <strong>resources/views</strong> como ficheros <strong>PHP</strong>. Contendrán el  código HTML de nuestro sitio web, mezclado con los assets (CSS, imágenes, Javascripts, etc.  que estarán almacenados en la carpeta public) y algo de código PHP (o código Blade de  plantillas) para presentar los datos de entrada como un resultado HTML.</p>
+<h4 id="pasar-variables-a-las-vistas">pasar variables a las vistas</h4>
+<p>Una vez tenemos una vista tenmos que asociarla a una ruta para poder mostrarla.</p>
+<p>Se suele pasar información como variables desde las rutas o los controladores a las vistas. Por ejemplo, pasar listado de datos.</p>
+<p>En este ejemplo estamos pasando la variable nombre y apellidos a la vista <strong>inicio</strong>, con el método <strong>with</strong>:</p>
+<pre class="hljs"><code><div>Route::get(<span class="hljs-string">'/'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+  $nombre=<span class="hljs-string">"pepe"</span>;
+  $apellidos=<span class="hljs-string">"Grillo"</span>;
+  <span class="hljs-keyword">return</span> view(<span class="hljs-string">'inicio'</span>)-&gt;with([<span class="hljs-string">'nombre'</span>=&gt;$nombre,<span class="hljs-string">'apellidos'</span>=&gt;$apellidos]);
+});
+</div></code></pre>
+<p>Otra alternativa es pasarlo como segundo parámetro a la función <strong>view</strong> como array asociativo</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">return</span> view(<span class="hljs-string">'inicio'</span>,[<span class="hljs-string">'nombre'</span>=&gt;$nombre,<span class="hljs-string">'apellidos'</span>=&gt;$apellidos]);
+</div></code></pre>
+<p>Otra mucho más usada es con la funcion <strong>compact</strong> como segundo parámetro de <strong>view</strong>. En este caso, solo le pasamos el nombre de la variable definida en nuestro código cuyo valor queremos pasar a la vista.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">return</span> view(<span class="hljs-string">'inicio'</span>,compact(<span class="hljs-string">'nombre'</span>,<span class="hljs-string">'apellidos'</span>));
+</div></code></pre>
+<p>En este ejemplo estamos pasando las variables nombre y apellidos a la vista inicio, de forma que podemos acceder a ellas como si de una variable local se tratara.</p>
+<pre class="hljs"><code><div>&lt;p&gt; bienvenido a <span class="hljs-meta">&lt;?php</span> <span class="hljs-keyword">echo</span> $nombre.<span class="hljs-string">","</span>.$apellidos <span class="hljs-meta">?&gt;</span>&lt;/p&gt;
+</div></code></pre>
+<p>lo habitual es acceder a la variable mediante la sintaxis específica de Blade, el motor de plantillas de Laravel que veremos.</p>
+<pre class="hljs"><code><div>&lt;p&gt; bienvenido a {{$nombre}}.<span class="hljs-string">","</span>.{{$apellidos}}&lt;/p&gt;
+</div></code></pre>
+<h4 id="organizaci%C3%B3n-de-las-vistas">Organización de las vistas</h4>
+<p>Las vistas se pueden organizar en sub-carpetas dentro de la carpeta resources/views.</p>
+<p>Por ejemplo podríamos tener una carpeta resources/views/user y dentro de esta todas las<br>
+vistas relacionadas, como por ejemplo login.php, register.php o profile.php.</p>
+<p>En este caso para referenciar las vistas que están dentro de sub-carpetas tenemos que utilizar  la notación tipo &quot;dot&quot;, en la que las barras que separan las carpetas se sustituyen por puntos.</p>
+<p>Por ejemplo, para referenciar la vista resources/views/user/login.php usaríamos el nombre  user.login, o la vista resources/views/user/register.php la cargaríamos de la forma:</p>
+<pre class="hljs"><code><div>Route::get(<span class="hljs-string">'register'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+  <span class="hljs-keyword">return</span> view(<span class="hljs-string">'user.register'</span>);
+});
+</div></code></pre>
+<h3 id="motor-de-plantillas-blade">Motor de plantillas Blade</h3>
+<p>Laravel utiliza Blade para la definición de plantillas en las vistas.</p>
+<p>Esta librería permite realizar todo tipo de operaciones con los datos, además de la  sustitución de secciones de las plantillas por otro contenido, herencia entre plantillas,  definición de layouts o plantillas base, etc.</p>
+<p>Los ficheros de vistas que utilizan el sistema de plantillas Blade tienen que tener la  extensión <strong>.blade.php.</strong></p>
+<p>Esta extensión tampoco se tendrá que incluir a la hora de referenciar una vista  desde el fichero de rutas o desde un controlador. Es decir, utilizaremos view('home')  tanto si el fichero se llama home.php como home.blade.php.</p>
+<p>En general <strong>el código</strong> que incluye <strong>Blade en una vista</strong> empezará por <strong>los símbolos @</strong>  o <strong>{{</strong>, el cual posteriormente será procesado y preparado para mostrarse por  pantalla.</p>
+<p>Blade no añade sobrecarga de procesamiento,  ya que todas las vistas son<br>
+preprocesadas y cacheadas.</p>
+<p>El método más básico que tenemos en Blade es el de mostrar datos. Para esto  utilizaremos las llaves dobles {{ }} y dentro de ellas escribiremos la variable o  función a mostrar:</p>
+<p>Ejemplo:</p>
+<pre class="hljs"><code><div>Hola {{$name}}
+La hora actual es {{time()}}
+</div></code></pre>
+<h4 id="mostrar-un-dato-solo-si-existe">Mostrar un dato solo si existe</h4>
+<p>Para	comprobar	que	una	variable	existe	o	tiene	un	determinado  valor podemos utilizar el operador ternario de la forma:</p>
+<pre class="hljs"><code><div>{{ <span class="hljs-keyword">isset</span>($name) ? $name : <span class="hljs-string">'Valor por defecto'</span> }}
+</div></code></pre>
+<p>O simplemente usar la notación que incluye Blade para este fin:</p>
+<pre class="hljs"><code><div>{{ $name <span class="hljs-keyword">or</span> <span class="hljs-string">'Valor por defecto'</span> }}
+</div></code></pre>
+<h4 id="comentarios">Comentarios</h4>
+<p>Para escribir comentarios en Blade se utilizan los símbolos {{-- y --}},  por ejemplo:</p>
+<pre class="hljs"><code><div>{{-- Este comentario no se mostrará en HTML --}}
+</div></code></pre>
+<h4 id="estructuras-de-control">Estructuras de control</h4>
+<p>Todas las directivas Blade vienen precedidas del <strong>símbolo @</strong> nos permite utilizar la <strong>estructura condicional if</strong> de las siguientes formas:</p>
+<pre class="hljs"><code><div>@<span class="hljs-keyword">if</span>( count($users) === <span class="hljs-number">1</span> )  
+  ¡Solo hay un usuario!  
+@<span class="hljs-keyword">elseif</span> (count($users) &gt; <span class="hljs-number">1</span>)  
+  ¡Hay muchos usuarios!
+@<span class="hljs-keyword">else</span>
+  ¡No hay ningún usuario!  
+@<span class="hljs-keyword">endif</span>
+</div></code></pre>
+<p><strong>Estructuras repetitivas bucles tipo for, while o foreach</strong></p>
+<pre class="hljs"><code><div>@<span class="hljs-keyword">for</span> ($i = <span class="hljs-number">0</span>; $i &lt; <span class="hljs-number">10</span>; $i++)  
+  El valor actual es {{ $i }}
+@<span class="hljs-keyword">endfor</span>
+@<span class="hljs-keyword">while</span> (<span class="hljs-keyword">true</span>)
+&lt;p&gt;Soy un bucle <span class="hljs-keyword">while</span> infinito!&lt;/p&gt;  
+@<span class="hljs-keyword">endwhile</span>
+@<span class="hljs-keyword">foreach</span> ($users <span class="hljs-keyword">as</span> $user)
+&lt;p&gt;Usuario {{ $user-&gt;name }} con identificador: {{ $user-&gt;id }}&lt;/p&gt;  
+@<span class="hljs-keyword">endforeach</span>
+</div></code></pre>
+<p><strong>Estructura alternativa que controla a la vez que la variable esté definida y tenga elementos forelse</strong><br>
+Esta directiva permite una cláusula adicional @empty para indicar qué hacer si la colección no tiene elementos o está sin definir.</p>
+<pre class="hljs"><code><div>@forelse ($elementos <span class="hljs-keyword">as</span> $elemento)
+&lt;li&gt; {{$elemento}}&lt;/li&gt;
+@<span class="hljs-keyword">empty</span>
+&lt;li&gt;No hay elementos que mostrar &lt;/li&gt;
+@endforelse
+</div></code></pre>
+<h4 id="enlaces-a-otras-rutas-con-blade">Enlaces a otras rutas con Blade</h4>
+<p>la forma tradicional de enlazar es</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;a href='/contacto'&gt;contacto&lt;/a&gt;"</span>;
+</div></code></pre>
+<p>o bien empleando la funcion route, seguida del nombre que le dado a la ruta:</p>
+<pre class="hljs"><code><div>&lt;a href=<span class="hljs-string">"{{route('ruta_contacto')}}"</span>&gt;contacto&lt;/a&gt;;
+</div></code></pre>
+<p>Mediante Blade, empleando la funcion url, que genera una URL completa hasta la ruta que indiquemos</p>
+<pre class="hljs"><code><div>&lt;a href=<span class="hljs-string">"{{url('/contacto')}}"</span>&gt;contacto&lt;/a&gt;
+</div></code></pre>
+<h4 id="definir-plantillas-con-blade">Definir Plantillas con Blade</h4>
+<p>En Blade podemos indicar que se incluya una plantilla dentro de otra plantilla,<br>
+para esto disponemos de la instrucción @include:</p>
+<pre class="hljs"><code><div>@<span class="hljs-keyword">include</span>(<span class="hljs-string">'view_name'</span>)
+</div></code></pre>
+<p>Además podemos pasarle un array de datos a la vista a cargar usando el segundo  parámetro del método include:</p>
+<pre class="hljs"><code><div>@<span class="hljs-keyword">include</span>(<span class="hljs-string">'view_name'</span>, <span class="hljs-keyword">array</span>(<span class="hljs-string">'some'</span>=&gt;<span class="hljs-string">'data'</span>))
+</div></code></pre>
+<p>Esta opción es muy útil para crear vistas que sean reutilizables o para separar el<br>
+contenido de una vista en varios ficheros.</p>
+<p><strong>Layouts</strong><br>
+Blade también nos permite la definición de layouts para crear una estructura HTML  base con secciones que serán rellenadas por otras plantillas o vistas hijas.</p>
+<p>Por ejemplo, podemos crear un layout con el contenido principal o común de nuestra  web (head, body, etc.) y definir una serie de secciones que serán rellenados por  otras plantillas para completar el código.</p>
+<p>Este layout puede ser utilizado para todas las pantallas de nuestro sitio web, lo que  nos permite que en el resto de plantillas no tengamos que repetir todo este código.<br>
+Para crear una plantilla en Blade, creamos por ejemplo, _<em>plantilla.blade.php</em> en la carpeta<br>
+<strong>resources/view/layout/</strong> plantilla.blade.php<br>
+En aquellas zonas del documento donde vamos a permitir contenido variable dependiendo de la vista, añadimos una sección llamada <strong>@yield, con un nombre asociado</strong>.<br>
+Un ejemplo</p>
+<pre class="hljs"><code><div>&lt;!DOCTYPE html&gt;
+&lt;html lang=<span class="hljs-string">"en"</span>&gt;
+&lt;head&gt;
+    &lt;meta charset=<span class="hljs-string">"UTF-8"</span>&gt;
+    &lt;meta http-equiv=<span class="hljs-string">"X-UA-Compatible"</span> content=<span class="hljs-string">"IE=edge"</span>&gt;
+    &lt;meta name=<span class="hljs-string">"viewport"</span> content=<span class="hljs-string">"width=device-width, initial-scale=1.0"</span>&gt;
+    &lt;title&gt;@<span class="hljs-keyword">yield</span>(<span class="hljs-string">'titulo'</span>)&lt;/title&gt;
+    &lt;!--favicon --&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    @<span class="hljs-keyword">include</span>(<span class="hljs-string">'layouts.partials.header'</span>)
+    @<span class="hljs-keyword">yield</span>(<span class="hljs-string">'contenido'</span>)
+    @<span class="hljs-keyword">include</span>(<span class="hljs-string">'layouts.partials.footer'</span>)
+&lt;/body&gt;
+&lt;/html&gt;
+</div></code></pre>
+<p>En el ejemplo ya está incluyendo otras vistas header y footer que se encuentran definidas en <strong>resources/view/layout/partials/</strong><br>
+Por ejemplo el contenido de footer denominada footer.blade.php</p>
+<pre class="hljs"><code><div>&lt;footer&gt;
+    este es el pie de página
+&lt;/footer&gt;
+</div></code></pre>
+<p>Luego, en cada vista en la que usemos esta plantilla, añadimos la directiva <strong>@extends('el nombre de la plantilla')</strong>.<br>
+Con la directiva <strong>@section('nombre de la seccion')</strong> añadimos el contenido de esa sección para cada uno de los @yield de la plantilla.<br>
+por ejemplo nuestra página de inicio denomina inicio.blade.php su contenido podría ser</p>
+<pre class="hljs"><code><div>@extends(<span class="hljs-string">'layouts.plantilla'</span>)
+@section(<span class="hljs-string">'titulo'</span>,<span class="hljs-string">'Inicio'</span>)
+@section(<span class="hljs-string">'contenido'</span>)
+    &lt;h1&gt;Bienvenido a la página principal&lt;/h1&gt;
+@endsection
+</div></code></pre>
+<h3 id="redirecciones">Redirecciones</h3>
+<p>Como respuesta a una petición también podemos devolver una redirección. Esta  opción será interesante cuando, por ejemplo, el usuario no esté logueado y lo  queramos redirigir al formulario de login, o cuando se produzca un error en la  validación de una petición y queramos redirigir a otra ruta.</p>
+<p>Utilizando el <strong>método redirect</strong> y lo recomendable es redireccionar usando el nombre asociado a la ruta</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">return</span> redirect()-&gt;route(‘user.login’);
+</div></code></pre>
+<p>O si queremos volver a la ruta anterior simplemente podemos usar <strong>el método back</strong></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">return</span> back();
+</div></code></pre>
+<h4 id="redirecciones-con-valores">Redirecciones con valores</h4>
+<p>Si queremos  enviar datos a otra página mediante la sesión del usuario (por  ejemplo un mensaje de éxito tras realizar una inserción) podemos utilizar el <strong>método  with()</strong></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">return</span> redirect()-&gt;route(‘perfil.show’)-&gt;with(<span class="hljs-string">'mensaje’, “Perfil de usuario actualizado");
+</span></div></code></pre>
+<h4 id="redirecci%C3%B3n-con-los-valores-de-la-petici%C3%B3n">Redirección con los valores de la petición</h4>
+<p>Las redirecciones se suelen utilizar tras obtener algún error en la validación<br>
+de un formulario o tras procesar algunos parámetros de entrada.</p>
+<p>En este caso, para que al mostrar el formulario con los errores producidos  podamos añadir los datos que había escrito el usuario tendremos que  volver a enviar los valores enviados con  la petición usando el <strong>método  withInput()</strong></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">return</span> redirect(<span class="hljs-string">'form'</span>)-&gt;withInput();
+<span class="hljs-comment">// O para reenviar los datos de entrada excepto algunos:</span>
+<span class="hljs-keyword">return</span> redirect(<span class="hljs-string">'form'</span>)-&gt;withInput($request-&gt;except(<span class="hljs-string">'password'</span>));
+</div></code></pre>
+<p>Este método también lo podemos usar con la función back o con la función route</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">return</span> back()-&gt;withInput();
+<span class="hljs-keyword">return</span> redirect()-&gt;route(‘formulario.index<span class="hljs-string">')-&gt;withInput();
+</span></div></code></pre>
+<h3 id="formularios">Formularios</h3>
+<p>Para crear formularios la recomendación de laravel sobre <strong>el parámetro action</strong> cuando tenemos que indicarle una dirección es <strong>utilizar el método route</strong> , para lo cual la ruta del controlador tiene que tener un name.<br>
+Ejemplo</p>
+<pre class="hljs"><code><div>&lt;form action=<span class="hljs-string">"{{route('cursos.insertar')}}"</span> method=<span class="hljs-string">"POST"</span>&gt;
+<span class="hljs-comment">// en web.php la ruta esta definida</span>
+Route::post(<span class="hljs-string">'cursos'</span>,[CursoController::class,<span class="hljs-string">'insertar'</span>])-&gt;name(<span class="hljs-string">'cursos.insertar'</span>);
+</div></code></pre>
+<p>Como hemos visto anteriormente, en Laravel podemos definir distintas acciones  para procesar peticiones realizadas a una misma ruta pero usando un método  distinto (GET, POST, PUT, DELETE).</p>
+<p>Por ejemplo, podemos definir la ruta &quot;curso&quot; de tipo GET para que nos devuelva la página  con el formulario para crear un curso, y por otro lado definir la ruta &quot;curso&quot; de tipo  POST para procesar el envío del formulario. De esta forma cada ruta apuntará a un  método distinto de un controlador y nos facilitará la separación del código.</p>
+<p>Desde una vista con Blade podemos asignar el contenido de una variable (en el  ejemplo $nombre) para que aparezca el campo de texto con dicho valor. Esta  opción es muy útil para crear formularios en los que tenemos que <strong>editar un  contenido ya existente</strong>, como por ejemplo editar los datos de usuario:</p>
+<pre class="hljs"><code><div>&lt;input type=<span class="hljs-string">"text"</span> name=<span class="hljs-string">"nombre"</span> id=<span class="hljs-string">"nombre"</span> value=<span class="hljs-string">"{{ $nombre }}"</span>&gt;
+</div></code></pre>
+<p>Para mostrar los valores introducidos en una  petición anterior podemos usar el <strong>método old</strong>, el cuál recuperará las variables almacenadas en la petición anterior.</p>
+<p>Por ejemplo, un formulario para el registro de usuarios y al enviar el formulario se comprueba que el usuario introducido está repetido.<br>
+En ese caso se tendría que volver a mostrar el formulario con los datos introducidos y  marcar dicho campo como erróneo.<br>
+Para esto, después de comprobar que hay un error en el controlador, habría que  realizar una redirección a la página anterior añadiendo la entrada con withInput(),<br>
+por ejemplo:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">return</span> back()-&gt;withInput();
+</div></code></pre>
+<p>El método withInput() añade todas las variables de entrada a la sesión, y esto nos  permite recuperarlas después de la forma:</p>
+<pre class="hljs"><code><div>&lt;input type=<span class="hljs-string">"text"</span> name=<span class="hljs-string">"nombre"</span> id=<span class="hljs-string">"nombre"</span> value=<span class="hljs-string">"{{ old('nombre’) }}"</span>&gt;
+</div></code></pre>
+<h4 id="protecci%C3%B3n-contra-csrf">Protección contra CSRF</h4>
+<p>El CSRF (del inglés Cross-site request forgery o falsificación de petición en  sitios cruzados) es un tipo de exploit malicioso de un sitio web en el que  comandos no autorizados son transmitidos por un usuario en el cual el sitio  web confía.</p>
+<p>Laravel proporciona una forma fácil de protegernos de este tipo de  ataques. Simplemente tendremos que llamar a la <strong>directiva @csrf</strong> después de abrir el  formulario.</p>
+<p>Esto añadirá un campo oculto ya configurado con los valores necesarios. Un olvido de esta directiva provoca el error de tipo 419<br>
+Ejemplo</p>
+<pre class="hljs"><code><div>&lt;form action=<span class="hljs-string">"{{route('clientes.insertar')}}"</span> method=<span class="hljs-string">"POST"</span>&gt;
+    @csrf
+  ...
+&lt;/form&gt;
+</div></code></pre>
+<h4 id="validaci%C3%B3n-de-formularios">Validación de formularios</h4>
+<p>Validar los datos en el servidor. Para la realización de esta acción, disponemos en el <strong>objeto request de un método validate</strong>, al que pasamos un aray con las reglas de validación.<br>
+Por ejemplo, comprobar que el nombre y los apellidos tienen un tamaño minimo, para evitar datos inconsistentes. Si la validación falla, este método lanzará una excepción de tipo Illuminate\Validation\ValidationException, y el propio framework se encarga de devolver un mensaje de redirección al navegador para que acceda a la URL que teníamos cargada previamente<br>
+Ejemplo</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">insertar</span><span class="hljs-params">(Request $request)</span></span>{
+        $request-&gt;validate(
+          [ <span class="hljs-string">'nombre'</span>=&gt;<span class="hljs-string">'required|min:4'</span>,
+            <span class="hljs-string">'apellidos'</span>=&gt;<span class="hljs-string">'required:min:4'</span>
+          ],
+          [
+            <span class="hljs-string">'nombre.required'</span>=&gt;<span class="hljs-string">'el nombre es obligatorio'</span>,
+            <span class="hljs-string">'apellidos.required'</span>=&gt;<span class="hljs-string">'los apellidos son obligatorios'</span>
+        ]);
+}
+</div></code></pre>
+<p>Las reglas de validacion se pueden consultar <a href="https://laravel.com/docs/9.x/validation#available-validation-rules">linkl</a></p>
+<h4 id="form-request-para-validaciones-m%C3%A1s-complejas">Form Request para validaciones más complejas</h4>
+<p>Existe otra alternativa para validaciones más complejas, de forma que así evitamos poner más codigo en los controladores y organizamos mejor el código. Se trarta de los form request, una clase adicional que contiene toda la lógica de validación. Los creamos con el comando php artisan<br>
+Ejemplo</p>
+<pre class="hljs"><code><div>php artisan make:request CrearClienteRequest
+</div></code></pre>
+<p>Esta clase se almacena de forma predeterminada en <strong>app/Http/Request</strong> y contiene los siguientes métodos predefinidos:</p>
+<ul>
+<li>Autorize:devuelve booleano, dependiendo de si el usuario está autorizado a enviar la petición o no. Si no requiere autorización, devolveremos true.</li>
+<li>Rules: para indicar las reglas de validación.</li>
+<li>Messages[opcional]: para personalizar los mensajes de error.</li>
+<li>Atributes[opcional]: para personalizar, reemplazar el atributo, por el nombre del atributo personalizado</li>
+</ul>
+<p>Ejemplo:</p>
+<pre class="hljs"><code><div><span class="hljs-meta">&lt;?php</span>
+
+<span class="hljs-keyword">namespace</span> <span class="hljs-title">App</span>\<span class="hljs-title">Http</span>\<span class="hljs-title">Requests</span>;
+
+<span class="hljs-keyword">use</span> <span class="hljs-title">Illuminate</span>\<span class="hljs-title">Foundation</span>\<span class="hljs-title">Http</span>\<span class="hljs-title">FormRequest</span>;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CrearClienteRequest</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">FormRequest</span>
+</span>{
+    <span class="hljs-comment">/**
+     * Determine if the user is authorized to make this request.
+     *
+     * <span class="hljs-doctag">@return</span> bool
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">authorize</span><span class="hljs-params">()</span>
+    </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+    }
+
+    <span class="hljs-comment">/**
+     * Get the validation rules that apply to the request.
+     *
+     * <span class="hljs-doctag">@return</span> array&lt;string, mixed&gt;
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">rules</span><span class="hljs-params">()</span>
+    </span>{
+       <span class="hljs-keyword">return</span> [ <span class="hljs-string">'nombre'</span>=&gt;<span class="hljs-string">'required|min:4'</span>,
+                <span class="hljs-string">'apellidos'</span>=&gt;<span class="hljs-string">'required:min:4'</span>
+          ];
+    }
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">attributes</span><span class="hljs-params">()</span>
+    </span>{
+        <span class="hljs-keyword">return</span>[
+            <span class="hljs-string">'nombre'</span>=&gt;<span class="hljs-string">'nombre del cliente'</span>,
+        ];
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">messages</span><span class="hljs-params">()</span>
+    </span>{
+        <span class="hljs-keyword">return</span>[
+            <span class="hljs-string">'nombre.required'</span>=&gt;<span class="hljs-string">'el nombre es obligatorio'</span>,
+            <span class="hljs-string">'apellidos.required'</span>=&gt;<span class="hljs-string">'los apellidos son obligatorios'</span>
+        ];
+    }
+}
+</div></code></pre>
+<p>Por último, en el método del controlador recibiríamos como parámetro un objeto de tipo CrearClienteRequest en vez de un objeto de tipo Request.</p>
+
+</body>
+</html>
