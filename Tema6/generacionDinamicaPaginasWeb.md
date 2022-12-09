@@ -430,16 +430,16 @@ La hora actual es {{time()}}
 
 Para	comprobar	que	una	variable	existe	o	tiene	un	determinado  valor podemos utilizar el operador ternario de la forma:
 ``` 
-  operador Ternario:  {{ isset($name) ? $name : 'Valor por defecto' }}
+  {{ isset($name) ? $name : 'Valor por defecto' }}
 ```
 O simplemente usar la notación que incluye Blade para este fin:
 ``` 
-  notacion Blade:  {{ $name or 'Valor por defecto' }}
+  {{ $name or 'Valor por defecto' }}
 ```
 #### Comentarios
 Para escribir comentarios en Blade se utilizan los símbolos {{-- y --}}:
 ``` 
-  comentario Blade:  {{-- Este comentario no se mostrará en HTML --}}
+  {{-- Este comentario no se mostrará en HTML --}}
 ```
 
 #### Estructuras de control
