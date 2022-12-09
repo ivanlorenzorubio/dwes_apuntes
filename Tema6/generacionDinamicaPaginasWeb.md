@@ -89,7 +89,7 @@ lo siguiente:
 * Un servidor web Apache
 * PHP
 * MySQL
-* Composer(https://getcomposer.org)
+* Composer [Enlace a la página oficial](https://getcomposer.org)
     * Permite descargar y gestionar las dependencias del Framework.
     * Es un administrador de dependencias para PHP que nos permite descargar paquetes  desde un repositorio para agregarlo a nuestro proyecto.
     * Por defecto, se agregan a una carpeta llamada /vendor. De esta manera evitamos  hacer las búsquedas manualmente y el mismo Composer se puede encargar de  actualizar las dependencias que hayamos descargado por una nueva versión.
@@ -109,7 +109,7 @@ Instala la última versión de Laravel;con el paso del tiempo conviene ir actual
 
 ![version instalador laravel](img/instalaravel2.png)
       
-* Adicionalmente también es recomendable instalar Node.js. Se instala la herramienta NPM (Node Package Manager), herramienta que permite instalar librerías de JavaScript, como BootStrap o jQuery. La página oficial es https://nodejs.org/es/download.
+* Adicionalmente también es recomendable instalar Node.js. Se instala la herramienta NPM (Node Package Manager), herramienta que permite instalar librerías de JavaScript, como BootStrap o jQuery. [La página oficial de Node.js](https://nodejs.org/es/download).
     * comprobamos la versión de node.js instalada
 
 ![version de node.js](img/instanodejs.png)
@@ -637,7 +637,7 @@ public function insertar(Request $request){
         ]);
 }
 ```
-Las reglas de validacion se pueden consultar [linkl](https://laravel.com/docs/9.x/validation#available-validation-rules)
+Las reglas de validacion se pueden consultar [enlace](https://laravel.com/docs/9.x/validation#available-validation-rules)
 
 #### Form Request para validaciones más complejas
 Existe otra alternativa para validaciones más complejas, de forma que así evitamos poner más codigo en los controladores y organizamos mejor el código. Se trarta de los form request, una clase adicional que contiene toda la lógica de validación. Los creamos con el comando php artisan
