@@ -324,7 +324,7 @@ __php artisan make:controller EjemploController__
 
 el comando artisan admite algunos parámetros adicionales más. Uno muy útil es el __paramétro -i__ que crea el controlador con un método llamado __invoke__, que se autoejecuta cuando es llamado desde algún proceso de enrutamiento. Dentro del método invoke, podemos definir la lógica de generar y obtener los datos que necesita una vista y renderizarla,  como es el ejemplo visto.
 
-si creamos un controlador con la opción -r en vez de -i, creará un controlador de recursos(resources) y predefine en él una serie de métodos de utilidad vacios para cada una de las operaciones principales que se pueden realizar sobre una entidad de nuestra aplicación:
+si creamos un controlador con __la opción -r__ en vez de -i, __creará un controlador de recursos(resources)__ y predefine en él una serie de métodos de utilidad vacios para cada una de las operaciones principales que se pueden realizar sobre una entidad de nuestra aplicación:
 * __index__- muestra un listado de los elementos de esa entidad o recurso.
 * __create__ muestra el formulario para dar de alta nuevos elementos.
 * __store__ almacena en la base de datos el recurso creado con el formulario anterior.
@@ -429,18 +429,17 @@ La hora actual es {{time()}}
 #### Mostrar un dato solo si existe
 
 Para	comprobar	que	una	variable	existe	o	tiene	un	determinado  valor podemos utilizar el operador ternario de la forma:
-
-```php 
+``` 
 {{ isset($name) ? $name : 'Valor por defecto' }}
-```
 
+```
 O simplemente usar la notación que incluye Blade para este fin:
-```php 
+``` 
 {{ $name or 'Valor por defecto' }}
 ```
 #### Comentarios
 Para escribir comentarios en Blade se utilizan los símbolos {{-- y --}},  por ejemplo:
-```php 
+``` 
 {{-- Este comentario no se mostrará en HTML --}}
 ```
 #### Estructuras de control
