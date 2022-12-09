@@ -443,6 +443,7 @@ Para escribir comentarios en Blade se utilizan los símbolos {{-- y --}},  por e
 ```
 
 #### Estructuras de control
+
 Todas las directivas Blade vienen precedidas del __símbolo @__ nos permite utilizar la __estructura condicional if__ de las siguientes formas:
 ```php 
 @if( count($users) === 1 )  
