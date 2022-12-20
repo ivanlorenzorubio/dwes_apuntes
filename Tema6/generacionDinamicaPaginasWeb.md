@@ -33,6 +33,8 @@
       - [Validación de formularios](#validación-de-formularios)
       - [Form Request para validaciones más complejas](#form-request-para-validaciones-más-complejas)
 
+<div class="page"/>
+
 ## Patrón arquitectónico MVC (Modelo-Vista-Controlador)
 
 En muchas ocasiones se mezcla el código propio de la lógica de la aplicación, con el código necesario para crear el interface web que se presenta a los usuarios.
@@ -246,6 +248,8 @@ Route::post('foo/bar',function(){
   return 'Hola mundo';
 });
 ```
+<div class="page"/>
+
 En este caso la ruta apuntaría a la dirección URL foo/bar
 Si queremos que una ruta se defina a la vez para get y post lo podemos hacer añadiendo un  array con los tipos, de la siguiente forma:
 ```php
@@ -353,6 +357,8 @@ Luego dede una plantilla podríamos hacer
 <a href="{{ route(‘foo.method') }}">¡Aprieta aquí!</a>
 ```
 :computer: Hoja06_MVC_03
+
+<div class="page"/>
 
 ### Vistas
 Las vistas son la forma de presentar el resultado (una pantalla de nuestro sitio web) de forma  visual al usuario, el cual podrá interactuar con él y volver a realizar una petición.
@@ -464,6 +470,8 @@ Todas las directivas Blade vienen precedidas del __símbolo @__ nos permite util
   ¡No hay ningún usuario!  
 @endif
 ```
+<div class="page"/>
+
 __Estructuras repetitivas bucles tipo for, while o foreach__
 ```php
 @for ($i = 0; $i < 10; $i++)  
@@ -499,6 +507,8 @@ Mediante Blade, empleando la funcion url, que genera una URL completa hasta la r
 ```php
 <a href="{{url('/contacto')}}">contacto</a>
 ```
+<div class="page"/>
+
 #### Definir Plantillas con Blade
 En Blade podemos indicar que se incluya una plantilla dentro de otra plantilla,
 para esto disponemos de la instrucción @include:
@@ -571,6 +581,8 @@ O si queremos volver a la ruta anterior simplemente podemos usar __el método ba
 ```php
 return back();
 ```
+<div class="page"/>
+
 #### Redirecciones con valores
 Si queremos  enviar datos a otra página mediante la sesión del usuario (por  ejemplo un mensaje de éxito tras realizar una inserción) podemos utilizar el __método  with()__
 ```php
@@ -662,7 +674,9 @@ Esta clase se almacena de forma predeterminada en __app/Http/Request__ y contien
 * Autorize:devuelve booleano, dependiendo de si el usuario está autorizado a enviar la petición o no. Si no requiere autorización, devolveremos true.
 * Rules: para indicar las reglas de validación.
 * Messages[opcional]: para personalizar los mensajes de error.
-* Atributes[opcional]: para personalizar, reemplazar el atributo, por el nombre del atributo personalizado
+* Atributes[opcional]: para personalizar, reemplazar el atributo, por el nombre del atributo personalizado.
+  
+<div class="page"/>
 
 Ejemplo:
 
