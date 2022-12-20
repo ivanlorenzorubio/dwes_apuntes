@@ -68,7 +68,9 @@ Si por ejemplo una misma aplicación debe ejecutarse tanto en un  navegador est�
 
 __El  controlador se encarga de aislar al modelo y a la vista de los  detalles del protocolo__ utilizado para las peticiones (HTTP, consola  de comandos, email, etc.). __El modelo se encarga de la abstracción  de la lógica relacionada con los datos__, haciendo que la vista y las  acciones sean independientes de, por ejemplo, el tipo de gestor de  bases de datos utilizado por la aplicación.
 
-Para poder entender las ventajas de utilizar el patrón MVC, se va a  transformar una aplicación simple realizada con PHP en una  aplicación que sigue la arquitectura MVC
+Para poder entender las ventajas de utilizar el patrón MVC, se va a  transformar una aplicación simple realizada con PHP en una  aplicación que sigue la arquitectura MVC.
+
+:computer: Hoja06_MVC_01
 
 ## Laravel
 
@@ -135,6 +137,8 @@ Como entorno de desarrollo vamos a utilizar Visual Studio code e instalar la ext
 Laravel se basa en un diseño  MVC
 
 ![patrón de laravel](img/patronlaravel.png)
+
+:computer: Hoja06_MVC_02 (ejercicio 1)
 
 ### Estructura de Laravel
 
@@ -281,6 +285,8 @@ Laravel también permite el uso de expresiones  regulares para validar los  par�
 ```php
 Route::get('user/{name?}',function($name){return $name;})->where('name','[A-Za-z]+');
 ```
+:computer: Hoja06_MVC_02 (ejercicio 2)
+
 ### Controladores
 
 __Un controlador es el componente que__ nos permite agrupar, de una mejor manera, el código necesario para dar respuesta a una petición HTTP; es el intermediario entre la vista y el modelo y __se encarga de definir la lógica de negocio__ y los controladores son necesarios para resolver las solicitudes que llegan.
@@ -346,6 +352,7 @@ Luego dede una plantilla podríamos hacer
 ```html
 <a href="{{ route(‘foo.method') }}">¡Aprieta aquí!</a>
 ```
+:computer: Hoja06_MVC_03
 
 ### Vistas
 Las vistas son la forma de presentar el resultado (una pantalla de nuestro sitio web) de forma  visual al usuario, el cual podrá interactuar con él y volver a realizar una petición.
@@ -404,6 +411,8 @@ Route::get('register',function(){
   return view('user.register');
 });
 ```
+:computer: Hoja06_MVC_04
+
 ### Motor de plantillas Blade
 
 Laravel utiliza Blade para la definición de plantillas en las vistas.
@@ -509,8 +518,8 @@ Blade también nos permite la definición de layouts para crear una estructura H
 Por ejemplo, podemos crear un layout con el contenido principal o común de nuestra  web (head, body, etc.) y definir una serie de secciones que serán rellenados por  otras plantillas para completar el código.
 
 Este layout puede ser utilizado para todas las pantallas de nuestro sitio web, lo que  nos permite que en el resto de plantillas no tengamos que repetir todo este código.
-Para crear una plantilla en Blade, creamos por ejemplo, __plantilla.blade.php_ en la carpeta
-__resources/view/layout/__ plantilla.blade.php
+Para crear una plantilla en Blade, creamos por ejemplo, __plantilla.blade.php__ en la carpeta
+__resources/views/layouts/__ plantilla.blade.php
 En aquellas zonas del documento donde vamos a permitir contenido variable dependiendo de la vista, añadimos una sección llamada __@yield, con un nombre asociado__.
 Un ejemplo
 ```php
@@ -530,7 +539,7 @@ Un ejemplo
 </body>
 </html>
 ```
-En el ejemplo ya está incluyendo otras vistas header y footer que se encuentran definidas en __resources/view/layout/partials/__
+En el ejemplo ya está incluyendo otras vistas header y footer que se encuentran definidas en __resources/views/layouts/partials/__
 Por ejemplo el contenido de footer denominada footer.blade.php
 ```php
 <footer>
@@ -538,7 +547,7 @@ Por ejemplo el contenido de footer denominada footer.blade.php
 </footer>
 ```
 Luego, en cada vista en la que usemos esta plantilla, añadimos la directiva __@extends('el nombre de la plantilla')__. 
-Con la directiva __@section('nombre de la seccion')__ añadimos el contenido de esa sección para cada uno de los @yield de la plantilla. 
+Con la directiva __@section('nombre de la seccion')__ añadimos el contenido de esa sección para cada uno de los __@yield__ de la plantilla. 
 por ejemplo nuestra página de inicio denomina inicio.blade.php su contenido podría ser
 ```php
 @extends('layouts.plantilla')
@@ -547,6 +556,9 @@ por ejemplo nuestra página de inicio denomina inicio.blade.php su contenido pod
     <h1>Bienvenido a la página principal</h1>
 @endsection
 ```
+:computer: Hoja06_MVC_04
+:computer: Hoja06_MVC_05
+
 ### Redirecciones
 
 Como respuesta a una petición también podemos devolver una redirección. Esta  opción será interesante cuando, por ejemplo, el usuario no esté logueado y lo  queramos redirigir al formulario de login, o cuando se produzca un error en la  validación de una petición y queramos redirigir a otra ruta.
@@ -708,6 +720,7 @@ public function InsertarConValidacion( CrearClienteRequest $request){
   //si entramos aqui, el formulario es válido.
 }
 ```
+:computer: Hoja06_MVC_06
 
 
 
