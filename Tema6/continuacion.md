@@ -196,3 +196,142 @@ php artisan migrate:status
 :computer: Hoja06_MVC_07
 
 #### Modelos de datos mediante ORM
+El mapeado objeto-relacional (Object-Relational  mapping o ORM) es una técnica de programación para convertir datos entre un lenguaje de programación orientado a objetos y una base de datos relacional como motor de persistencia.
+
+Esto posibilita el uso de las características propias de la orientación a objetos, podremos acceder directamente a los campos de un objeto para leer los datos de una base de datos o para insertarlos o modificarlos.
+
+__Laravel incluye su propio sistema de  ORM  llamado Eloquent__. Para cada tabla de la base datos tendremos que definir su correspondiente modelo, el cual se utilizará para interactuar desde código con la tabla.
+
+##### Definición de un modelo
+Para definir un modelo que use Eloquent únicamente tenemos que crear una clase que herede  de la clase Model. Podemos hacerlas “a mano”, pero es mucho más fácil y rápido crear los  modelos usando el comando make:model de Artisan:
+```php
+php artisan make:model User
+```
+##### Nombre del modelo
+En general el nombre de los modelos se pone en singular con la primera letra en mayúscula, mientras que el nombre de las tablas suele estar en plural.
+
+Gracias a esto, al definir un modelo no es necesario indicar el nombre de la tabla asociada, sino que Eloquent automáticamente buscará la tabla transformando el nombre del modelo a  minúsculas y buscando su plural (en inglés).
+
+En el ejemplo anterior que hemos creado el modelo User buscará la tabla de la base de  datos llamada users y en caso de no encontrarla daría un error.
+Si la tabla tuviese otro nombre lo podemos indicar usando la propiedad protegida $table del modelo:
+```php
+class User extends Model
+{
+protected $table = 'my_users';
+}
+```
+##### Clave primaria
+Laravel también asume que cada tabla tiene declarada una clave primaria con el nombre id.
+En el caso de que no sea así y queramos cambiarlo tendremos que sobrescribir el valor de la
+propiedad	protegida	$primaryKey	del	modelo.
+```php
+protected	$primaryKey='my_id';.
+```
+##### Timestamps
+Otra propiedad que en ocasiones tendremos que establecer son los timestamps automáticos.
+Por defecto Eloquent asume  que todas las  tablas contienen  los campos updated_at y  created_at (los cuales los podemos añadir muy fácilmente con Schema añadiendo $table->timestamps() en la migración).
+
+Estos campos se actualizarán automáticamente cuando se cree un nuevo  registro o se  modifique.
+
+En el caso de que no queramos utilizarlos (y que no estén añadidos a la tabla) tendremos que  indicarlo en el modelo o de otra forma nos daría un error. 
+
+Para indicar que no los actualice  automáticamente tendremos que modificar el valor de la propiedad pública $timestamps a false, por ejemplo: 
+```php
+public $timestamps = false;
+```
+Ejemplo:
+```php
+class User extends Model
+{
+    protected $table = 'my_users';  
+    protected $primaryKey = 'my_id';  
+    public $timestamps = false;
+}
+```
+##### Uso de un modelo de datos
+El sitio correcto donde realizar estas acciones es en el __controlador__, el cual se los tendrá que pasar a la vista ya preparados para su visualización.
+
+Es importante indicar al inicio de la clase el espacio de nombres del modelo o modelos a  utilizar.
+Por ejemplo, si vamos a usar los modelos User y Orders tendríamos que añadir:
+use App\User;
+use App\Orders;
+
+##### Consultar datos
+Para obtener todas las filas de la tabla asociada a un modelo usaremos __el método all()__:
+Ejemplo:
+```php
+$users = User::all();  
+foreach( $users as $user ) {
+    echo $user->name;
+}
+```
+Este método nos devolverá __un array de resultados__, donde __cada item del array__ será una __instancia del modelo User__. Gracias a esto al obtener un elemento del array podemos acceder  a los campos o columnas de la tabla como si fueran propiedades del objeto ($user->name).
+
+También podremos utilizar __where, orWhere, first, get, orderBy, groupBy, having, skip, take,__  etc. para elaborar las consultas.
+
+Eloquent también incorpora __el método find($id)__ para buscar un elemento a partir del  identificador único del modelo, por ejemplo:
+```php
+$user = User::find(1);
+```
+Si queremos que se lance una excepción cuando no se encuentre un modelo podemos utilizar  __los métodos findOrFail o firstOrFail__. Esto nos permite capturar las excepciones y mostrar un  error 404 cuando sucedan.
+```php
+$model = User::findOrFail(1);
+$model = User::where('votes', '>', 100)->firstOrFail();
+```
+A continuación se incluyen otros ejemplos de consultas usando Eloquent con algunos de los  métodos:
+```php
+// Obtener 10 usuarios con más de 100 votos
+$users = User::where('votes', '>', 100)->take(10)->get();
+// Obtener el primer usuario con más de 100 votos
+$user = User::where('votes', '>', 100)->first();
+```
+También	podemos	utilizar	los	métodos	agregados	para	calcular	el	total	de	registros obtenidos, o el máximo, mínimo, media o suma de una determinada columna. Por ejemplo:
+```php
+$count = User::where('votes', '>', 100)->count();
+$price = Orders::max('price');
+$price = Orders::min('price');
+$price = Orders::avg('price');
+$total = User::sum('votes');
+```
+##### Insertar datos
+Para insertar un  dato en  una  tabla de la base de datos tenemos  que crear una __nueva instancia__ de dicho modelo, __asignar los valores__ y guardarlos con el __método save()__:
+```php
+$user = new User(); $user->name = 'Juan’; $user->save();
+```
+Para obtener el identificador asignado en la base de datos después de guardar, lo podremos recuperar accediendo al campo id del objeto que habíamos creado, por  ejemplo:
+```php
+$insertedId = $user->id;
+```
+##### Actualizar datos
+Para actualizar una instancia de un modelo sólo tendremos que recuperar la instancia  que queremos actualizar, a continuación modificarla y por último guardar los datos:
+```php
+$user = User::find(1); $user->email = 'juan@gmail.com’; $user->save();
+```
+##### Borrar datos
+Para borrar fila de una tabla en la base de datos tenemos que usar su __método delete()__:
+```php
+$user = User::find(1);	
+$user->delete();
+```
+Si queremos  borrar un conjunto de resultados también podemos usar el método  delete():
+```php
+$affectedRows = User::where('votes', '>', 100)->delete();
+```
+### Seeders
+Los	seeders	sirven para	rellenar la	base de	datos con datos iniciales.
+Para ello se puede rellenar __el método run__ de database/seeds/DatabaseSeeder.php
+Luego ejecutaremos la migración con:
+```php
+php artisan db:seed
+```
+Pero lo habitual es crear distintos	seeders para cada modelo de nuestra base de datos. Para crearlos usamos:
+```php
+php artisan make:seeder UserSeeder
+```
+Nos creará __una clase con el método run__. Ahí escribiremos los datos de creación de objetos.
+Por	último,	desde el método	run	de la clase	DatabaseSeeder llamaremos a las clases Seeder creadas:
+```php
+$this->call(UserSeeder::class);
+```
+
+
