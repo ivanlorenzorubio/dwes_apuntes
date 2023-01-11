@@ -566,7 +566,7 @@ por ejemplo nuestra página de inicio denomina inicio.blade.php su contenido pod
     <h1>Bienvenido a la página principal</h1>
 @endsection
 ```
-:computer: Hoja06_MVC_04
+
 :computer: Hoja06_MVC_05
 
 ### Redirecciones
