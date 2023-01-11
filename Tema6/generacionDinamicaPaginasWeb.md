@@ -195,7 +195,7 @@ vamos a la terminal de Visual Studio Code y ejecutamos
 
 ![listado comandos artisan](img/artisan.png)
 
-Para ver un listado con todas las rutas que hemos definido en el fichero routes.php  podemos ejecutar el comando:
+Para ver un listado con todas las rutas que hemos definido en el fichero routes\web.php  podemos ejecutar el comando:
 
 __php artisan route:list__
 
@@ -219,7 +219,7 @@ Cualquier ruta no definida en este fichero no será válida, generado una excepc
 
 Las rutas, en su forma más sencilla, pueden devolver __directamente un valor__  desde el propio fichero de rutas, pero también podrán __generar la llamada  a una vista o a un controlador__.
 
-Con las rutas, construimos las URL amigables( son fáciles de recordar y más seuguras) de nuestra aplicación, es importante para el posicionamiento web. 
+Con las rutas, construimos las URL amigables( son fáciles de recordar y más seguras) de nuestra aplicación, es importante para el posicionamiento web. 
 
 Son un mecamismo que nos permite establecer el controlador al que debemos enviar la petición de una determinada URL. 
 
@@ -236,7 +236,7 @@ Lo que hace dicha ruta es llamar al método __view__, que carga una vista o arch
 para definir una ruta, realizamos la llamada al método get/post de la clase Route
 
 ```php
-Route::get('/',function()){
+Route::get('/',function(){
   return 'Hola mundo';
 });
 ```
