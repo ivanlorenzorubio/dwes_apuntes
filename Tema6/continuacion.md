@@ -46,10 +46,15 @@ Para solventar este problema podemos hacer uso de las variables de entorno __con
 Así que para configurar la base de datos vamos a cambiar las siguientes líneas en  el __fichero .env de la raíz del proyecto__:
 
 DB_CONNECTION=mysql
+
 DB_HOST=127.0.0.1
+
 DB_PORT=3306
+
 DB_DATABASE=(nombre de la base de datos)laravel_zoologico
+
 DB_USERNAME=(nombre de usuario)root
+
 DB_PASSWORD=(contraseña de acceso)
 
 #### Migraciones: Schema Builder
@@ -285,7 +290,7 @@ $users = User::where('votes', '>', 100)->take(10)->get();
 // Obtener el primer usuario con más de 100 votos
 $user = User::where('votes', '>', 100)->first();
 ```
-También	podemos	utilizar	los	métodos	agregados	para	calcular	el	total	de	registros obtenidos, o el máximo, mínimo, media o suma de una determinada columna. Por ejemplo:
+También	podemos	utilizar los métodos agregados para	calcular el	total de registros obtenidos, o el máximo, mínimo, media o suma de una determinada columna. Por ejemplo:
 ```php
 $count = User::where('votes', '>', 100)->count();
 $price = Orders::max('price');
@@ -296,7 +301,9 @@ $total = User::sum('votes');
 ##### Insertar datos
 Para insertar un  dato en  una  tabla de la base de datos tenemos  que crear una __nueva instancia__ de dicho modelo, __asignar los valores__ y guardarlos con el __método save()__:
 ```php
-$user = new User(); $user->name = 'Juan’; $user->save();
+$user = new User(); 
+$user->name = "Juan"; 
+$user->save();
 ```
 Para obtener el identificador asignado en la base de datos después de guardar, lo podremos recuperar accediendo al campo id del objeto que habíamos creado, por  ejemplo:
 ```php
@@ -305,7 +312,9 @@ $insertedId = $user->id;
 ##### Actualizar datos
 Para actualizar una instancia de un modelo sólo tendremos que recuperar la instancia  que queremos actualizar, a continuación modificarla y por último guardar los datos:
 ```php
-$user = User::find(1); $user->email = 'juan@gmail.com’; $user->save();
+$user = User::find(1); 
+$user->email = "juan@gmail.com"; 
+$user->save();
 ```
 ##### Borrar datos
 Para borrar fila de una tabla en la base de datos tenemos que usar su __método delete()__:
@@ -333,5 +342,333 @@ Por	último,	desde el método	run	de la clase	DatabaseSeeder llamaremos a las cl
 ```php
 $this->call(UserSeeder::class);
 ```
+:computer: Hoja06_MVC_08
 
+### Factories
+
+las factorias pasan a ser clases
+para crearla haremos
+```php
+php artisan make:factory UserFactory
+```
+Nos creará una clase en la carpeta database/factories. Completaremos el atributo $model y el método definition:
+
+```php
+class UserFactory extends Factory
+{
+    public function definition()
+    {
+        return [
+            'name' => fake()->name(),
+            'email' => fake()->unique()->safeEmail(),
+            'email_verified_at' => now(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'remember_token' => Str::random(10),
+        ];
+    }
+}
+```
+Luego desde una clase Seeder podemos llamar a la clase:
+
+```php
+class DatabaseSeeder extends Seeder
+{
+    public function run()
+    {
+        \App\Models\User::factory(10)->create();
+
+    }
+}
+```
+Para generar los datos se utiliza [la librería Faker](https://github.com/fzaninotto/Faker#formatters)
+
+## Datos de entrada
+
+Para conseguir acceso los datos de entrada del usuario Laravel utiliza __inyección de dependencias__.
+Añade __la clase Request__ al constructor o método del controlador en el que lo  necesitemos.
+Laravel	se encargará de	inyectar dicha dependencia ya inicializada y directamente podremos usar este parámetro para obtener los datos de entrada.
+
+Algunos ejemplos:
+```php
+class UserController extends Controller
+{
+    public function store(Request $request){
+
+       
+        $name=$request->nombre;
+        if ($request->has('nombre')) // para comprobar que existe
+        {
+            //operaciones dentro del if
+        }
+        //...
+    }
+    public function edit(Request $request, $id){
+        // hago operaciones
+    }
+}
+```
+## Ficheros de entrada
+
+Laravel facilita una serie de clases para trabajar con los ficheros de entrada. 
+Por ejemplo: para obtener un fichero que se ha enviado en el campo con nombre photo y guardarlo en  una variable, tenemos que hacer:
+```php
+$file = $request->photo;
+```
+Si queremos podemos comprobar si un determinado campo tiene un fichero asignado:
+```php
+if ($request->hasFile('photo')) {
+     … 
+}
+```
+Laravel dispone de una nueva librería que nos permite gestionar el acceso y escritura de ficheros en un almacenamiento. Simplemente tenemos que configurar el fichero __config/filesystems.php__ y posteriormente los podremos usar.
+
+Por ejemplo, para almacenar un fichero subido mediante un formulario tenemos que usar el __método store__ indicando como parámetro la ruta donde queremos almacenar el fichero (sin el nombre del fichero):
+```php
+$path = $request->photo->store('images');
+$path = $request->photo->store('images’, ‘miAlmacenamiento'); // Especificar un almacenamiento
+```
+Estos métodos devolverán el path hasta el fichero almacenado de forma relativa a la raíz de disco configurada. Para el nombre del fichero se generará automáticamente un UUID (identificador único universal).
+Si queremos especificar nosotros el nombre tendríamos que usar __el método storeAs__:
+```php
+$path = $request->photo->storeAs('images', 'filename.jpg');
+$path = $request->photo->storeAs('images', 'filename.jpg', ' miAlmacenamiento ');
+```
+:computer: Hoja06_MVC_09
+
+## Control de usuarios : Laravel Jetstream
+
+Laravel incluye una serie de métodos y clases que harán que la implementación del control de usuarios sea muy rápida y sencilla.
+Casi todo el trabajo ya está hecho, sólo tendremos que indicar dónde queremos utilizarlo y algunos pequeños detalles de configuración.
+Por defecto, al crear un nuevo proyecto de Laravel, ya se incluye  todo lo necesario:
+* La __configuración__ predeterminada en __config/auth.php__.
+* La __migración__ para la base de datos de la __tabla de usuarios__ con todos los campos necesarios.
+* El __modelo de datos de usuario__ (User.php) dentro de la carpeta  App\Models con toda la implementación necesaria.
+
+La __configuración__ del sistema de autenticación se puede encontrar en el fichero __config/auth.php__. Podremos:
+
+* cambiar el sistema de autenticación (que por defecto es a través de Eloquent)
+* cambiar el modelo de datos usado para los usuarios (por defecto será User)
+* cambiar la tabla de usuarios (que por defecto será users).
+  
+La __migración__ de la tabla de usuarios (llamada users) también está incluida  (ver carpeta __database/migrations__). Por defecto incluye todos los campos necesarios, pero si necesitamos alguno más lo podemos añadir para guardar por ejemplo, la dirección o el teléfono del usuario.
+
+En la carpeta __App\Models__ se encuentra el __modelo de datos__ (llamado  User.php) para trabajar con los usuarios. Esta clase ya incluye toda la  implementación necesaria y por defecto no tendremos que modificar nada. Pero si queremos podemos modificar esta clase para añadirle más métodos o relaciones con otras tablas, etc.
+
+Laravel Jetstream desde laravel 8, contiene las siguientes funcionalidades:
+* Verificación por correo electrónico
+* Autenticación de dos pasos
+* Administrador de sesiones
+* Soporte de API
+* Gestión de equipos
+* etc...
+  
+Para instalarlo hacemos lo siguiente:
+
+```php
+composer require laravel/jetstream
+php artisan jetstream:install livewire
+npm install 
+npm run dev
+php artisan migrate
+```
+### Rutas
+Cuando ejecutamos los comandos nos añadirá las rutas necesarias en el fichero routes/web.php
+
+### Vistas
+Al ejecutar los comandos anteriores también se generarán todas las vistas necesarias para realizar el login, registro y para recuperar la contraseña.
+Todas estas	vistas las	podremos encontrar en la carpeta __resources/views/auth__
+Si lo deseamos podemos modificar el contenido y diseño de cualquier vista, así como del layout, lo único que tenemos que mantener igual es la URL a la que se envía el formulario y los nombres de cada uno de los inputs del formulario.
+
+### Autenticación de un usuario
+Si accedemos a la ruta login, introducimos unos datos y éstos son correctos, se creará la sesión del usuario y se le redirigirá a la ruta "/dashboard".
+
+Si queremos cambiar esta ruta tenemos que definir la constante HOME en  el controlador RouteServiceProvider, por ejemplo:
+```php
+public const HOME='/';
+```
+### Configuraciones
+
+En el archivo de configuración situado en __config/jetstream.php__ podremos añadir ciertas características:
+* Features::profilePhotos() //Para que se muestre foto en el perfil del usuario
+* Features::api() //Crear una API para crear, leer, actualizer y eliminar usuarios
+* Features::teams() //Creación de equipos. Un usuario puede pertenecer a uno o varios [equipos](https://jetstream.laravel.com/1.x/features/teams.html)
+
+ Si usamos __Livewire__ podemos publicar los componentes de Blade
+
+```php
+php artisan vendor:publish --tag=jetstream-views
+```
+Esto hará que se publique en __resources/views/vendor/jetstream/components__ todos los componentes ya desarrollados. Luego podremos modificar toda la “vista” de Jetstream.
+
+### Registro de un usuario
+Si accedemos a la ruta register	nos	aparecerá la vista con el formulario de registro.
+
+### Registro manual de un usuario
+Si queremos añadir un usuario manualmente lo podemos hacer de forma normal usando el modelo User de Eloquent. La única  precaución es cifrar la contraseña que se va a almacenar.
+Un ejemplo es el siguiente:
+```php
+public function store(Request $request) {
+    $user = new User();
+    $user->name  = $request->name;
+    $user->email = $request->email;
+    $user->password = bcrypt( $request->password );
+    $user->save();
+}
+```
+### Acceder a los datos del usuario autenticado
+Una vez que el usuario está autenticado podemos acceder a los datos del
+mismo a través del método Auth::user():
+```php
+$user = Auth::user();
+```
+Este método nos devolverá null en caso de que no esté autenticado. Si estamos seguros de que el usuario está autenticado (porque estamos en una ruta protegida) podremos acceder directamente a sus propiedades:
+```php
+$email = Auth::user()->email;
+```
+Para utilizar la clase Auth tenemos que añadir el espacio de nombres use Illuminate\Support\Facades\Auth;, de otra forma nos aparecerá un error indicando que no puede encontrar la clase.
+
+### Cerrar la sesión
+Si accedemos a la ruta logout por POST se cerrará la sesión.
+Para  cerrar manualmente la  sesión	del usuario actualmente	autenticado tenemos que utilizar el método:
+```php
+Auth::logout();
+```
+Posteriormente podremos	hacer una redirección a	una	página principal para usuarios no autenticados.
+
+### Comprobar si un usuario está autenticado
+Para comprobar si el usuario actual se ha autenticado en la aplicación  podemos utilizar el método Auth::check() de la forma:
+```php
+if (Auth::check()) {
+// El usuario está correctamente autenticado
+}
+```
+Sin embargo, lo recomendable es utilizar __Middleware__ para realizar esta comprobación antes de permitir el acceso a determinadas rutas.
+
+## Middleware o filtros
+Los Middleware son un mecanismo proporcionado por Laravel para __filtrar las peticiones HTTP__ que se realizan a una aplicación.
+
+Un filtro o middleware se define como una clase PHP almacenada en un fichero dentro de la carpeta __App/Http/Middleware__.
+
+Cada middleware se encargará de aplicar un tipo concreto de filtro y de decidir qué realizar con la petición realizada: permitir su ejecución, dar un error o redireccionar a otra página en caso de no permitirla.
+
+Laravel incluye varios filtros por defecto.Uno de ellos es el encargado de realizar la autenticación de los usuarios. Este  filtro lo podemos aplicar sobre una ruta, un conjunto de rutas o sobre un  controlador en concreto. Este middleware se encargará de filtrar las peticiones  a dichas rutas: en caso de estar logueado y tener permisos de acceso le permitirá continuar con la petición, y en caso de no estar autenticado lo  redireccionará al formulario de login.
+
+Laravel incluye middleware para gestionar la autenticación, el modo mantenimiento, la protección contra CSRF (Cross-site request forgery o falsificación de petición en sitios cruzados), y algunos más.
+
+Además de éstos podemos crear nuestros propios Middleware
+### Definir un nuevo Middleware
+Para crear un nuevo Middleware podemos utilizar el comando de Artisan:
+```php
+php artisan make:middleware MyMiddleware
+```
+Este comando creará la clase MyMiddleware dentro de la carpeta __App/Http/Middleware__
+```php
+class MyMiddleware
+{
+    /**
+    Handle an incoming request.
+    @param \Illuminate\Http\Request $request
+    @param \Closure $next
+    @return mixed
+    */
+    public function handle(Request $request, Closure $next)
+    {
+        return $next($request);
+    }
+}
+```
+El código generado por Artisan ya viene preparado para que podamos escribir  directamente la implementación del filtro a realizar dentro de la función handle.
+
+Esta función sólo incluye el valor de retorno con una llamada a	return $next($request); que lo que hace es continuar con la petición y ejecutar el método que tiene que procesarla.
+
+Como entrada el método handle recibe dos parámetros:
+* $request: en la cuál nos vienen todos los parámetros de entrada de la petición.
+* $next: el método o función que tiene que procesar la petición.
+
+Por ejemplo podríamos crear un filtro que redirija al home si el usuario tiene menos de 18 años y en otro caso que le permita acceder a la ruta:
+```php
+
+    public function handle(Request $request, Closure $next)
+    {
+        if ($request->input('age') < 18) { 
+            return redirect('home’)
+        };
+
+        return $next($request);
+    }
+```
+Como hemos dicho antes, podemos hacer tres cosas con una petición:
+* Si todo es correcto permito que la petición continúe:
+```php  
+return $next($request);
+```
+* Realizar una redirección a otra ruta para no permitir el acceso:
+```php  
+return redirect('home');
+```
+* Lanzar una excepción o llamar al método abort para mostrar una página de  error:
+```php  
+abort(403, 'Unauthorized action.');
+```
+
+Laravel permite la utilización de Middleware de tres formas distintas:
+* global
+* asociado a rutas o grupos de rutas
+* asociado a un controlador o a un método de un controlador.
+En los tres casos será necesario registrar primero el Middleware en la __clase App/Http/Kernel.php__.
+
+### Middleware global
+
+Para hacer que un Middleware se ejecute con todas las peticiones HTTP realizadas a una aplicación  simplemente lo tenemos que registrar en el __array $middleware__ definido en la __clase App/Http/Kernel.php__. 
+```php  
+protected $middleware = [
+\App\Http\Middleware\TrustProxies::class,
+\App\Http\Middleware\CheckForMaintenanceMode::class,
+\Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
+\App\Http\Middleware\TrimStrings::class,
+\Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+\App\Http\Middleware\MyMiddleware::class,
+];
+```
+En este ejemplo hemos registrado la clase MyMiddleware al final del array. Si queremos que nuestro middleware se ejecute antes que otro filtro simplemente tendremos que colocarlo antes en la posición del array.
+
+### Middleware asociado a rutas
+
+También tendremos que registrarlo en el fichero App/Http/Kernel.php, pero en el array $routeMiddleware. Al añadirlo a este array además tendremos que asignarle un nombre o clave, que será el que después utilizaremos asociarlo con una ruta.
+En primer lugar añadimos nuestro filtro al array y le asignamos el nombre "es_mayor_de_edad":
+```php
+protected $routeMiddleware = [
+'auth' => \App\Http\Middleware\Authenticate::class,  'auth.basic' =>
+\Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,  'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+'es_mayor_de_edad' => \App\Http\Middleware\MyMiddleware::class,
+];
+```
+Una vez registrado ya lo podemos utilizar en el fichero de  rutas mediante la clave o nombre asignado, por ejemplo:
+```php
+Route::get('/', function () {
+//
+})->middleware(‘es_mayor_de_edad’);
+```
+En el ejemplo anterior hemos asignado el middleware con clave es_mayor_de_edad a la ruta /. Si la petición supera el filtro entonces se ejecutara la función asociada.
+Laravel también permite asignar múltiples filtros a una  determinada ruta:
+```php
+Route::get('/', function () {
+//
+})->middleware(['first', 'second']);
+```
+#### Proteger rutas
+El sistema de autenticación de Laravel incorpora una serie de filtros o para comprobar que el usuario que accede a una determinada ruta o grupo de rutas esté autenticado.
+Para proteger el acceso a rutas y solo permitir su visualización por usuarios correctamente autenticados usaremos el middleware
+\Illuminate\Auth\Middleware\Authenticate.php cuyo alias es auth.
+Para utilizar este middleware tenemos que editar el fichero routes/web.php y modificar las rutas que queramos proteger:
+```php
+// Para proteger una cláusula:  
+Route::get('admin/catalog', function(){
+ ...
+})->middleware('auth’);
+
+// Para proteger una acción de un controlador:
+Route::get('profile’, [ProfileController::class,’show’])->middleware('auth');
+```
+:computer: Hoja06_MVC_10
 
