@@ -51,25 +51,25 @@
         - [Insertar datos](#insertar-datos)
         - [Actualizar datos](#actualizar-datos)
         - [Borrar datos](#borrar-datos)
-    - [Seeders](#seeders)
-    - [Factories](#factories)
-  - [Datos de entrada](#datos-de-entrada)
-  - [Ficheros de entrada](#ficheros-de-entrada)
-  - [Control de usuarios : Laravel Jetstream](#control-de-usuarios--laravel-jetstream)
-    - [Rutas](#rutas-1)
-    - [Vistas](#vistas-1)
-    - [Autenticación de un usuario](#autenticación-de-un-usuario)
-    - [Configuraciones](#configuraciones)
-    - [Registro de un usuario](#registro-de-un-usuario)
-    - [Registro manual de un usuario](#registro-manual-de-un-usuario)
-    - [Acceder a los datos del usuario autenticado](#acceder-a-los-datos-del-usuario-autenticado)
-    - [Cerrar la sesión](#cerrar-la-sesión)
-    - [Comprobar si un usuario está autenticado](#comprobar-si-un-usuario-está-autenticado)
-  - [Middleware o filtros](#middleware-o-filtros)
-    - [Definir un nuevo Middleware](#definir-un-nuevo-middleware)
-    - [Middleware global](#middleware-global)
-    - [Middleware asociado a rutas](#middleware-asociado-a-rutas)
-      - [Proteger rutas](#proteger-rutas)
+      - [Seeders](#seeders)
+      - [Factories](#factories)
+    - [Datos de entrada](#datos-de-entrada)
+    - [Ficheros de entrada](#ficheros-de-entrada)
+    - [Control de usuarios : Laravel Jetstream](#control-de-usuarios--laravel-jetstream)
+      - [Rutas](#rutas-1)
+      - [Vistas](#vistas-1)
+      - [Autenticación de un usuario](#autenticación-de-un-usuario)
+      - [Configuraciones](#configuraciones)
+      - [Registro de un usuario](#registro-de-un-usuario)
+      - [Registro manual de un usuario](#registro-manual-de-un-usuario)
+      - [Acceder a los datos del usuario autenticado](#acceder-a-los-datos-del-usuario-autenticado)
+      - [Cerrar la sesión](#cerrar-la-sesión)
+      - [Comprobar si un usuario está autenticado](#comprobar-si-un-usuario-está-autenticado)
+    - [Middleware o filtros](#middleware-o-filtros)
+      - [Definir un nuevo Middleware](#definir-un-nuevo-middleware)
+      - [Middleware global](#middleware-global)
+      - [Middleware asociado a rutas](#middleware-asociado-a-rutas)
+        - [Proteger rutas](#proteger-rutas)
 
 
 <div class="page"/>
@@ -846,23 +846,21 @@ Para esto tenemos que  ejecutar el siguiente comando de Artisan:
 ```php 
 php artisan migrate
 ```
-Para crear una nueva migración se utiliza el comando de Artisan make:migration,
-al cuál le pasaremos el nombre del fichero a crear:
+Para crear una nueva migración se utiliza el comando de Artisan make:migration, al cuál le pasaremos el nombre del fichero a crear:
 ```php 
 php artisan make:migration create_users_table
 ```
-Esto nos creará un fichero de migración en la carpeta database/migrations con el  nombre __*TIMESTAMP*_create_users_table.php__.
+Esto nos creará un fichero de migración en la carpeta database/migrations con el nombre __*TIMESTAMP*_create_users_table.php__.
 
-Al añadir un timestamp a las migraciones el sistema sabe el orden en el que tiene
-que ejecutar (o deshacer) las mismas.
+Al añadir un timestamp a las migraciones el sistema sabe el orden en el que tiene que ejecutar (o deshacer) las mismas.
 
-Si lo que queremos es añadir una migración que modifique los campos de una  tabla existente tendremos que ejecutar el siguiente comando:
+Si lo que queremos es añadir una migración que modifique los campos de una tabla existente tendremos que ejecutar el siguiente comando:
 ```php 
 php artisan make:migration add_votes_to_user_table --table=users
 ```
 En este caso se creará también un fichero en la misma carpeta, con el nombre __*TIMESTAMP*_add_votes_to_user_table.php__ preparado para modificar los campos de dicha tabla.
 
-Por defecto, al indicar el nombre del fichero de migraciones se suele seguir siempre  el mismo patrón (aunque el realidad el nombre es libre).
+Por defecto, al indicar el nombre del fichero de migraciones se suele seguir siempre el mismo patrón (aunque el realidad el nombre es libre).
 * Si es una migración que  crea una tabla el nombre tendrá que ser __create_*table-name*_table__ 
 * Si es una  migración que modifica una tabla será __*action*_to_*table-name*_table__
 
@@ -870,34 +868,32 @@ Por defecto, al indicar el nombre del fichero de migraciones se suele seguir sie
 
 El fichero o clase PHP generada para una migración siempre  contiene __los métodos up y down__.
 * En el método up es donde tendremos crear o modificar la tabla
-* En el método down tendremos que deshacer los cambios que se hagan  en el up (eliminar la tabla o eliminar el campo que se haya añadido).
+* En el método down tendremos que deshacer los cambios que se hagan en el up (eliminar la tabla o eliminar el campo que se haya añadido).
   
-Esto nos permitirá poder ir añadiendo y eliminando cambios sobre la  base de datos y tener un control o histórico de los mismos.
+Esto nos permitirá poder ir añadiendo y eliminando cambios sobre la base de datos y tener un control o histórico de los mismos.
 
-Para especificar la tabla a crear o modificar, así como las columnas  y tipos de datos de las mismas, se utiliza __la clase Schema__.
+Para especificar la tabla a crear o modificar, así como las columnas y tipos de datos de las mismas, se utiliza __la clase Schema__.
 
-Esta clase tiene una serie de métodos que nos permitirá especificar  la estructura de las tablas independientemente del sistema de base  de datos que utilicemos.
+Esta clase tiene una serie de métodos que nos permitirá especificar la estructura de las tablas independientemente del sistema de base de datos que utilicemos.
 
 ##### Crear y borrar una tabla
-En __la sección up__ para añadir una nueva tabla a la base de datos se utiliza el siguiente
-constructor:
+En __la sección up__ para añadir una nueva tabla a la base de datos se utiliza el siguiente constructor:
 ```php
  Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
  });
 ```
-Donde el primer argumento es el nombre de la tabla y el segundo es una  función que recibe como  parámetro __un objeto del tipo Blueprint__ que  utilizaremos para configurar las columnas de la tabla.
-En __la sección down__ de la migración tendremos que eliminar la tabla que  hemos creado, para esto usaremos el método:
+Donde el primer argumento es el nombre de la tabla y el segundo es una función que recibe como parámetro __un objeto del tipo Blueprint__ que utilizaremos para configurar las columnas de la tabla.
+En __la sección down__ de la migración tendremos que eliminar la tabla que hemos creado, para esto usaremos el método:
 ```php
 Schema::dropIfExists('users');
 ```
-Al crear una migración con el comando de Artisan __make:migration__ ya nos  viene este código añadido por defecto, la creación y eliminación de la  tabla que se ha indicado y además se añaden un par de columnas por  defecto (id y timestamps).
-
+Al crear una migración con el comando de Artisan __make:migration__ ya nos viene este código añadido por defecto, la creación y eliminación de la tabla que se ha indicado y además se añaden un par de columnas por defecto (id y timestamps).
 
 ##### Añadir columnas
 El constructor Schema::create recibe como segundo parámetro una función que nos permite especificar las columnas que va a tener dicha tabla.
-En esta función podemos ir añadiendo todos los campos que queramos,  indicando para cada uno de ellos su tipo y nombre, y además si queremos  también podremos indicar una serie de modificadores como  valor por  defecto, índices, etc. 
+En esta función podemos ir añadiendo todos los campos que queramos,  indicando para cada uno de ellos su tipo y nombre, y además si queremos también podremos indicar una serie de modificadores como valor por defecto, índices, etc. 
 Ejemplo:
 ```php
  Schema::create('users', function (Blueprint $table) {
@@ -921,7 +917,7 @@ Schema soporta los siguientes tipos de índices:
 |$table->unique('email');|Definir el campo como UNIQUE|
 |$table->index('state');|Añadir un índice a una columna|
 
-En la tabla se especifica como añadir estos índices  después de crear el campo, pero también permite  indicar estos índices a la vez que se crea el campo como figura en el ejemplo anterior al definir el campo email.
+En la tabla se especifica como añadir estos índices después de crear el campo, pero también permite indicar estos índices a la vez que se crea el campo como figura en el ejemplo anterior al definir el campo email.
 
 ##### Claves ajenas
 Con Schema también podemos definir claves ajenas entre tablas:
@@ -931,8 +927,8 @@ $table->foreign('user_id')->references('id')->on('users');
 ```
 En este ejemplo en primer lugar añadimos la columna "user_id" de tipo UNSIGNED  INTEGER (siempre tendremos que crear primero la columna sobre la que se va a  aplicar la clave ajena).
 
-A continuación creamos la clave ajena entre la columna "user_id" y la columna "id"  de la tabla "users".
-También podemos especificar las acciones que se tienen que realizar para "on  delete" y "on update":
+A continuación creamos la clave ajena entre la columna "user_id" y la columna "id" de la tabla "users".
+También podemos especificar las acciones que se tienen que realizar para "on delete" y "on update":
 ```php
 $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 ```
@@ -945,8 +941,7 @@ Para indicar la clave ajena a eliminar tenemos que seguir el siguiente patrón p
 * "columna" el nombre de la columna sobre la que se creo la clave  ajena.
 
 ##### Ejecutar migraciones
-Después de crear una migración y de definir los campos de la tabla tenemos que lanzar la
-migración con el siguiente comando:
+Después de crear una migración y de definir los campos de la tabla tenemos que lanzar la migración con el siguiente comando:
 ```php
 php artisan migrate
 ```
@@ -956,7 +951,7 @@ composer dump-autoload
 ```
 El comando migrate aplicará la migración sobre la base de datos. Si hubiera más de una migración pendiente se ejecutarán todas.
 
-Para cada migración se llamará a su método up para que cree o modifique la base de datos.  
+Para cada migración se llamará a su método up para que cree o modifique la base de datos.
 
 Posteriormente en caso de que queramos deshacer los últimos cambios podremos ejecutar:
 ```php
@@ -966,12 +961,11 @@ O si queremos deshacer todas las migraciones:
 ```php
 php artisan migrate:reset
 ```
-Un comando interesante cuando estamos desarrollando un nuevo sitio web es migrate:fresh, el
-cual deshará todos los cambios y volver a aplicar las migraciones:
+Un comando interesante cuando estamos desarrollando un nuevo sitio web es migrate:fresh, el cual deshará todos los cambios y volver a aplicar las migraciones:
 ```php
 php artisan migrate:fresh
 ```
-Además si queremos comprobar el estado de las migraciones, para ver las que ya están  instaladas y las que quedan pendientes, podemos ejecutar:
+Además si queremos comprobar el estado de las migraciones, para ver las que ya están instaladas y las que quedan pendientes, podemos ejecutar:
 ```php
 php artisan migrate:status
 ```
@@ -985,16 +979,16 @@ Esto posibilita el uso de las características propias de la orientación a obje
 __Laravel incluye su propio sistema de  ORM  llamado Eloquent__. Para cada tabla de la base datos tendremos que definir su correspondiente modelo, el cual se utilizará para interactuar desde código con la tabla.
 
 ##### Definición de un modelo
-Para definir un modelo que use Eloquent únicamente tenemos que crear una clase que herede  de la clase Model. Podemos hacerlas “a mano”, pero es mucho más fácil y rápido crear los  modelos usando el comando make:model de Artisan:
+Para definir un modelo que use Eloquent únicamente tenemos que crear una clase que herede  de la clase Model. Podemos hacerlas “a mano”, pero es mucho más fácil y rápido crear los modelos usando el comando make:model de Artisan:
 ```php
 php artisan make:model User
 ```
 ##### Nombre del modelo
 En general el nombre de los modelos se pone en singular con la primera letra en mayúscula, mientras que el nombre de las tablas suele estar en plural.
 
-Gracias a esto, al definir un modelo no es necesario indicar el nombre de la tabla asociada, sino que Eloquent automáticamente buscará la tabla transformando el nombre del modelo a  minúsculas y buscando su plural (en inglés).
+Gracias a esto, al definir un modelo no es necesario indicar el nombre de la tabla asociada, sino que Eloquent automáticamente buscará la tabla transformando el nombre del modelo a minúsculas y buscando su plural (en inglés).
 
-En el ejemplo anterior que hemos creado el modelo User buscará la tabla de la base de  datos llamada users y en caso de no encontrarla daría un error.
+En el ejemplo anterior que hemos creado el modelo User buscará la tabla de la base de datos llamada users y en caso de no encontrarla daría un error.
 Si la tabla tuviese otro nombre lo podemos indicar usando la propiedad protegida $table del modelo:
 ```php
 class User extends Model
@@ -1004,20 +998,19 @@ protected $table = 'my_users';
 ```
 ##### Clave primaria
 Laravel también asume que cada tabla tiene declarada una clave primaria con el nombre id.
-En el caso de que no sea así y queramos cambiarlo tendremos que sobrescribir el valor de la
-propiedad	protegida	$primaryKey	del	modelo.
+En el caso de que no sea así y queramos cambiarlo tendremos que sobrescribir el valor de la propiedad	protegida	$primaryKey	del	modelo.
 ```php
 protected	$primaryKey='my_id';.
 ```
 ##### Timestamps
 Otra propiedad que en ocasiones tendremos que establecer son los timestamps automáticos.
-Por defecto Eloquent asume  que todas las  tablas contienen  los campos updated_at y  created_at (los cuales los podemos añadir muy fácilmente con Schema añadiendo $table->timestamps() en la migración).
+Por defecto Eloquent asume que todas las tablas contienen los campos updated_at y created_at (los cuales los podemos añadir muy fácilmente con Schema añadiendo $table->timestamps() en la migración).
 
-Estos campos se actualizarán automáticamente cuando se cree un nuevo  registro o se  modifique.
+Estos campos se actualizarán automáticamente cuando se cree un nuevo registro o se modifique.
 
-En el caso de que no queramos utilizarlos (y que no estén añadidos a la tabla) tendremos que  indicarlo en el modelo o de otra forma nos daría un error. 
+En el caso de que no queramos utilizarlos (y que no estén añadidos a la tabla) tendremos que indicarlo en el modelo o de otra forma nos daría un error. 
 
-Para indicar que no los actualice  automáticamente tendremos que modificar el valor de la propiedad pública $timestamps a false, por ejemplo: 
+Para indicar que no los actualice automáticamente tendremos que modificar el valor de la propiedad pública $timestamps a false, por ejemplo: 
 ```php
 public $timestamps = false;
 ```
@@ -1033,7 +1026,7 @@ class User extends Model
 ##### Uso de un modelo de datos
 El sitio correcto donde realizar estas acciones es en el __controlador__, el cual se los tendrá que pasar a la vista ya preparados para su visualización.
 
-Es importante indicar al inicio de la clase el espacio de nombres del modelo o modelos a  utilizar.
+Es importante indicar al inicio de la clase el espacio de nombres del modelo o modelos a utilizar.
 Por ejemplo, si vamos a usar los modelos User y Orders tendríamos que añadir:
 use App\User;
 use App\Orders;
@@ -1047,11 +1040,11 @@ foreach( $users as $user ) {
     echo $user->name;
 }
 ```
-Este método nos devolverá __un array de resultados__, donde __cada item del array__ será una __instancia del modelo User__. Gracias a esto al obtener un elemento del array podemos acceder  a los campos o columnas de la tabla como si fueran propiedades del objeto ($user->name).
+Este método nos devolverá __un array de resultados__, donde __cada item del array__ será una __instancia del modelo User__. Gracias a esto al obtener un elemento del array podemos acceder a los campos o columnas de la tabla como si fueran propiedades del objeto ($user->name).
 
 También podremos utilizar __where, orWhere, first, get, orderBy, groupBy, having, skip, take,__  etc. para elaborar las consultas.
 
-Eloquent también incorpora __el método find($id)__ para buscar un elemento a partir del  identificador único del modelo, por ejemplo:
+Eloquent también incorpora __el método find($id)__ para buscar un elemento a partir del identificador único del modelo, por ejemplo:
 ```php
 $user = User::find(1);
 ```
@@ -1060,7 +1053,7 @@ Si queremos que se lance una excepción cuando no se encuentre un modelo podemos
 $model = User::findOrFail(1);
 $model = User::where('votes', '>', 100)->firstOrFail();
 ```
-A continuación se incluyen otros ejemplos de consultas usando Eloquent con algunos de los  métodos:
+A continuación se incluyen otros ejemplos de consultas usando Eloquent con algunos de los métodos:
 ```php
 // Obtener 10 usuarios con más de 100 votos
 $users = User::where('votes', '>', 100)->take(10)->get();
@@ -1076,16 +1069,18 @@ $price = Orders::avg('price');
 $total = User::sum('votes');
 ```
 ##### Insertar datos
-Para insertar un  dato en  una  tabla de la base de datos tenemos  que crear una __nueva instancia__ de dicho modelo, __asignar los valores__ y guardarlos con el __método save()__:
+Para insertar un  dato en  una tabla de la base de datos tenemos que crear una __nueva instancia__ de dicho modelo, __asignar los valores__ y guardarlos con el __método save()__:
 ```php
 $user = new User(); 
 $user->name = "Juan"; 
 $user->save();
 ```
-Para obtener el identificador asignado en la base de datos después de guardar, lo podremos recuperar accediendo al campo id del objeto que habíamos creado, por  ejemplo:
+Para obtener el identificador asignado en la base de datos después de guardar, lo podremos recuperar accediendo al campo id del objeto que habíamos creado, por ejemplo:
 ```php
 $insertedId = $user->id;
 ```
+<div class="page"/>
+
 ##### Actualizar datos
 Para actualizar una instancia de un modelo sólo tendremos que recuperar la instancia  que queremos actualizar, a continuación modificarla y por último guardar los datos:
 ```php
@@ -1099,11 +1094,11 @@ Para borrar fila de una tabla en la base de datos tenemos que usar su __método 
 $user = User::find(1);	
 $user->delete();
 ```
-Si queremos  borrar un conjunto de resultados también podemos usar el método  delete():
+Si queremos borrar un conjunto de resultados también podemos usar el método delete():
 ```php
 $affectedRows = User::where('votes', '>', 100)->delete();
 ```
-### Seeders
+#### Seeders
 Los	seeders	sirven para	rellenar la	base de	datos con datos iniciales.
 Para ello se puede rellenar __el método run__ de database/seeds/DatabaseSeeder.php
 Luego ejecutaremos la migración con:
@@ -1121,10 +1116,9 @@ $this->call(UserSeeder::class);
 ```
 :computer: Hoja06_MVC_08
 
-### Factories
+#### Factories
 
-las factorias pasan a ser clases
-para crearla haremos
+las factorias pasan a ser clases para crearla haremos:
 ```php
 php artisan make:factory UserFactory
 ```
@@ -1159,7 +1153,7 @@ class DatabaseSeeder extends Seeder
 ```
 Para generar los datos se utiliza [la librería Faker](https://github.com/fzaninotto/Faker#formatters)
 
-## Datos de entrada
+### Datos de entrada
 
 Para conseguir acceso los datos de entrada del usuario Laravel utiliza __inyección de dependencias__.
 Añade __la clase Request__ al constructor o método del controlador en el que lo  necesitemos.
@@ -1184,10 +1178,10 @@ class UserController extends Controller
     }
 }
 ```
-## Ficheros de entrada
+### Ficheros de entrada
 
 Laravel facilita una serie de clases para trabajar con los ficheros de entrada. 
-Por ejemplo: para obtener un fichero que se ha enviado en el campo con nombre photo y guardarlo en  una variable, tenemos que hacer:
+Por ejemplo: para obtener un fichero que se ha enviado en el campo con nombre photo y guardarlo en una variable, tenemos que hacer:
 ```php
 $file = $request->photo;
 ```
@@ -1212,7 +1206,7 @@ $path = $request->photo->storeAs('images', 'filename.jpg', ' miAlmacenamiento ')
 ```
 :computer: Hoja06_MVC_09
 
-## Control de usuarios : Laravel Jetstream
+### Control de usuarios : Laravel Jetstream
 
 Laravel incluye una serie de métodos y clases que harán que la implementación del control de usuarios sea muy rápida y sencilla.
 Casi todo el trabajo ya está hecho, sólo tendremos que indicar dónde queremos utilizarlo y algunos pequeños detalles de configuración.
@@ -1248,27 +1242,27 @@ npm install
 npm run dev
 php artisan migrate
 ```
-### Rutas
+#### Rutas
 Cuando ejecutamos los comandos nos añadirá las rutas necesarias en el fichero routes/web.php
 
-### Vistas
+#### Vistas
 Al ejecutar los comandos anteriores también se generarán todas las vistas necesarias para realizar el login, registro y para recuperar la contraseña.
-Todas estas	vistas las	podremos encontrar en la carpeta __resources/views/auth__
+Todas estas	vistas las podremos encontrar en la carpeta __resources/views/auth__
 Si lo deseamos podemos modificar el contenido y diseño de cualquier vista, así como del layout, lo único que tenemos que mantener igual es la URL a la que se envía el formulario y los nombres de cada uno de los inputs del formulario.
 
-### Autenticación de un usuario
+#### Autenticación de un usuario
 Si accedemos a la ruta login, introducimos unos datos y éstos son correctos, se creará la sesión del usuario y se le redirigirá a la ruta "/dashboard".
 
 Si queremos cambiar esta ruta tenemos que definir la constante HOME en  el controlador RouteServiceProvider, por ejemplo:
 ```php
 public const HOME='/';
 ```
-### Configuraciones
+#### Configuraciones
 
 En el archivo de configuración situado en __config/jetstream.php__ podremos añadir ciertas características:
 * Features::profilePhotos() //Para que se muestre foto en el perfil del usuario
 * Features::api() //Crear una API para crear, leer, actualizer y eliminar usuarios
-* Features::teams() //Creación de equipos. Un usuario puede pertenecer a uno o varios [equipos](https://jetstream.laravel.com/1.x/features/teams.html)
+* Features::teams() //Creación de equipos. Un usuario puede pertenecer a uno o varios [equipos](https://jetstream.laravel.com/2.x/features/teams.html)
 
  Si usamos __Livewire__ podemos publicar los componentes de Blade
 
@@ -1277,11 +1271,11 @@ php artisan vendor:publish --tag=jetstream-views
 ```
 Esto hará que se publique en __resources/views/vendor/jetstream/components__ todos los componentes ya desarrollados. Luego podremos modificar toda la “vista” de Jetstream.
 
-### Registro de un usuario
+#### Registro de un usuario
 Si accedemos a la ruta register	nos	aparecerá la vista con el formulario de registro.
 
-### Registro manual de un usuario
-Si queremos añadir un usuario manualmente lo podemos hacer de forma normal usando el modelo User de Eloquent. La única  precaución es cifrar la contraseña que se va a almacenar.
+#### Registro manual de un usuario
+Si queremos añadir un usuario manualmente lo podemos hacer de forma normal usando el modelo User de Eloquent. La única precaución es cifrar la contraseña que se va a almacenar.
 Un ejemplo es el siguiente:
 ```php
 public function store(Request $request) {
@@ -1292,9 +1286,8 @@ public function store(Request $request) {
     $user->save();
 }
 ```
-### Acceder a los datos del usuario autenticado
-Una vez que el usuario está autenticado podemos acceder a los datos del
-mismo a través del método Auth::user():
+#### Acceder a los datos del usuario autenticado
+Una vez que el usuario está autenticado podemos acceder a los datos del mismo a través del método Auth::user():
 ```php
 $user = Auth::user();
 ```
@@ -1304,16 +1297,16 @@ $email = Auth::user()->email;
 ```
 Para utilizar la clase Auth tenemos que añadir el espacio de nombres use Illuminate\Support\Facades\Auth;, de otra forma nos aparecerá un error indicando que no puede encontrar la clase.
 
-### Cerrar la sesión
+#### Cerrar la sesión
 Si accedemos a la ruta logout por POST se cerrará la sesión.
-Para  cerrar manualmente la  sesión	del usuario actualmente	autenticado tenemos que utilizar el método:
+Para cerrar manualmente la sesión	del usuario actualmente	autenticado tenemos que utilizar el método:
 ```php
 Auth::logout();
 ```
 Posteriormente podremos	hacer una redirección a	una	página principal para usuarios no autenticados.
 
-### Comprobar si un usuario está autenticado
-Para comprobar si el usuario actual se ha autenticado en la aplicación  podemos utilizar el método Auth::check() de la forma:
+#### Comprobar si un usuario está autenticado
+Para comprobar si el usuario actual se ha autenticado en la aplicación podemos utilizar el método Auth::check() de la forma:
 ```php
 if (Auth::check()) {
 // El usuario está correctamente autenticado
@@ -1321,19 +1314,19 @@ if (Auth::check()) {
 ```
 Sin embargo, lo recomendable es utilizar __Middleware__ para realizar esta comprobación antes de permitir el acceso a determinadas rutas.
 
-## Middleware o filtros
+### Middleware o filtros
 Los Middleware son un mecanismo proporcionado por Laravel para __filtrar las peticiones HTTP__ que se realizan a una aplicación.
 
 Un filtro o middleware se define como una clase PHP almacenada en un fichero dentro de la carpeta __App/Http/Middleware__.
 
 Cada middleware se encargará de aplicar un tipo concreto de filtro y de decidir qué realizar con la petición realizada: permitir su ejecución, dar un error o redireccionar a otra página en caso de no permitirla.
 
-Laravel incluye varios filtros por defecto.Uno de ellos es el encargado de realizar la autenticación de los usuarios. Este  filtro lo podemos aplicar sobre una ruta, un conjunto de rutas o sobre un  controlador en concreto. Este middleware se encargará de filtrar las peticiones  a dichas rutas: en caso de estar logueado y tener permisos de acceso le permitirá continuar con la petición, y en caso de no estar autenticado lo  redireccionará al formulario de login.
+Laravel incluye varios filtros por defecto. Uno de ellos es el encargado de realizar la autenticación de los usuarios. Este filtro lo podemos aplicar sobre una ruta, un conjunto de rutas o sobre un controlador en concreto. Este middleware se encargará de filtrar las peticiones a dichas rutas: en caso de estar logueado y tener permisos de acceso le permitirá continuar con la petición, y en caso de no estar autenticado lo redireccionará al formulario de login.
 
 Laravel incluye middleware para gestionar la autenticación, el modo mantenimiento, la protección contra CSRF (Cross-site request forgery o falsificación de petición en sitios cruzados), y algunos más.
 
 Además de éstos podemos crear nuestros propios Middleware
-### Definir un nuevo Middleware
+#### Definir un nuevo Middleware
 Para crear un nuevo Middleware podemos utilizar el comando de Artisan:
 ```php
 php artisan make:middleware MyMiddleware
@@ -1354,7 +1347,7 @@ class MyMiddleware
     }
 }
 ```
-El código generado por Artisan ya viene preparado para que podamos escribir  directamente la implementación del filtro a realizar dentro de la función handle.
+El código generado por Artisan ya viene preparado para que podamos escribir directamente la implementación del filtro a realizar dentro de la función handle.
 
 Esta función sólo incluye el valor de retorno con una llamada a	return $next($request); que lo que hace es continuar con la petición y ejecutar el método que tiene que procesarla.
 
@@ -1394,9 +1387,9 @@ Laravel permite la utilización de Middleware de tres formas distintas:
 * asociado a un controlador o a un método de un controlador.
 En los tres casos será necesario registrar primero el Middleware en la __clase App/Http/Kernel.php__.
 
-### Middleware global
+#### Middleware global
 
-Para hacer que un Middleware se ejecute con todas las peticiones HTTP realizadas a una aplicación  simplemente lo tenemos que registrar en el __array $middleware__ definido en la __clase App/Http/Kernel.php__. 
+Para hacer que un Middleware se ejecute con todas las peticiones HTTP realizadas a una aplicación simplemente lo tenemos que registrar en el __array $middleware__ definido en la __clase App/Http/Kernel.php__. 
 ```php  
 protected $middleware = [
 \App\Http\Middleware\TrustProxies::class,
@@ -1409,7 +1402,7 @@ protected $middleware = [
 ```
 En este ejemplo hemos registrado la clase MyMiddleware al final del array. Si queremos que nuestro middleware se ejecute antes que otro filtro simplemente tendremos que colocarlo antes en la posición del array.
 
-### Middleware asociado a rutas
+#### Middleware asociado a rutas
 
 También tendremos que registrarlo en el fichero App/Http/Kernel.php, pero en el array $routeMiddleware. Al añadirlo a este array además tendremos que asignarle un nombre o clave, que será el que después utilizaremos asociarlo con una ruta.
 En primer lugar añadimos nuestro filtro al array y le asignamos el nombre "es_mayor_de_edad":
@@ -1420,20 +1413,20 @@ protected $routeMiddleware = [
 'es_mayor_de_edad' => \App\Http\Middleware\MyMiddleware::class,
 ];
 ```
-Una vez registrado ya lo podemos utilizar en el fichero de  rutas mediante la clave o nombre asignado, por ejemplo:
+Una vez registrado ya lo podemos utilizar en el fichero de rutas mediante la clave o nombre asignado, por ejemplo:
 ```php
 Route::get('/', function () {
 //
 })->middleware(‘es_mayor_de_edad’);
 ```
 En el ejemplo anterior hemos asignado el middleware con clave es_mayor_de_edad a la ruta /. Si la petición supera el filtro entonces se ejecutara la función asociada.
-Laravel también permite asignar múltiples filtros a una  determinada ruta:
+Laravel también permite asignar múltiples filtros a una determinada ruta:
 ```php
 Route::get('/', function () {
 //
 })->middleware(['first', 'second']);
 ```
-#### Proteger rutas
+##### Proteger rutas
 El sistema de autenticación de Laravel incorpora una serie de filtros o para comprobar que el usuario que accede a una determinada ruta o grupo de rutas esté autenticado.
 Para proteger el acceso a rutas y solo permitir su visualización por usuarios correctamente autenticados usaremos el middleware
 \Illuminate\Auth\Middleware\Authenticate.php cuyo alias es auth.
@@ -1448,7 +1441,5 @@ Route::get('admin/catalog', function(){
 Route::get('profile’, [ProfileController::class,’show’])->middleware('auth');
 ```
 :computer: Hoja06_MVC_10
-
-
 
 
