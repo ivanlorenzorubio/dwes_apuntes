@@ -1,7 +1,6 @@
 # UT6 GENERACIÓN DINÁMICA DE PÁGINAS WEB 
 
 ## Índice
-
 - [UT6 GENERACIÓN DINÁMICA DE PÁGINAS WEB](#ut6-generación-dinámica-de-páginas-web)
   - [Índice](#índice)
   - [Patrón arquitectónico MVC (Modelo-Vista-Controlador)](#patrón-arquitectónico-mvc-modelo-vista-controlador)
@@ -51,6 +50,10 @@
         - [Insertar datos](#insertar-datos)
         - [Actualizar datos](#actualizar-datos)
         - [Borrar datos](#borrar-datos)
+      - [Operaciones con tablas relacionadas usando ORM](#operaciones-con-tablas-relacionadas-usando-orm)
+        - [Relaciones uno a uno](#relaciones-uno-a-uno)
+        - [Relaciones uno a muchos](#relaciones-uno-a-muchos)
+        - [Relaciones muchos a muchos](#relaciones-muchos-a-muchos)
       - [Seeders](#seeders)
       - [Factories](#factories)
     - [Datos de entrada](#datos-de-entrada)
@@ -474,8 +477,10 @@ Blade no añade sobrecarga de procesamiento,  ya que todas las vistas son
 preprocesadas y cacheadas.
 
 El método más básico que tenemos en Blade es el de mostrar datos. Para esto  utilizaremos las llaves dobles {{ }} y dentro de ellas escribiremos la variable o  función a mostrar:
+<div class="page"/>
 
 Ejemplo:
+
 ```php 
 Hola {{$name}}
 La hora actual es {{time()}}
@@ -1098,6 +1103,110 @@ Si queremos borrar un conjunto de resultados también podemos usar el método de
 ```php
 $affectedRows = User::where('votes', '>', 100)->delete();
 ```
+
+#### Operaciones con tablas relacionadas usando ORM
+
+##### Relaciones uno a uno
+supongamos que tenemos dos modelos Libro y Portada, de modo que podemos establecer una relación de uno a uno entre ellos: un libro pertenece a una Portada y una portada pertenece a un libro.
+
+Para reflejar esta relación en tablas, una de las dos debería tener una referencia a la otra. En este caso, podriamos tener un campo libro_id en la tabla de portadas que indique a que libro pertenece esa portada.
+para indicar que un libro tiene una portada, añadimos un método en el modelo de Libro (portada), que se llame igual que el modelo con el que queremos conectar(Portada) que emplee el método __hasOne__.
+```php
+class Libro extends Model
+{
+  public function portada(){
+    return $this->hasOne(Portada::class);
+  }
+}
+```
+Ahora, si queremos obtener la portada de un libro, basta con que hagamos esto:
+```php
+$portada=Libro::findOrFail($id)->portada;
+```
+La instrucción anterior obtiene el objeto Portada asociado con el libro buscado (a través del id del libro). Para que esta asociación tenga efecto, es preciso que en la tabla portadas exista un campo libro_id y que corresponda con un campo id de la tabla de libros.
+
+Si queremos utilizar otros campos distintos a los anteriores en una y otra tabla para conectarlas, debemos indicar dos parámetros más al llamar a hasOne.
+
+Por ejemplo, así relacionariamos las dos tablas anteriores, indicando que la clave ajena de portadas es idlibro, y que la clave de libros es codigo:
+```php
+return $this->hasOne(Portada::class,'idportada','codigo');
+```
+también es posible obtener la relación inversa; es decir, a parti de una portada, obtener el libro al que pertenece. Para ello añadimos un método en el modelo Portada y empleamos el método __belongsTo__ para indicar a qué modelo se asocia:
+```php
+class Portada extends Model
+{
+  public function libro(){
+    return $this->belongsTo(Libro::class);
+  }
+}
+```
+De este modo, si quereemos obtener el Libro a partir de la portada, podemos hacerlo así:
+
+```php
+$libro=Portada::findOrFail($idportada)->libro;
+```
+
+##### Relaciones uno a muchos
+
+Supongamos  que tenemos los modelos Autor y Libro, de modo que un autor puede tener varios libros, y un libro está asociado a un autor
+
+La forma de establecer la relación entre ambos consistirá en añadir en la tabla libros una clave ajena al autor al que pertenece. A la hora de plasmar la relacion utilizamos el método __hasMany__ en la clase Autor
+
+```php
+class Autor extends Model
+{
+  public function libros(){
+    return $this->hasMany(Libro::class);
+  }
+}
+```
+De este modo, obtenemos los libros asociados a un autor:
+
+```php
+$libro=Autor::findOrFail($id)->libros;
+```
+También es posible establecer la relación inversa, y recuperar el autor al que pertenece un determinado libro, definiendo un método en la clase Libro que emplee __belongsTo__.
+
+```php
+class Libro extends Model
+{
+  public function autor(){
+    return $this->belongsTo(Autor::class);
+  }
+}
+```
+y obtener, por ejemplo, el nombre del autor a partir del libro:
+```php
+$nombreAutor = Libro::findorFail($id)->autor->nombre;
+```
+##### Relaciones muchos a muchos
+
+Estas relaciones requieren contar con una tercera tabla que relacione las dos tablas afectadas.
+supongamos los modelos Libro y Biblioteca , de modo que un libro puede ser consultado en muchas bibliotecas, y una biblioteca tiene muchos libros.
+Nuevamente, definimos un método en el modelo Libro que utilice el método __belongsToMany__ para indicar con qué otro modelo se relaciona:
+
+```php
+class Libro extends Model
+{
+  public function bibliotecas(){
+    return $this->belongsToMany(Biblioteca::class);
+  }
+}
+```
+así ya podremos acceder a las bibliotecas que tienen el libro:
+```php
+$bibliotecas = Libro::findorFail($id)->roles;
+```
+En este cado, al otro lado de la relación hacemos lo mismo:
+```php
+class Biblioteca extends Model
+{
+  public function libros(){
+    return $this->belongsToMany(Libro::class);
+  }
+}
+```
+
 #### Seeders
 Los	seeders	sirven para	rellenar la	base de	datos con datos iniciales.
 Para ello se puede rellenar __el método run__ de database/seeds/DatabaseSeeder.php
@@ -1441,5 +1550,11 @@ Route::get('admin/catalog', function(){
 Route::get('profile’, [ProfileController::class,’show’])->middleware('auth');
 ```
 :computer: Hoja06_MVC_10
+
+:computer: Hoja06_MVC_11
+
+:computer: Hoja06_MVC_12
+
+:computer: Hoja06_MVC_13
 
 
