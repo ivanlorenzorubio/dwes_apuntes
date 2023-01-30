@@ -36,7 +36,7 @@ Para compartir la información que gestiona tu aplicación, normalmente es sufic
 Para facilitar esta tarea existen los servicios web.
 
 __Un servicio web__ es un método que permite que dos equipos intercambien información a través de una red informática.
-Al utilizar servicios web, el servidor puede ofrecer __un punto de acceso__ a la información que quiere compartir De esta forma __controla y facilita el acceso__ a la misma por parte de otras aplicaciones.
+Al utilizar servicios web, el servidor puede ofrecer __un punto de acceso__ a la información que quiere compartir. De esta forma __controla y facilita el acceso__ a la misma por parte de otras aplicaciones.
 
 __Los clientes del servicio__, por su parte, no necesitan conocer la estructura interna de almacenamiento. En lugar de tener que programar un mecanismo para localizar la información, tienen un __punto de acceso directo__ a la que les interesa.
 
@@ -47,11 +47,11 @@ En todos estos protocolos se definen un servidor y un cliente pero no han sido d
 
 Sin embargo, ya desde hace tiempo existen otras soluciones para este tipo de problemas. Una de las más populares es __RPC__
 
-El protocolo RPC se creó para permitir a un sistema acceder de forma remota a funciones o procedimientos que se encuentren en otro sistema El cliente se conecta con el servidor, y le indica qué función debe ejecutar El servidor la ejecuta y le devuelve el resultado obtenido Así, por ejemplo, podemos crear en el servidor RPC una función que reciba un código de producto y devuelva su PVP.
+El protocolo RPC se creó para permitir a un sistema acceder de forma remota a funciones o procedimientos que se encuentren en otro sistema El cliente se conecta con el servidor, y le indica qué función debe ejecutar. El servidor la ejecuta y le devuelve el resultado obtenido. Así, por ejemplo, podemos crear en el servidor RPC una función que reciba un código de producto y devuelva su PVP.
 
 Los servicios web se crearon para permitir el intercambio de información al igual que RPC, pero sobre la base del protocolo HTTP (de ahí el término web).
 
-En lugar de definir su propio protocolo para transportar las peticiones de información, utilizan HTTP para este fin La respuesta obtenida no será una página web, sino la información que se solicitó. De esta forma pueden funcionar sobre cualquier servidor web y, lo que es aún más importante, utilizando el puerto 80 reservado para este protocolo.
+En lugar de definir su propio protocolo para transportar las peticiones de información, utilizan HTTP para este fin. La respuesta obtenida no será una página web, sino la información que se solicitó. De esta forma pueden funcionar sobre cualquier servidor web y, lo que es aún más importante, utilizando el puerto 80 reservado para este protocolo.
 
 Por tanto, cualquier ordenador que pueda consultar una página web, podrá también solicitar información de un servicio web.
 
@@ -128,7 +128,7 @@ Como primer miembro del elemento Envelope puede haber de forma opcional __un ele
 
 Sería muy complejo programar un servicio web que procesase el XML recibido en cada petición SOAP, y generase el XML relativo a cada respuesta correspondiente. Existen mecanismos de ayuda que nos evitan tener que tratar con las interioridades del protocolo SOAP.
 
-De las implementaciones de SOAP que podemos usar con PHP, cabe destacar tres NuSOAP PEAR SOAP y PHP SOAP Las tres nos permiten crear tanto un cliente como un servidor SOAP.
+De las implementaciones de SOAP que podemos usar con PHP, cabe destacar tres: NuSOAP, PEAR::SOAP y PHP SOAP. Las tres nos permiten crear tanto un cliente como un servidor SOAP.
 
 Básicamente las características que las diferencias son:
 
@@ -175,7 +175,8 @@ La extensión PHP SOAP también incluye opciones de depuración muy útiles para
 $cliente = new SoapClient(null, array('location'=>$location,'uri'=>$uri,'trace'=>true));
 ```
 
-Una vez activada la depuración, podrás utilizar los siguientes métodos para revisar
+Una vez activada la depuración, podrás utilizar los siguientes métodos para revisar.
+
 | Método | Significado |
 | ------------- | ------------------------------ |
 | __getLastRequest__  | Devuelve el XML correspondiente a la última petición enviada|
