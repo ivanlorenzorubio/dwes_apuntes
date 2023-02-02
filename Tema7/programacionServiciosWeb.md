@@ -206,9 +206,9 @@ A partir de ahora vamos a desarrollar nuestros propios servicios web.
 
 Para que un servicio web sea accesible a aplicaciones desarrolladas por otros programadores, habrá que indicarles cómo usarlo, es decir, crear un documento WSDL que describa el servicio.
 
-WSDL es un lenguaje basado en XML que utiliza unas reglas determinadas para generar el documento de descripción de un servicio web. Una vez generado, ese documento se suele poner a disposición de los posibles usuarios del servicio(normalmente se accede al documento WSDL añadiendo?wsdl ala URL del servicio).
+WSDL es un lenguaje basado en XML que utiliza unas reglas determinadas para generar el documento de descripción de un servicio web. Una vez generado, ese documento se suele poner a disposición de los posibles usuarios del servicio(normalmente se accede al documento WSDL añadiendo?wsdl a la URL del servicio).
 
-El espacio de nombresde un documento WSDL es http://schemas.xmlsoap.org/wsdl, aunque en un documento WSDL se suelen utilizar también otros espacios de nombres.
+El espacio de nombres de un documento WSDL es http://schemas.xmlsoap.org/wsdl, aunque en un documento WSDL se suelen utilizar también otros espacios de nombres.
 
 ### Estructura de un documento WSDL
 
@@ -226,7 +226,7 @@ xmlns ="http://schemas.xmlsoap.org/wsdl/"
 <message > … </message>
 <portType > … </portType>
 <binding > … </binding>
-<serviceservice> … </service>
+<service> … </service>
 </definitions>
 ```
 El objetivo de cada una de las secciones del documento es el siguiente:
