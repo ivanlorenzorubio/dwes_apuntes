@@ -40,9 +40,7 @@ Apuntes de Desarrollo Web en Entorno Servidor del CFGS de Desarrollo de Aplicaci
 
 [Apuntes de la Unidad 8.](Tema8/paginasWebInteractivas.md)
 
-**9. UNIDAD 9.Desarrollo de aplicaciones web híbridas.**
 
-[Apuntes de la Unidad 9.](Tema9/aplicacionesHibridas.md)
 
 
 
