@@ -134,7 +134,7 @@ mirar [artículo de firefox](https://developer.mozilla.org/es/docs/Web/API/Geolo
         <script>
             var x=document.getElementById("demo");
             function getlocation(){
-                if(navigator.getlocation){
+                if(navigator.geolocation){
                     navigator.geolocation.getCurrentPosition(showPosition);
                 }
                 else {
