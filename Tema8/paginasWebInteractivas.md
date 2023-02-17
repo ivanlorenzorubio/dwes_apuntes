@@ -154,7 +154,7 @@ Algunas opciones del método son:
 </script>
 
 ```
-Para comunicarse con el servidos, se puede utilizar la notación __JSON__. Json es un formato de intercambio de información más sencillo de procesar que XML (especialmente al utilizar el lenguaje JavaScript) para transmitir la información con el servidor
+Para comunicarse con el servidor, se puede utilizar la notación __JSON__. Json es un formato de intercambio de información más sencillo de procesar que XML (especialmente al utilizar el lenguaje JavaScript) para transmitir la información con el servidor
 
 :computer: Hoja08_AJAX_01
 
