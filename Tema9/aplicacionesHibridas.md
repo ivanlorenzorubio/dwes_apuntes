@@ -4,7 +4,7 @@
 - [UT9 DESARROLLO DE APLICACIONES WEB HÍBRIDAS](#ut9-desarrollo-de-aplicaciones-web-híbridas)
   - [Índice](#índice)
   - [Reutilización de código e información](#reutilización-de-código-e-información)
-  - [Arquitectura de una aplicación web híbirda](#arquitectura-de-una-aplicación-web-híbirda)
+  - [Arquitectura de una aplicación web híbrida](#arquitectura-de-una-aplicación-web-híbrida)
   - [Comunicación en la arquitectura mashup](#comunicación-en-la-arquitectura-mashup)
   - [Características](#características)
   - [Utilización de repositorios de información](#utilización-de-repositorios-de-información)
@@ -43,7 +43,7 @@ Un ejemplo ya visto era el siguiente:
     $respuesta_decodificada = json_decode($respuesta_curl);
 ```
 
-## Arquitectura de una aplicación web híbirda
+## Arquitectura de una aplicación web híbrida
 La arquitecturar de una aplicación web híbrida está compuesta por tres partes principales. Por un lado, lo más importante es el __proveedor de contenidos__ que ofrece servicios como mapas, geolocalizaciones, API para conectar con los servicios de AdWords o transcripciones de audio a texto, como es el gran y todo poderoso Google. En el centro estaría situado __el servidor__ de la nueva página híbrida y por último, __el cliente__, que es quien accede a la página.
 
 * __Proveedor de contenidos__ Es la fuente de datos. Los datos suelen estar disponibles a través de una interfaz pública o utilizando una API con diferentes protocolos como RSS o ATOM o servicios Web.
@@ -109,8 +109,11 @@ Podeís encontrar información sobre apis en  el siguiente artículo de [NORDIC 
 Obtener una api key de google maps en el siguiente artículo de [Maplink](https://maplink.global/blog/es/como-obtener-google-maps-api-key/)
 
 Información [Google Maps Platform](https://developers.google.com/maps?hl=es-419)
+
 Documentación sobre [Amazon API Gateway](https://aws.amazon.com/es/api-gateway/)
+
 Documentación de la [API de Flickr](https://www.flickr.com/services/api/)
+
 Documentación de la [API de YouTube](https://developers.google.com/youtube/v3)
 
 
@@ -149,5 +152,7 @@ mirar [artículo de firefox](https://developer.mozilla.org/es/docs/Web/API/Geolo
 propuesta realizar una función que a partir de la latitud y longitud, nos dé los siguientes datos: población, código postal, calle, número y comunidad.
 
 :computer: Hoja09_Mashup_01
+
 :computer: Hoja09_Mashup_02
+
 :computer: Hoja09_Mashup_03
