@@ -11,7 +11,7 @@
 
 ## Reutilización de código e información
 Los servicios web permiten a tus aplicaciones comunicarse con otras utilizando la web (el protocolo HTTP) como medio de transmisión.
-En la UT 7 hemos visto servicios SOAP y los servicios REST La mayoría de las APIs existentes en el mercado utilizan estos últimos.
+En la UT 7 hemos visto servicios SOAP y los servicios REST. La mayoría de las APIs existentes en el mercado utilizan estos últimos.
 
 Un servicio web implementado mediante REST puede:
 
@@ -30,6 +30,8 @@ Es una biblioteca que permite conectarse y comunicarse con diferentes tipos de s
 
 __Una aplicación web híbrida o mashup__ implica que debe acceder a datos o procesar información a través del sitio que nos ofrece el proveedor, ya que este servicio de nuestro proveedor nos va a dar un valor añadido a nuestra aplicación, y sin esta ayuda sería técnicamente imposible ofrecer estos servicios.
 
+<div class="page"/>
+
 Un ejemplo ya visto era el siguiente:
 ```php
     $url_servicio = "http://zoologico.laravel/rest";
@@ -44,11 +46,13 @@ Un ejemplo ya visto era el siguiente:
 ```
 
 ## Arquitectura de una aplicación web híbrida
-La arquitecturar de una aplicación web híbrida está compuesta por tres partes principales. Por un lado, lo más importante es el __proveedor de contenidos__ que ofrece servicios como mapas, geolocalizaciones, API para conectar con los servicios de AdWords o transcripciones de audio a texto, como es el gran y todo poderoso Google. En el centro estaría situado __el servidor__ de la nueva página híbrida y por último, __el cliente__, que es quien accede a la página.
+
+La arquitectura de una aplicación web híbrida está compuesta por tres partes principales. Por un lado, lo más importante es el __proveedor de contenidos__ que ofrece servicios como mapas, geolocalizaciones, API para conectar con los servicios de AdWords o transcripciones de audio a texto, como es el gran y todo poderoso Google. En el centro estaría situado __el servidor__ de la nueva página híbrida y por último, __el cliente__, que es quien accede a la página.
 
 * __Proveedor de contenidos__ Es la fuente de datos. Los datos suelen estar disponibles a través de una interfaz pública o utilizando una API con diferentes protocolos como RSS o ATOM o servicios Web.
   
-* __Sitio Mashup__: es la aplicacion nueva que provee de un nuevo servicio utilizando diferentes fuentes de información de las que no es dueño. El sitio mashup hará uso de las tecnologías de las que disponga el proveedor de contenidos para conseguir generar la aplicación híbrida
+* __Sitio Mashup__: es la aplicacion nueva que provee de un nuevo servicio utilizando diferentes fuentes de información de las que no es dueño. El sitio mashup hará uso de las tecnologías de las que disponga el proveedor de contenidos para conseguir generar la aplicación híbrida.
+  
 * __Cliente Web__: es la interfaz del usuario del mashup. Es una aplicación web. Aqui el contenido también puede ser mezclado en el mismo navegador del cliente. Se pueden utilizar lenguajes como JavaScript y AJAX.
 
 ## Comunicación en la arquitectura mashup
@@ -56,12 +60,13 @@ La arquitecturar de una aplicación web híbrida está compuesta por tres partes
 Vamos a ver el esquema de las diferentes vías de comunicación entre el navegador web del cliente y el proveedor de contenidos, pasando o no por el servidor de aplicaciones o páginas híbridas.
 * 1 - el navegador cliente accede directamente a la información del proveedor de contenidos mediante JavaScript
 * 2 - el servidor de aplicaciones obtiene los datos directamente del proveedor de contenidos; estos se mezclan en el servidor y son enviaddos al navegador del cliente.
-* 3 - el navegador del cliente accede al servidor web y extrae el contenido almacenado
+* 3 - el navegador del cliente accede al servidor web y extrae el contenido almacenado.
   
  ![comunicacion](img/comunicacionmashup.png) 
 
 
 ## Características
+
 __Una aplicación web híbrida__, también conocida por su nombre en inglés __mashup__ se caracteriza por combinar datos y/o funcionalidades procedentes de diversos orígenes para formar un nuevo tipo de aplicación o servicio.
 
 Los tipos de fuentes de información más habituales que se utilizan en una aplicación web híbrida son:
@@ -77,7 +82,7 @@ Los tipos de fuentes de información más habituales que se utilizan en una apli
   * Complejidad
   * Sobrecarga de los servidores
   * Propensión a fallos inesperados
-  
+<div class="page"/>  
 
 ## Utilización de repositorios de información
 
@@ -115,7 +120,7 @@ Documentación sobre [Amazon API Gateway](https://aws.amazon.com/es/api-gateway/
 Documentación de la [API de Flickr](https://www.flickr.com/services/api/)
 
 Documentación de la [API de YouTube](https://developers.google.com/youtube/v3)
-
+<div class="page"/>
 
 Ejemplo:
 Utilización de Google Api para obtener la dirección a partir de las coordenas de latitud y longitud
@@ -149,7 +154,7 @@ mirar [artículo de firefox](https://developer.mozilla.org/es/docs/Web/API/Geolo
     </body>
 </html>
 ```
-propuesta realizar una función que a partir de la latitud y longitud, nos dé los siguientes datos: población, código postal, calle, número y comunidad.
+Propuesta realizar una función que a partir de la latitud y longitud, nos dé los siguientes datos: población, código postal, calle, número y comunidad.
 
 :computer: Hoja09_Mashup_01
 
