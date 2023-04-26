@@ -1129,9 +1129,9 @@ Si queremos utilizar otros campos distintos a los anteriores en una y otra tabla
 
 Por ejemplo, así relacionariamos las dos tablas anteriores, indicando que la clave ajena de portadas es idlibro, y que la clave de libros es codigo:
 ```php
-return $this->hasOne(Portada::class,'idportada','codigo');
+return $this->hasOne(Portada::class,'idlibro','codigo');
 ```
-también es posible obtener la relación inversa; es decir, a parti de una portada, obtener el libro al que pertenece. Para ello añadimos un método en el modelo Portada y empleamos el método __belongsTo__ para indicar a qué modelo se asocia:
+también es posible obtener la relación inversa; es decir, a partir de una portada, obtener el libro al que pertenece. Para ello añadimos un método en el modelo Portada y empleamos el método __belongsTo__ para indicar a qué modelo se asocia:
 ```php
 class Portada extends Model
 {
@@ -1143,7 +1143,7 @@ class Portada extends Model
 De este modo, si quereemos obtener el Libro a partir de la portada, podemos hacerlo así:
 
 ```php
-$libro=Portada::findOrFail($idportada)->libro;
+$libro=Portada::findOrFail($idlibro)->libro;
 ```
 
 ##### Relaciones uno a muchos
